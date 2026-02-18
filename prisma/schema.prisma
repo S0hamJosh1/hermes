@@ -1,0 +1,477 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_DATABASE_URL")
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// 1. Users — Strava OAuth identity + tokens
+// ──────────────────────────────────────────────────────────────────────────────
+
+model User {
+  id                    String    @id @default(uuid()) @db.Uuid
+  stravaId              BigInt    @unique @map("strava_id")
+  stravaUsername         String?   @map("strava_username") @db.VarChar(255)
+  email                 String?   @db.VarChar(255)
+  refreshToken          String    @map("refresh_token")
+  accessToken           String?   @map("access_token")
+  accessTokenExpiresAt  DateTime? @map("access_token_expires_at")
+  createdAt             DateTime  @default(now()) @map("created_at")
+  updatedAt             DateTime  @updatedAt @map("updated_at")
+
+  profile            RunnerProfile?
+  goals              LongTermGoal[]
+  roadmaps           Roadmap[]
+  weeklyPlans        WeeklyPlan[]
+  stravaActivities   StravaActivity[]
+  healthRecords      HealthRecord[]
+  healthStrikes      HealthStrike[]
+  complianceCheckIns ComplianceCheckIn[]
+  weeklySummaries    WeeklySummary[]
+  adaptationHistory  AdaptationHistory[]
+  momentumMeter      MomentumMeter?
+  killaMeter         KillaMeter?
+
+  @@map("users")
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// 2. Runner Profile — calibration data from 7-day bootcamp
+// ──────────────────────────────────────────────────────────────────────────────
+
+model RunnerProfile {
+  id     String @id @default(uuid()) @db.Uuid
+  userId String @unique @map("user_id") @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  basePaceSecondsPerKm      Int      @map("base_pace_seconds_per_km")
+  thresholdPaceSecondsPerKm Int      @map("threshold_pace_seconds_per_km")
+  weeklyCapacityKm          Decimal  @map("weekly_capacity_km") @db.Decimal(5, 2)
+  durabilityScore           Decimal  @default(0.5) @map("durability_score") @db.Decimal(3, 2)
+  consistencyScore          Decimal  @default(0.5) @map("consistency_score") @db.Decimal(3, 2)
+  riskLevel                 String   @default("moderate") @map("risk_level") @db.VarChar(20)
+
+  currentState        String  @default("Stable") @map("current_state") @db.VarChar(30)
+  overrideModeEnabled Boolean @default(false) @map("override_mode_enabled")
+
+  primaryGoalDistance String?   @map("primary_goal_distance") @db.VarChar(20)
+  primaryGoalDate     DateTime? @map("primary_goal_date") @db.Date
+  goalTimeSeconds     Int?      @map("goal_time_seconds")
+
+  last28DayVolume      Decimal? @map("last_28_day_volume") @db.Decimal(6, 2)
+  last90DayVolume      Decimal? @map("last_90_day_volume") @db.Decimal(6, 2)
+  last28DayConsistency Decimal? @map("last_28_day_consistency") @db.Decimal(3, 2)
+
+  bootcampCompleted Boolean   @default(false) @map("bootcamp_completed")
+  bootcampStartDate DateTime? @map("bootcamp_start_date") @db.Date
+  bootcampEndDate   DateTime? @map("bootcamp_end_date") @db.Date
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("runner_profiles")
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// 3. Long-Term Goals — up to 24 months out
+// ──────────────────────────────────────────────────────────────────────────────
+
+model LongTermGoal {
+  id     String @id @default(uuid()) @db.Uuid
+  userId String @map("user_id") @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  distance          String   @db.VarChar(20)
+  targetDate        DateTime @map("target_date") @db.Date
+  targetTimeSeconds Int?     @map("target_time_seconds")
+  priority          Int      @default(1)
+
+  roadmaps Roadmap[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("long_term_goals")
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// 4. Roadmaps — phased plans generated from goals
+// ──────────────────────────────────────────────────────────────────────────────
+
+model Roadmap {
+  id     String @id @default(uuid()) @db.Uuid
+  userId String @map("user_id") @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  goalId String @map("goal_id") @db.Uuid
+  goal   LongTermGoal @relation(fields: [goalId], references: [id], onDelete: Cascade)
+
+  phaseNumber    Int      @map("phase_number")
+  phaseName      String   @map("phase_name") @db.VarChar(100)
+  startDate      DateTime @map("start_date") @db.Date
+  endDate        DateTime @map("end_date") @db.Date
+  targetVolumeKm Decimal? @map("target_volume_km") @db.Decimal(6, 2)
+  focus          String?  @db.VarChar(50)
+
+  milestones Milestone[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("roadmaps")
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// 5. Milestones — checkpoints within roadmaps
+// ──────────────────────────────────────────────────────────────────────────────
+
+model Milestone {
+  id        String  @id @default(uuid()) @db.Uuid
+  roadmapId String  @map("roadmap_id") @db.Uuid
+  roadmap   Roadmap @relation(fields: [roadmapId], references: [id], onDelete: Cascade)
+
+  milestoneName String    @map("milestone_name") @db.VarChar(100)
+  targetDate    DateTime  @map("target_date") @db.Date
+  targetMetric  String?   @map("target_metric") @db.VarChar(50)
+  targetValue   Decimal?  @map("target_value") @db.Decimal(8, 2)
+  achieved      Boolean   @default(false)
+  achievedDate  DateTime? @map("achieved_date") @db.Date
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("milestones")
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// 6. Workout Templates — parameterized templates from Hal Higdon data
+// ──────────────────────────────────────────────────────────────────────────────
+
+model WorkoutTemplate {
+  id String @id @default(uuid()) @db.Uuid
+
+  templateName       String  @map("template_name") @db.VarChar(100)
+  workoutType        String  @map("workout_type") @db.VarChar(30)
+  distanceType       String? @map("distance_type") @db.VarChar(20)
+  baseDistanceKm     Decimal? @map("base_distance_km") @db.Decimal(5, 2)
+  baseDurationMinutes Int?    @map("base_duration_minutes")
+  intensityZone      String? @map("intensity_zone") @db.VarChar(20)
+
+  minDistanceKm      Decimal? @map("min_distance_km") @db.Decimal(5, 2)
+  maxDistanceKm      Decimal? @map("max_distance_km") @db.Decimal(5, 2)
+  minDurationMinutes Int?     @map("min_duration_minutes")
+  maxDurationMinutes Int?     @map("max_duration_minutes")
+
+  minWeekNumber      Int?    @map("min_week_number")
+  maxWeekNumber      Int?    @map("max_week_number")
+  requiresBaseBuilding Boolean @default(false) @map("requires_base_building")
+
+  sourcePlan String? @map("source_plan") @db.VarChar(100)
+  sourceWeek Int?    @map("source_week")
+
+  workouts Workout[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("workout_templates")
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// 7. Weekly Plans — generated training plans
+// ──────────────────────────────────────────────────────────────────────────────
+
+model WeeklyPlan {
+  id     String @id @default(uuid()) @db.Uuid
+  userId String @map("user_id") @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  weekStartDate DateTime @map("week_start_date") @db.Date
+  weekEndDate   DateTime @map("week_end_date") @db.Date
+  weekNumber    Int      @map("week_number")
+
+  stateAtGeneration  String  @map("state_at_generation") @db.VarChar(30)
+  totalVolumeKm      Decimal @map("total_volume_km") @db.Decimal(6, 2)
+  totalDurationMinutes Int   @map("total_duration_minutes")
+
+  validationStatus String @default("pending") @map("validation_status") @db.VarChar(20)
+  validationErrors Json?  @map("validation_errors")
+  repairActions    Json?  @map("repair_actions")
+
+  userEdited     Boolean @default(false) @map("user_edited")
+  userEditReason String? @map("user_edit_reason")
+
+  published   Boolean   @default(false)
+  publishedAt DateTime? @map("published_at")
+
+  workouts Workout[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([userId, weekStartDate])
+  @@index([userId, weekStartDate])
+  @@map("weekly_plans")
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// 8. Workouts — individual workouts within weekly plans
+// ──────────────────────────────────────────────────────────────────────────────
+
+model Workout {
+  id           String     @id @default(uuid()) @db.Uuid
+  weeklyPlanId String     @map("weekly_plan_id") @db.Uuid
+  weeklyPlan   WeeklyPlan @relation(fields: [weeklyPlanId], references: [id], onDelete: Cascade)
+  templateId   String?    @map("template_id") @db.Uuid
+  template     WorkoutTemplate? @relation(fields: [templateId], references: [id])
+
+  workoutDate            DateTime @map("workout_date") @db.Date
+  workoutType            String   @map("workout_type") @db.VarChar(30)
+  plannedDistanceKm      Decimal? @map("planned_distance_km") @db.Decimal(5, 2)
+  plannedDurationMinutes Int?     @map("planned_duration_minutes")
+  plannedPaceSecondsPerKm Int?    @map("planned_pace_seconds_per_km")
+  intensityZone          String?  @map("intensity_zone") @db.VarChar(20)
+
+  stravaActivityId        BigInt?   @map("strava_activity_id")
+  actualDistanceKm        Decimal?  @map("actual_distance_km") @db.Decimal(5, 2)
+  actualDurationSeconds   Int?      @map("actual_duration_seconds")
+  actualPaceSecondsPerKm  Int?      @map("actual_pace_seconds_per_km")
+  completed               Boolean   @default(false)
+  completedAt             DateTime? @map("completed_at")
+
+  userModified             Boolean @default(false) @map("user_modified")
+  userModificationReason   String? @map("user_modification_reason")
+
+  dayOfWeek   Int @map("day_of_week")
+  orderInWeek Int @map("order_in_week")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([weeklyPlanId, workoutDate])
+  @@map("workouts")
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// 9. Strava Activities — synced activity data
+// ──────────────────────────────────────────────────────────────────────────────
+
+model StravaActivity {
+  id     String @id @default(uuid()) @db.Uuid
+  userId String @map("user_id") @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  stravaActivityId BigInt @unique @map("strava_activity_id")
+  activityType     String @map("activity_type") @db.VarChar(50)
+
+  name                String?  @db.VarChar(255)
+  distanceMeters      Decimal  @map("distance_meters") @db.Decimal(8, 2)
+  movingTimeSeconds   Int      @map("moving_time_seconds")
+  elapsedTimeSeconds  Int      @map("elapsed_time_seconds")
+  totalElevationGain  Decimal? @map("total_elevation_gain") @db.Decimal(6, 2)
+  startDate           DateTime @map("start_date")
+  startDateLocal      DateTime @map("start_date_local")
+
+  averageSpeedMs Decimal? @map("average_speed_ms") @db.Decimal(6, 3)
+  maxSpeedMs     Decimal? @map("max_speed_ms") @db.Decimal(6, 3)
+
+  averageHeartrate Int? @map("average_heartrate")
+  maxHeartrate     Int? @map("max_heartrate")
+
+  weightedAverageWatts Decimal? @map("weighted_average_watts") @db.Decimal(6, 2)
+
+  externalId String? @map("external_id") @db.VarChar(255)
+  uploadId   BigInt? @map("upload_id")
+  syncedAt   DateTime @default(now()) @map("synced_at")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([userId, startDate])
+  @@map("strava_activities")
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// 10. Health Records — injury / pain / fatigue tracking
+// ──────────────────────────────────────────────────────────────────────────────
+
+model HealthRecord {
+  id     String @id @default(uuid()) @db.Uuid
+  userId String @map("user_id") @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  recordDate  DateTime @map("record_date") @db.Date
+  recordType  String   @map("record_type") @db.VarChar(30)
+
+  bodyPart    String? @map("body_part") @db.VarChar(50)
+  severity    Int?
+  description String?
+
+  trainingModification String? @map("training_modification") @db.VarChar(50)
+  daysOff              Int     @default(0) @map("days_off")
+
+  strikeCount Int     @default(0) @map("strike_count")
+  isChronic   Boolean @default(false) @map("is_chronic")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([userId, recordDate])
+  @@map("health_records")
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// 11. Health Strikes — progressive warning system
+// ──────────────────────────────────────────────────────────────────────────────
+
+model HealthStrike {
+  id     String @id @default(uuid()) @db.Uuid
+  userId String @map("user_id") @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  strikeType  String   @map("strike_type") @db.VarChar(30)
+  strikeCount Int      @map("strike_count")
+  bodyPart    String?  @map("body_part") @db.VarChar(50)
+  issuedAt    DateTime @default(now()) @map("issued_at")
+  resolved    Boolean  @default(false)
+  resolvedAt  DateTime? @map("resolved_at")
+
+  forcedRecoveryDays    Int?    @map("forced_recovery_days")
+  permanentLimitApplied Boolean @default(false) @map("permanent_limit_applied")
+  limitDescription      String? @map("limit_description")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("health_strikes")
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// 12. Compliance Check-Ins — context when compliance drops
+// ──────────────────────────────────────────────────────────────────────────────
+
+model ComplianceCheckIn {
+  id     String @id @default(uuid()) @db.Uuid
+  userId String @map("user_id") @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  checkInDate     DateTime @map("check_in_date") @db.Date
+  triggerReason   String?  @map("trigger_reason") @db.VarChar(50)
+
+  responseType    String? @map("response_type") @db.VarChar(50)
+  responseDetails String? @map("response_details")
+
+  adaptationAction String? @map("adaptation_action") @db.VarChar(50)
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("compliance_check_ins")
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// 13. Weekly Summaries — rolling window metrics
+// ──────────────────────────────────────────────────────────────────────────────
+
+model WeeklySummary {
+  id     String @id @default(uuid()) @db.Uuid
+  userId String @map("user_id") @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  weekStartDate DateTime @map("week_start_date") @db.Date
+  weekEndDate   DateTime @map("week_end_date") @db.Date
+
+  plannedVolumeKm      Decimal? @map("planned_volume_km") @db.Decimal(6, 2)
+  actualVolumeKm       Decimal? @map("actual_volume_km") @db.Decimal(6, 2)
+  compliancePercentage Decimal? @map("compliance_percentage") @db.Decimal(5, 2)
+
+  easyRunKm        Decimal? @map("easy_run_km") @db.Decimal(6, 2)
+  qualitySessionKm Decimal? @map("quality_session_km") @db.Decimal(6, 2)
+  longRunKm        Decimal? @map("long_run_km") @db.Decimal(6, 2)
+  recoveryKm       Decimal? @map("recovery_km") @db.Decimal(6, 2)
+
+  averagePaceSecondsPerKm Decimal? @map("average_pace_seconds_per_km") @db.Decimal(6, 2)
+  thresholdPaceEstimate   Decimal? @map("threshold_pace_estimate") @db.Decimal(6, 2)
+
+  healthIssuesCount Int    @default(0) @map("health_issues_count")
+  restDays          Int    @default(0) @map("rest_days")
+  endingState       String? @map("ending_state") @db.VarChar(30)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([userId, weekStartDate])
+  @@index([userId, weekStartDate])
+  @@map("weekly_summaries")
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// 14. Adaptation History — log of state transitions
+// ──────────────────────────────────────────────────────────────────────────────
+
+model AdaptationHistory {
+  id     String @id @default(uuid()) @db.Uuid
+  userId String @map("user_id") @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  transitionDate DateTime @map("transition_date") @db.Date
+  fromState      String?  @map("from_state") @db.VarChar(30)
+  toState        String?  @map("to_state") @db.VarChar(30)
+
+  triggerReason String?  @map("trigger_reason") @db.VarChar(100)
+  triggerData   Json?    @map("trigger_data")
+
+  volumeChangePercentage    Decimal? @map("volume_change_percentage") @db.Decimal(5, 2)
+  intensityChangePercentage Decimal? @map("intensity_change_percentage") @db.Decimal(5, 2)
+  adaptationRationale       String?  @map("adaptation_rationale")
+
+  window7Day  Json? @map("window_7_day")
+  window28Day Json? @map("window_28_day")
+  window90Day Json? @map("window_90_day")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([userId, transitionDate])
+  @@map("adaptation_history")
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// 15. Momentum Meter — consistency / streak tracking
+// ──────────────────────────────────────────────────────────────────────────────
+
+model MomentumMeter {
+  id     String @id @default(uuid()) @db.Uuid
+  userId String @unique @map("user_id") @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  currentStreakDays Int     @default(0) @map("current_streak_days")
+  longestStreakDays Int     @default(0) @map("longest_streak_days")
+  consistencyScore  Decimal @default(0.0) @map("consistency_score") @db.Decimal(3, 2)
+
+  lastUpdated DateTime? @map("last_updated") @db.Date
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("momentum_meter")
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// 16. Killa Meter — overreach / breakthrough tracking
+// ──────────────────────────────────────────────────────────────────────────────
+
+model KillaMeter {
+  id     String @id @default(uuid()) @db.Uuid
+  userId String @unique @map("user_id") @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  overreachCount    Int @default(0) @map("overreach_count")
+  breakthroughCount Int @default(0) @map("breakthrough_count")
+  totalPoints       Int @default(0) @map("total_points")
+
+  lastUpdated DateTime? @map("last_updated") @db.Date
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("killa_meter")
+}
