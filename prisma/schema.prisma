@@ -35,6 +35,7 @@ model User {
   adaptationHistory  AdaptationHistory[]
   momentumMeter      MomentumMeter?
   killaMeter         KillaMeter?
+  chatMessages       ChatMessage[]
 
   @@map("users")
 }
@@ -474,4 +475,26 @@ model KillaMeter {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("killa_meter")
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// 17. Chat Messages — SLM conversation history
+// ──────────────────────────────────────────────────────────────────────────────
+
+model ChatMessage {
+  id     String @id @default(uuid()) @db.Uuid
+  userId String @map("user_id") @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  role    String @db.VarChar(20) // "user" | "assistant" | "system"
+  content String
+
+  intentType   String?  @map("intent_type") @db.VarChar(50)
+  intentParams Json?    @map("intent_params")
+  intentApplied Boolean @default(false) @map("intent_applied")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([userId, createdAt])
+  @@map("chat_messages")
 }

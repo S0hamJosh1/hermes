@@ -1,0 +1,314 @@
+{
+  "meta": {
+    "id": "marathon-senior",
+    "name": "Marathon Senior",
+    "category": "Marathon",
+    "level": "Senior",
+    "lengthWeeks": 8,
+    "sourceFile": "marathon-training-senior.md"
+  },
+  "weeksKm": [
+    {
+      "weekNumber": 8,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "pace",
+          "distanceKm": 6.4
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "cross",
+          "label": "Stretch & strengthen"
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "label": "12.9 km easy"
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "cross",
+          "label": "Stretch & strengthen"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "run",
+          "label": "19.3 km easy"
+        }
+      ]
+    },
+    {
+      "weekNumber": 7,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "label": "9.7 km easy pace"
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "cross",
+          "label": "Stretch & strengthen"
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "label": "9.7 km easy"
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "cross",
+          "label": "Stretch & strengthen"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "run",
+          "label": "22.5 km easy"
+        }
+      ]
+    },
+    {
+      "weekNumber": 6,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "pace",
+          "distanceKm": 6.4
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "cross",
+          "label": "Stretch & strengthen"
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "label": "12.9 km easy"
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "cross",
+          "label": "Stretch & strengthen"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "run",
+          "label": "19.3 km easy"
+        }
+      ]
+    },
+    {
+      "weekNumber": 5,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "label": "9.7 km easy pace"
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "cross",
+          "label": "Stretch & strengthen"
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "label": "9.7 km easy"
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "cross",
+          "label": "Stretch & strengthen"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "run",
+          "label": "25.8 km easy"
+        }
+      ]
+    },
+    {
+      "weekNumber": 4,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "pace",
+          "distanceKm": 6.4
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "cross",
+          "label": "Stretch & strengthen"
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "label": "16.1 km easy"
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "cross",
+          "label": "Stretch & strengthen"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "run",
+          "label": "19.3 km easy"
+        }
+      ]
+    },
+    {
+      "weekNumber": 3,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "label": "9.7 km easy pace"
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "cross",
+          "label": "Stretch & strengthen"
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "label": "9.7 km easy"
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "cross",
+          "label": "Stretch & strengthen"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "run",
+          "label": "32.1 km easy"
+        }
+      ]
+    },
+    {
+      "weekNumber": 2,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "pace",
+          "distanceKm": 6.4
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "cross",
+          "label": "Stretch & strengthen"
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "label": "12.9 km easy"
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "cross",
+          "label": "Stretch & strengthen"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "run",
+          "label": "19.3 km easy"
+        }
+      ]
+    },
+    {
+      "weekNumber": 1,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "label": "9.7 km easy pace"
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "cross",
+          "label": "Stretch & strengthen"
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "race",
+          "label": "Marathon"
+        }
+      ]
+    }
+  ]
+}

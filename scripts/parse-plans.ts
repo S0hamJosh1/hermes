@@ -17,24 +17,103 @@ type ParsedDayEntry = {
   type: string;
   distanceKm?: number;
   distanceMi?: number;
+  durationMinutes?: number;
   label?: string;
 };
 
 type ParsedWeek = { weekNumber: number; days: ParsedDayEntry[] };
+
+type CompactPlan = {
+  meta: {
+    id: string;
+    name: string;
+    category: string;
+    level: string;
+    lengthWeeks: number;
+    sourceFile: string;
+  };
+  weeksKm: {
+    weekNumber: number;
+    days: {
+      dayOfWeek: number;
+      type: string;
+      distanceKm?: number;
+      label?: string;
+    }[];
+  }[];
+};
 
 function parseCell(cell: string, dayIndex: number, tableUnit: "mi" | "km"): ParsedDayEntry {
   const raw = cell.replace(/\*\*/g, "").trim();
   const lower = raw.toLowerCase();
   const entry: ParsedDayEntry = { dayOfWeek: dayIndex, type: "rest" };
   if (lower === "rest") return { ...entry, type: "rest" };
-  if (lower === "cross") return { ...entry, type: "cross" };
+  if (lower === "cross" || lower === "x-train" || lower === "xtrain" || lower === "cross-training") return { ...entry, type: "cross" };
+  if (/^rest or easy run$/i.test(raw)) return { dayOfWeek: dayIndex, type: "optional_run" };
+  if (/^rest or run\/?walk$/i.test(raw)) return { dayOfWeek: dayIndex, type: "optional_run", label: raw };
+  if (/^run or cross$/i.test(raw)) return { dayOfWeek: dayIndex, type: "optional_run", label: raw };
+  if (/^stretch\s*&\s*strengthen$/i.test(raw)) return { dayOfWeek: dayIndex, type: "cross", label: raw };
   if (raw === "**Half Marathon**" || lower === "half marathon") return { ...entry, type: "race", label: "Half Marathon" };
   if (raw === "**Marathon**" || lower === "marathon") return { ...entry, type: "race", label: "Marathon" };
+  if (/^5k\s*(test|race)$/i.test(raw)) return { dayOfWeek: dayIndex, type: "race", label: raw };
+
+  const repMatch = raw.match(/^(\d+)\s*x\s*(\d+(?:\.\d+)?)$/i);
+  if (repMatch) {
+    const reps = parseInt(repMatch[1], 10);
+    const repDistanceMeters = parseFloat(repMatch[2]);
+    const totalKm = Math.round(((reps * repDistanceMeters) / 1000) * 10) / 10;
+    return { dayOfWeek: dayIndex, type: "interval", distanceKm: totalKm > 0 ? totalKm : undefined, label: raw };
+  }
+
+  const minCrossMatch = raw.match(/^(\d+)\s*min\s*(?:cross|x-?train(?:ing)?)$/i);
+  if (minCrossMatch) {
+    const mins = parseInt(minCrossMatch[1], 10);
+    return { dayOfWeek: dayIndex, type: "cross", durationMinutes: mins, label: raw };
+  }
+  const crossMinPrefixMatch = raw.match(/^(?:cross|bike)\s*:?\s*(\d+)\s*min$/i);
+  if (crossMinPrefixMatch) {
+    const mins = parseInt(crossMinPrefixMatch[1], 10);
+    return { dayOfWeek: dayIndex, type: "cross", durationMinutes: mins, label: raw };
+  }
+
+  const minWalkMatch = raw.match(/^(\d+)\s*min\s*walk$/i);
+  if (minWalkMatch) {
+    const mins = parseInt(minWalkMatch[1], 10);
+    return { dayOfWeek: dayIndex, type: "cross", durationMinutes: mins, label: raw };
+  }
+
+  const tempoMinMatch = raw.match(/^(\d+)\s*min\s*(?:tempo|trempo)$/i);
+  if (tempoMinMatch) {
+    const mins = parseInt(tempoMinMatch[1], 10);
+    return { dayOfWeek: dayIndex, type: "tempo", durationMinutes: mins, label: raw };
+  }
+
+  const minRunMatch = raw.match(/^(\d+)\s*min\s*run$/i);
+  if (minRunMatch) {
+    const mins = parseInt(minRunMatch[1], 10);
+    return { dayOfWeek: dayIndex, type: "run", durationMinutes: mins, label: raw };
+  }
+
+  const fastMiMatch = raw.match(/^(\d+(?:\.\d+)?)\s*(?:mi|m)\s*fast$/i);
+  if (fastMiMatch) {
+    const mi = parseFloat(fastMiMatch[1]);
+    return { dayOfWeek: dayIndex, type: "fast", distanceMi: mi, distanceKm: Math.round(mi * MI_TO_KM * 10) / 10 };
+  }
+  const fastKmMatch = raw.match(/^(\d+(?:\.\d+)?)\s*km\s*fast$/i);
+  if (fastKmMatch) {
+    const km = parseFloat(fastKmMatch[1]);
+    return { dayOfWeek: dayIndex, type: "fast", distanceKm: km, distanceMi: Math.round((km / MI_TO_KM) * 10) / 10 };
+  }
 
   const miRunMatch = raw.match(/^(\d+(?:\.\d+)?)\s*(?:mi|m)\s*run$/i);
   if (miRunMatch) {
     const mi = parseFloat(miRunMatch[1]);
     return { dayOfWeek: dayIndex, type: "run", distanceMi: mi, distanceKm: Math.round(mi * MI_TO_KM * 10) / 10 };
+  }
+  const miRunOrCrossMatch = raw.match(/^(\d+(?:\.\d+)?)\s*(?:mi|m)\s*run\s+or\s+cross$/i);
+  if (miRunOrCrossMatch) {
+    const mi = parseFloat(miRunOrCrossMatch[1]);
+    return { dayOfWeek: dayIndex, type: "optional_run", distanceMi: mi, distanceKm: Math.round(mi * MI_TO_KM * 10) / 10, label: raw };
   }
   const miPaceMatch = raw.match(/^(\d+(?:\.\d+)?)\s*(?:mi|m)\s*pace$/i);
   if (miPaceMatch) {
@@ -45,6 +124,11 @@ function parseCell(cell: string, dayIndex: number, tableUnit: "mi" | "km"): Pars
   if (kmRunMatch) {
     const km = parseFloat(kmRunMatch[1]);
     return { dayOfWeek: dayIndex, type: "run", distanceKm: km, distanceMi: Math.round((km / MI_TO_KM) * 10) / 10 };
+  }
+  const kmRunOrCrossMatch = raw.match(/^(\d+(?:\.\d+)?)\s*km\s*run\s+or\s+cross$/i);
+  if (kmRunOrCrossMatch) {
+    const km = parseFloat(kmRunOrCrossMatch[1]);
+    return { dayOfWeek: dayIndex, type: "optional_run", distanceKm: km, distanceMi: Math.round((km / MI_TO_KM) * 10) / 10, label: raw };
   }
   const kmPaceMatch = raw.match(/^(\d+(?:\.\d+)?)\s*km\s*pace$/i);
   if (kmPaceMatch) {
@@ -59,7 +143,7 @@ function parseCell(cell: string, dayIndex: number, tableUnit: "mi" | "km"): Pars
       return { dayOfWeek: dayIndex, type: "long_run", distanceMi: n, distanceKm: Math.round(n * MI_TO_KM * 10) / 10 };
     }
   }
-  return { ...entry, type: "run" };
+  return { ...entry, type: "run", label: raw || undefined };
 }
 
 function findTableHeader(lines: string[]): number {
@@ -202,12 +286,33 @@ function main() {
       allPlans.push(p);
     }
   }
-  fs.writeFileSync(path.join(outDir, "index.json"), JSON.stringify(allPlans.map((p) => ({ meta: p.meta, weeksCount: p.weeksKm?.length ?? 0 })), null, 2));
-  for (const p of allPlans) {
+  const compact: CompactPlan[] = allPlans.map((p) => ({
+    meta: p.meta,
+    weeksKm: (p.weeksKm ?? []).map((w: ParsedWeek) => ({
+      weekNumber: w.weekNumber,
+      days: w.days.map((d) => ({
+        dayOfWeek: d.dayOfWeek,
+        type: d.type,
+        ...(d.distanceKm != null && d.distanceKm > 0 ? { distanceKm: d.distanceKm } : {}),
+        ...(d.durationMinutes != null && d.durationMinutes > 0 ? { durationMinutes: d.durationMinutes } : {}),
+        ...(d.label ? { label: d.label } : {}),
+      })),
+    })),
+  }));
+
+  fs.writeFileSync(
+    path.join(outDir, "index.json"),
+    JSON.stringify(
+      compact.map((p) => ({ meta: p.meta, weeksCount: p.weeksKm?.length ?? 0 })),
+      null,
+      2
+    )
+  );
+  for (const p of compact) {
     const safeId = (p.meta.id as string).replace(/[^a-z0-9-]/gi, "-");
     fs.writeFileSync(path.join(outDir, `${safeId}.json`), JSON.stringify(p, null, 2));
   }
-  console.log("Parsed", allPlans.length, "plans into", outDir);
+  console.log("Parsed", compact.length, "plans into", outDir, "(compact format)");
 }
 
 main();

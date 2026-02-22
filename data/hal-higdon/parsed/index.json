@@ -1,0 +1,244 @@
+[
+  {
+    "meta": {
+      "id": "10k-intermediate",
+      "name": "10K Intermediate",
+      "category": "10K",
+      "level": "Intermediate",
+      "lengthWeeks": 8,
+      "sourceFile": "10k-training-intermediate.md"
+    },
+    "weeksCount": 8
+  },
+  {
+    "meta": {
+      "id": "10k-novice",
+      "name": "10K Novice",
+      "category": "10K",
+      "level": "Novice",
+      "lengthWeeks": 8,
+      "sourceFile": "10k-training-novice.md"
+    },
+    "weeksCount": 8
+  },
+  {
+    "meta": {
+      "id": "5k-advanced",
+      "name": "5K Advanced",
+      "category": "5K",
+      "level": "Advanced",
+      "lengthWeeks": 8,
+      "sourceFile": "5k-training-advanced.md"
+    },
+    "weeksCount": 8
+  },
+  {
+    "meta": {
+      "id": "5k-intermediate",
+      "name": "5K Intermediate",
+      "category": "5K",
+      "level": "Intermediate",
+      "lengthWeeks": 8,
+      "sourceFile": "5k-training-intermediate-2.md"
+    },
+    "weeksCount": 8
+  },
+  {
+    "meta": {
+      "id": "5k-intermediate",
+      "name": "5K Intermediate",
+      "category": "5K",
+      "level": "Intermediate",
+      "lengthWeeks": 8,
+      "sourceFile": "5k-training-intermediate.md"
+    },
+    "weeksCount": 8
+  },
+  {
+    "meta": {
+      "id": "5k-novice",
+      "name": "5K Novice",
+      "category": "5K",
+      "level": "Novice",
+      "lengthWeeks": 8,
+      "sourceFile": "5k-training-novice.md"
+    },
+    "weeksCount": 8
+  },
+  {
+    "meta": {
+      "id": "half-marathon-advanced",
+      "name": "Half Marathon Advanced",
+      "category": "Half Marathon",
+      "level": "Advanced",
+      "lengthWeeks": 12,
+      "sourceFile": "half-marathon-training-advanced.md"
+    },
+    "weeksCount": 12
+  },
+  {
+    "meta": {
+      "id": "half-marathon-half-marathon-3--hm3-",
+      "name": "Half Marathon Half Marathon 3 (HM3)",
+      "category": "Half Marathon",
+      "level": "Half Marathon 3 (HM3)",
+      "lengthWeeks": 12,
+      "sourceFile": "half-marathon-training-half-marathon-3-hm3.md"
+    },
+    "weeksCount": 12
+  },
+  {
+    "meta": {
+      "id": "half-marathon-intermediate-1",
+      "name": "Half Marathon Intermediate 1",
+      "category": "Half Marathon",
+      "level": "Intermediate 1",
+      "lengthWeeks": 12,
+      "sourceFile": "half-marathon-training-intermediate-1.md"
+    },
+    "weeksCount": 12
+  },
+  {
+    "meta": {
+      "id": "half-marathon-intermediate-2",
+      "name": "Half Marathon Intermediate 2",
+      "category": "Half Marathon",
+      "level": "Intermediate 2",
+      "lengthWeeks": 12,
+      "sourceFile": "half-marathon-training-intermediate-2.md"
+    },
+    "weeksCount": 12
+  },
+  {
+    "meta": {
+      "id": "half-marathon-novice-1",
+      "name": "Half Marathon Novice 1",
+      "category": "Half Marathon",
+      "level": "Novice 1",
+      "lengthWeeks": 12,
+      "sourceFile": "half-marathon-training-novice-1.md"
+    },
+    "weeksCount": 12
+  },
+  {
+    "meta": {
+      "id": "half-marathon-novice-2",
+      "name": "Half Marathon Novice 2",
+      "category": "Half Marathon",
+      "level": "Novice 2",
+      "lengthWeeks": 12,
+      "sourceFile": "half-marathon-training-novice-2.md"
+    },
+    "weeksCount": 12
+  },
+  {
+    "meta": {
+      "id": "marathon-advanced-1",
+      "name": "Marathon Advanced 1",
+      "category": "Marathon",
+      "level": "Advanced 1",
+      "lengthWeeks": 18,
+      "sourceFile": "marathon-training-advanced-1.md"
+    },
+    "weeksCount": 18
+  },
+  {
+    "meta": {
+      "id": "marathon-advanced-2",
+      "name": "Marathon Advanced 2",
+      "category": "Marathon",
+      "level": "Advanced 2",
+      "lengthWeeks": 18,
+      "sourceFile": "marathon-training-advanced-2.md"
+    },
+    "weeksCount": 18
+  },
+  {
+    "meta": {
+      "id": "marathon-intermediate-2",
+      "name": "Marathon Intermediate 2",
+      "category": "Marathon",
+      "level": "Intermediate 2",
+      "lengthWeeks": 18,
+      "sourceFile": "marathon-training-intermediate-2.md"
+    },
+    "weeksCount": 18
+  },
+  {
+    "meta": {
+      "id": "marathon-marathon-3",
+      "name": "Marathon Marathon 3",
+      "category": "Marathon",
+      "level": "Marathon 3",
+      "lengthWeeks": 24,
+      "sourceFile": "marathon-training-marathon-3.md"
+    },
+    "weeksCount": 24
+  },
+  {
+    "meta": {
+      "id": "marathon-novice-supreme",
+      "name": "Marathon Novice Supreme",
+      "category": "Marathon",
+      "level": "Novice Supreme",
+      "lengthWeeks": 30,
+      "sourceFile": "marathon-training-novice-supreme.md"
+    },
+    "weeksCount": 30
+  },
+  {
+    "meta": {
+      "id": "marathon-personal-best",
+      "name": "Marathon Personal Best",
+      "category": "Marathon",
+      "level": "Personal Best",
+      "lengthWeeks": 30,
+      "sourceFile": "marathon-training-personal-best.md"
+    },
+    "weeksCount": 30
+  },
+  {
+    "meta": {
+      "id": "marathon-senior",
+      "name": "Marathon Senior",
+      "category": "Marathon",
+      "level": "Senior",
+      "lengthWeeks": 8,
+      "sourceFile": "marathon-training-senior.md"
+    },
+    "weeksCount": 8
+  },
+  {
+    "meta": {
+      "id": "marathon-novice-1",
+      "name": "Marathon Novice 1",
+      "category": "Marathon",
+      "level": "Novice 1",
+      "lengthWeeks": 18,
+      "sourceFile": "plan 1 - 3.txt"
+    },
+    "weeksCount": 18
+  },
+  {
+    "meta": {
+      "id": "marathon-novice-2",
+      "name": "Marathon Novice 2",
+      "category": "Marathon",
+      "level": "Novice 2",
+      "lengthWeeks": 18,
+      "sourceFile": "plan 1 - 3.txt"
+    },
+    "weeksCount": 18
+  },
+  {
+    "meta": {
+      "id": "marathon-intermediate-1",
+      "name": "Marathon Intermediate 1",
+      "category": "Marathon",
+      "level": "Intermediate 1",
+      "lengthWeeks": 18,
+      "sourceFile": "plan 1 - 3.txt"
+    },
+    "weeksCount": 18
+  }
+]

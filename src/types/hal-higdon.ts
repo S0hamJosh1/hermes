@@ -8,6 +8,10 @@ export type HalHigdonDayType =
   | "cross"
   | "run"
   | "pace"
+  | "tempo"
+  | "interval"
+  | "fast"
+  | "optional_run"
   | "long_run"
   | "race";
 
@@ -18,6 +22,8 @@ export type ParsedDayEntry = {
   distanceKm?: number;
   /** Distance in miles (from source; 1 mi ≈ 1.60934 km) */
   distanceMi?: number;
+  /** Duration for time-based workouts (e.g., "30 min tempo") */
+  durationMinutes?: number;
   /** For races: "Half Marathon" | "Marathon" | etc. */
   label?: string;
 };

@@ -22,8 +22,9 @@ import type {
   PlannerConfig,
   StateContext,
   StateTransition,
+  GeneratedWeeklyPlan,
+  RepairedPlan,
 } from "./types";
-import type { RepairedPlan } from "./types";
 import { selectPlan, calculateCurrentWeek } from "./plan-selector";
 import { generateWeeklyPlan } from "./planner";
 import { validatePlan, type ValidatorContext } from "./validator";

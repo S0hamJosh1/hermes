@@ -1,0 +1,330 @@
+{
+  "meta": {
+    "id": "10k-novice",
+    "name": "10K Novice",
+    "category": "10K",
+    "level": "Novice",
+    "lengthWeeks": 8,
+    "sourceFile": "10k-training-novice.md"
+  },
+  "weeksKm": [
+    {
+      "weekNumber": 1,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 4
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "cross",
+          "durationMinutes": 30,
+          "label": "30 min cross"
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 3.2
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "cross",
+          "durationMinutes": 40,
+          "label": "40 min cross"
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "run",
+          "distanceKm": 4.8
+        }
+      ]
+    },
+    {
+      "weekNumber": 2,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 4
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "cross",
+          "durationMinutes": 30,
+          "label": "30 min cross"
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 3.2
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "cross",
+          "durationMinutes": 40,
+          "label": "40 min cross"
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "run",
+          "distanceKm": 5.9
+        }
+      ]
+    },
+    {
+      "weekNumber": 3,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 4
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "cross",
+          "durationMinutes": 35,
+          "label": "35 min cross"
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 3.2
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "cross",
+          "durationMinutes": 50,
+          "label": "50 min cross"
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "run",
+          "distanceKm": 6.4
+        }
+      ]
+    },
+    {
+      "weekNumber": 4,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "cross",
+          "durationMinutes": 35,
+          "label": "35 min cross"
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 3.2
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "cross",
+          "durationMinutes": 50,
+          "label": "50 min cross"
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "run",
+          "distanceKm": 6.4
+        }
+      ]
+    },
+    {
+      "weekNumber": 5,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "cross",
+          "durationMinutes": 40,
+          "label": "40 min cross"
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 3.2
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "cross",
+          "durationMinutes": 60,
+          "label": "60 min cross"
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "run",
+          "distanceKm": 7.3
+        }
+      ]
+    },
+    {
+      "weekNumber": 6,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "cross",
+          "durationMinutes": 40,
+          "label": "40 min cross"
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 3.2
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "cross",
+          "durationMinutes": 60,
+          "label": "60 min cross"
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "run",
+          "distanceKm": 8.1
+        }
+      ]
+    },
+    {
+      "weekNumber": 7,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "cross",
+          "durationMinutes": 45,
+          "label": "45 min cross"
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 3.2
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "cross",
+          "durationMinutes": 60,
+          "label": "60 min cross"
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "run",
+          "distanceKm": 8.9
+        }
+      ]
+    },
+    {
+      "weekNumber": 8,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "cross",
+          "durationMinutes": 30,
+          "label": "30 min cross"
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 3.2
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "run",
+          "label": "10K Run"
+        }
+      ]
+    }
+  ]
+}

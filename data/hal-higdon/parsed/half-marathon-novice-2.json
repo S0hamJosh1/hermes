@@ -1,0 +1,478 @@
+{
+  "meta": {
+    "id": "half-marathon-novice-2",
+    "name": "Half Marathon Novice 2",
+    "category": "Half Marathon",
+    "level": "Novice 2",
+    "lengthWeeks": 12,
+    "sourceFile": "half-marathon-training-novice-2.md"
+  },
+  "weeksKm": [
+    {
+      "weekNumber": 1,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "run",
+          "distanceKm": 6.4
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "cross",
+          "durationMinutes": 60,
+          "label": "60 min cross"
+        }
+      ]
+    },
+    {
+      "weekNumber": 2,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "pace",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "run",
+          "distanceKm": 8.1
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "cross",
+          "durationMinutes": 60,
+          "label": "60 min cross"
+        }
+      ]
+    },
+    {
+      "weekNumber": 3,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "distanceKm": 6.4
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "run",
+          "distanceKm": 9.7
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "cross",
+          "durationMinutes": 60,
+          "label": "60 min cross"
+        }
+      ]
+    },
+    {
+      "weekNumber": 4,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "pace",
+          "distanceKm": 6.4
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "run",
+          "distanceKm": 11.3
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "cross",
+          "durationMinutes": 60,
+          "label": "60 min cross"
+        }
+      ]
+    },
+    {
+      "weekNumber": 5,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "distanceKm": 6.4
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "run",
+          "distanceKm": 12.9
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "cross",
+          "durationMinutes": 60,
+          "label": "60 min cross"
+        }
+      ]
+    },
+    {
+      "weekNumber": 6,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "pace",
+          "distanceKm": 6.4
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "run",
+          "label": "5-K Race"
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "cross",
+          "durationMinutes": 60,
+          "label": "60 min cross"
+        }
+      ]
+    },
+    {
+      "weekNumber": 7,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "distanceKm": 8.1
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "run",
+          "distanceKm": 14.5
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "cross",
+          "durationMinutes": 60,
+          "label": "60 min cross"
+        }
+      ]
+    },
+    {
+      "weekNumber": 8,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "pace",
+          "distanceKm": 8.1
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "run",
+          "distanceKm": 16.1
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "cross",
+          "durationMinutes": 60,
+          "label": "60 min cross"
+        }
+      ]
+    },
+    {
+      "weekNumber": 9,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "distanceKm": 8.1
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "run",
+          "label": "10-K Race"
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "cross",
+          "durationMinutes": 60,
+          "label": "60 min cross"
+        }
+      ]
+    },
+    {
+      "weekNumber": 10,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "pace",
+          "distanceKm": 8.1
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "run",
+          "distanceKm": 17.7
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "cross",
+          "durationMinutes": 60,
+          "label": "60 min cross"
+        }
+      ]
+    },
+    {
+      "weekNumber": 11,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "distanceKm": 8.1
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "run",
+          "distanceKm": 19.3
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "cross",
+          "durationMinutes": 60,
+          "label": "60 min cross"
+        }
+      ]
+    },
+    {
+      "weekNumber": 12,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "pace",
+          "distanceKm": 3.2
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 3.2
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "race",
+          "label": "Half Marathon"
+        }
+      ]
+    }
+  ]
+}

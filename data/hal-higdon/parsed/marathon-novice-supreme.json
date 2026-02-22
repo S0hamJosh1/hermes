@@ -1,0 +1,1146 @@
+{
+  "meta": {
+    "id": "marathon-novice-supreme",
+    "name": "Marathon Novice Supreme",
+    "category": "Marathon",
+    "level": "Novice Supreme",
+    "lengthWeeks": 30,
+    "sourceFile": "marathon-training-novice-supreme.md"
+  },
+  "weeksKm": [
+    {
+      "weekNumber": 1,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 2.4
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 2.4
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "cross",
+          "durationMinutes": 30,
+          "label": "30 min walk"
+        }
+      ]
+    },
+    {
+      "weekNumber": 2,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 2.4
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 2.4
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "run",
+          "distanceKm": 5.6
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "cross",
+          "durationMinutes": 35,
+          "label": "35 min walk"
+        }
+      ]
+    },
+    {
+      "weekNumber": 3,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 2.4
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 2.4
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "cross",
+          "durationMinutes": 40,
+          "label": "40 min walk"
+        }
+      ]
+    },
+    {
+      "weekNumber": 4,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 3.2
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 2.4
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "run",
+          "distanceKm": 6.4
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "cross",
+          "durationMinutes": 30,
+          "label": "30 min walk"
+        }
+      ]
+    },
+    {
+      "weekNumber": 5,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 3.2
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 3.2
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "cross",
+          "durationMinutes": 45,
+          "label": "45 min walk"
+        }
+      ]
+    },
+    {
+      "weekNumber": 6,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 3.2
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 3.2
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "run",
+          "distanceKm": 7.2
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "cross",
+          "durationMinutes": 30,
+          "label": "30 min walk"
+        }
+      ]
+    },
+    {
+      "weekNumber": 7,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 3.2
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 3.2
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "cross",
+          "durationMinutes": 50,
+          "label": "50 min walk"
+        }
+      ]
+    },
+    {
+      "weekNumber": 8,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 3.2
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 3.2
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "run",
+          "distanceKm": 8.1
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "cross",
+          "durationMinutes": 30,
+          "label": "30 min walk"
+        }
+      ]
+    },
+    {
+      "weekNumber": 9,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 3.2
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 4
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "cross",
+          "durationMinutes": 55,
+          "label": "55 min walk"
+        }
+      ]
+    },
+    {
+      "weekNumber": 10,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 3.2
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 4
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "run",
+          "distanceKm": 8.8
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "cross",
+          "durationMinutes": 30,
+          "label": "30 min walk"
+        }
+      ]
+    },
+    {
+      "weekNumber": 11,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "cross",
+          "durationMinutes": 60,
+          "label": "60 min walk"
+        }
+      ]
+    },
+    {
+      "weekNumber": 12,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "run",
+          "distanceKm": 9.7
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "cross",
+          "durationMinutes": 30,
+          "label": "30 min walk"
+        }
+      ]
+    },
+    {
+      "weekNumber": 13,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "run",
+          "distanceKm": 9.7
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "cross"
+        }
+      ]
+    },
+    {
+      "weekNumber": 14,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "run",
+          "distanceKm": 11.3
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "cross"
+        }
+      ]
+    },
+    {
+      "weekNumber": 15,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "distanceKm": 6.4
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "run",
+          "distanceKm": 8.1
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "cross"
+        }
+      ]
+    },
+    {
+      "weekNumber": 16,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "distanceKm": 6.4
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "run",
+          "distanceKm": 14.5
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "cross"
+        }
+      ]
+    },
+    {
+      "weekNumber": 17,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "distanceKm": 8.1
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "run",
+          "distanceKm": 16.1
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "cross"
+        }
+      ]
+    },
+    {
+      "weekNumber": 18,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "distanceKm": 8.1
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "run",
+          "distanceKm": 11.3
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "cross"
+        }
+      ]
+    },
+    {
+      "weekNumber": 19,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "distanceKm": 9.7
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "run",
+          "distanceKm": 19.3
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "cross"
+        }
+      ]
+    },
+    {
+      "weekNumber": 20,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "distanceKm": 9.7
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "run",
+          "distanceKm": 20.9
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "cross"
+        }
+      ]
+    },
+    {
+      "weekNumber": 21,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "distanceKm": 11.3
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 6.4
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "run",
+          "distanceKm": 16.1
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "cross"
+        }
+      ]
+    },
+    {
+      "weekNumber": 22,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "distanceKm": 11.3
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 6.4
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "run",
+          "distanceKm": 24.1
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "cross"
+        }
+      ]
+    },
+    {
+      "weekNumber": 23,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 6.4
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "distanceKm": 12.9
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 6.4
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "run",
+          "distanceKm": 25.8
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "cross"
+        }
+      ]
+    },
+    {
+      "weekNumber": 24,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 6.4
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "distanceKm": 12.9
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 8.1
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "run",
+          "distanceKm": 19.3
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "cross"
+        }
+      ]
+    },
+    {
+      "weekNumber": 25,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 6.4
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "distanceKm": 14.5
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 8.1
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "run",
+          "distanceKm": 29
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "cross"
+        }
+      ]
+    },
+    {
+      "weekNumber": 26,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 8.1
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "distanceKm": 14.5
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 8.1
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "run",
+          "distanceKm": 22.5
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "cross"
+        }
+      ]
+    },
+    {
+      "weekNumber": 27,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 8.1
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "distanceKm": 16.1
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 8.1
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "run",
+          "distanceKm": 32.1
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "cross"
+        }
+      ]
+    },
+    {
+      "weekNumber": 28,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 8.1
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "distanceKm": 12.9
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 6.4
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "run",
+          "distanceKm": 19.3
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "cross"
+        }
+      ]
+    },
+    {
+      "weekNumber": 29,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 6.4
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "distanceKm": 9.7
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "run",
+          "distanceKm": 12.9
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "cross"
+        }
+      ]
+    },
+    {
+      "weekNumber": 30,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "distanceKm": 6.4
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 3.2
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "race",
+          "label": "Marathon"
+        }
+      ]
+    }
+  ]
+}

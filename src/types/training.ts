@@ -1,6 +1,6 @@
 // Training domain types
 
-export type Distance = '4K' | '10K' | 'Half Marathon' | 'Marathon';
+export type Distance = '4K' | '5K' | '10K' | 'Half Marathon' | 'Marathon';
 
 export type WorkoutType =
   | 'Easy Run'

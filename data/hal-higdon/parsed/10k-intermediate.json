@@ -1,0 +1,328 @@
+{
+  "meta": {
+    "id": "10k-intermediate",
+    "name": "10K Intermediate",
+    "category": "10K",
+    "level": "Intermediate",
+    "lengthWeeks": 8,
+    "sourceFile": "10k-training-intermediate.md"
+  },
+  "weeksKm": [
+    {
+      "weekNumber": 1,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "label": "35 min tempo run"
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "cross",
+          "durationMinutes": 60,
+          "label": "60 min cross"
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "run",
+          "distanceKm": 6.4
+        }
+      ]
+    },
+    {
+      "weekNumber": 2,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 5.9
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "label": "8 x 400 5K pace"
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 6.4
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "cross",
+          "durationMinutes": 60,
+          "label": "60 min cross"
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "run",
+          "distanceKm": 8.1
+        }
+      ]
+    },
+    {
+      "weekNumber": 3,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 6.4
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "label": "40 min tempo run"
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "cross",
+          "durationMinutes": 60,
+          "label": "60 min cross"
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "run",
+          "distanceKm": 9.7
+        }
+      ]
+    },
+    {
+      "weekNumber": 4,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 7.3
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "label": "9 x 400 5K pace"
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 6.4
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "race",
+          "label": "5K Race"
+        }
+      ]
+    },
+    {
+      "weekNumber": 5,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 8.1
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "label": "45 min tempo run"
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "cross",
+          "durationMinutes": 60,
+          "label": "60 min cross"
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "run",
+          "distanceKm": 9.7
+        }
+      ]
+    },
+    {
+      "weekNumber": 6,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 8.9
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "label": "10 x 400 5K pace"
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 6.4
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "cross",
+          "durationMinutes": 60,
+          "label": "60 min cross"
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "run",
+          "distanceKm": 11.3
+        }
+      ]
+    },
+    {
+      "weekNumber": 7,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 9.7
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "label": "50 min tempo run"
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "distanceKm": 6.4
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "cross",
+          "durationMinutes": 60,
+          "label": "60 min cross"
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "run",
+          "distanceKm": 12.9
+        }
+      ]
+    },
+    {
+      "weekNumber": 8,
+      "days": [
+        {
+          "dayOfWeek": 0,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 1,
+          "type": "run",
+          "distanceKm": 4.8
+        },
+        {
+          "dayOfWeek": 2,
+          "type": "run",
+          "label": "5 x 400 5K pace"
+        },
+        {
+          "dayOfWeek": 3,
+          "type": "run",
+          "label": "1.6-4.8 km run"
+        },
+        {
+          "dayOfWeek": 4,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 5,
+          "type": "rest"
+        },
+        {
+          "dayOfWeek": 6,
+          "type": "run",
+          "label": "10K Race"
+        }
+      ]
+    }
+  ]
+}

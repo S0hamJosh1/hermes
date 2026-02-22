@@ -20,7 +20,7 @@ export type RunnerProfile = {
 };
 
 export type RunnerGoal = {
-  distance: "4K" | "10K" | "Half Marathon" | "Marathon";
+  distance: "4K" | "5K" | "10K" | "Half Marathon" | "Marathon";
   targetDate: Date;
   targetTimeSeconds?: number;
 };
