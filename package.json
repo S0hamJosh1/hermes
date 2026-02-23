@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "prisma generate && next build",
     "start": "next start",
+    "test": "tsx --test \"src/**/*.test.ts\"",
     "lint": "eslint",
     "clean-plans": "tsx scripts/clean-hal-higdon.ts",
     "parse-plans": "tsx scripts/parse-plans.ts",

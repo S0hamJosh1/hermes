@@ -9,6 +9,7 @@ import { intentParsingPrompt } from "./prompts";
 
 export type IntentType =
     | "volume_change"
+    | "plan_level_change"
     | "skip_workout"
     | "reschedule"
     | "modify_workout"
@@ -35,6 +36,7 @@ export type RunnerContext = {
 
 const VALID_INTENTS: IntentType[] = [
     "volume_change",
+    "plan_level_change",
     "skip_workout",
     "reschedule",
     "modify_workout",
@@ -123,16 +125,32 @@ export async function parseIntent(
 /**
  * Simple keyword-based fallback when SLM is unavailable or returns bad JSON.
  */
-function detectIntentFallback(message: string): ParsedIntent {
+export function detectIntentFallback(message: string): ParsedIntent {
     const lower = message.toLowerCase();
+    const referencesPlanLevel = /(?:base plan|plan level|difficulty level|novice|intermediate|advanced)/i.test(lower);
+    const requestsPlanSwitch = /(?:switch|change|move|upgrade|downgrade|set).*(?:base plan|plan level|difficulty)/i.test(lower);
+    const wantsHarder = /(?:harder|upgrade|higher|intermediate|advanced|too easy|challenge me|push me)/i.test(lower);
+    const wantsEasier = /(?:easier|downgrade|lower|novice|too hard)/i.test(lower);
 
     if (
-        /(?:too easy|very easy|make.*harder|harder plan|challenge me|push me|increase intensity)/i.test(lower)
+        /(?:more tempo|more intervals|harder workouts|harder sessions|higher difficulty|harder plan|easier plan|easier workouts|too easy|too hard|make.*harder|make.*easier|challenge me|push me)/i.test(lower) ||
+        referencesPlanLevel ||
+        requestsPlanSwitch
     ) {
+        const direction = wantsEasier && !wantsHarder
+            ? "decrease"
+            : "increase";
         return {
-            type: "volume_change",
-            params: { direction: "increase", amount: 0.12, reason: "too_easy_feedback" },
-            confidence: 0.7,
+            type: "plan_level_change",
+            params: {
+                direction,
+                changeType: /(?:tempo|interval|workout|session|difficulty)/i.test(lower)
+                    ? "workout_difficulty"
+                    : referencesPlanLevel || requestsPlanSwitch
+                        ? "workout_difficulty"
+                        : "unspecified",
+            },
+            confidence: 0.72,
         };
     }
 

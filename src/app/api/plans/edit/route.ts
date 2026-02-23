@@ -3,7 +3,7 @@ import { getSessionFromRequest } from "@/lib/auth/session";
 import { applyPlanEdit } from "@/lib/plans/edit";
 
 type EditBody = {
-    action?: "volume_change" | "skip_workout" | "reschedule";
+    action?: "volume_change" | "skip_workout" | "reschedule" | "base_plan_level_change";
     params?: Record<string, unknown>;
     reason?: string;
 };

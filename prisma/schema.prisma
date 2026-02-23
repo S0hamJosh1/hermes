@@ -58,6 +58,9 @@ model RunnerProfile {
 
   currentState        String  @default("Stable") @map("current_state") @db.VarChar(30)
   overrideModeEnabled Boolean @default(false) @map("override_mode_enabled")
+  planLevelOffset     Int     @default(0) @map("plan_level_offset")
+  planLevelMode       String  @default("auto") @map("plan_level_mode") @db.VarChar(20)
+  planLevelUpdatedAt  DateTime? @map("plan_level_updated_at")
 
   primaryGoalDistance String?   @map("primary_goal_distance") @db.VarChar(20)
   primaryGoalDate     DateTime? @map("primary_goal_date") @db.Date

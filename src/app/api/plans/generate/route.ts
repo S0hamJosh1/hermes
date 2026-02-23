@@ -157,6 +157,9 @@ function mapProfileToAlgorithm(
     currentState: overrides?.currentState ?? (profile.currentState as AlgoRunnerProfile["currentState"]),
     overrideModeEnabled: overrides?.overrideModeEnabled ?? profile.overrideModeEnabled,
     bootcampCompleted: overrides?.bootcampCompleted ?? profile.bootcampCompleted,
+    planLevelOffset: overrides?.planLevelOffset ?? profile.planLevelOffset,
+    planLevelMode:
+      overrides?.planLevelMode ?? (profile.planLevelMode as AlgoRunnerProfile["planLevelMode"] ?? "auto"),
   };
 }
 
@@ -387,6 +390,7 @@ export async function POST(req: NextRequest) {
           triggerData: {
             selectedPlanId: result.selectedPlanId,
             weekNumber: result.weekNumber,
+            selectorDebug: result.selectorDebug,
           },
           volumeChangePercentage: result.plan.rampPercentage,
           adaptationRationale: "Automatic transition from weekly pipeline generation.",
@@ -409,6 +413,7 @@ export async function POST(req: NextRequest) {
       repairsApplied: result.repairs.length,
       softViolations: result.softViolations.length,
       workouts: savedPlan.workouts.length,
+      selectorDebug: result.selectorDebug,
     });
   } catch (error) {
     console.error("POST /api/plans/generate failed:", error);

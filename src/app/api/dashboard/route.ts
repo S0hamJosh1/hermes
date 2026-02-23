@@ -33,6 +33,8 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
                     durabilityScore: true,
                     consistencyScore: true,
                     riskLevel: true,
+                    planLevelOffset: true,
+                    planLevelMode: true,
                     primaryGoalDistance: true,
                     primaryGoalDate: true,
                     goalTimeSeconds: true,

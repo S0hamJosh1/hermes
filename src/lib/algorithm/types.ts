@@ -17,6 +17,10 @@ export type RunnerProfile = {
   currentState: RunnerState;
   overrideModeEnabled: boolean;
   bootcampCompleted: boolean;
+  // Persistent user preference: negative=easier, positive=harder.
+  planLevelOffset?: number;
+  // "auto" follows algorithm only, "user_override" applies offset in selector.
+  planLevelMode?: "auto" | "user_override";
 };
 
 export type RunnerGoal = {

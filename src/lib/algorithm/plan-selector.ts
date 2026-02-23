@@ -15,6 +15,16 @@ type PlanCandidate = {
   score: number;
 };
 
+export type PlanSelectionDebug = {
+  idealRank: number;
+  effectiveIdealRank: number;
+  benchmarkRank: number | null;
+  appliedLevelOffset: number;
+  selectedPlanLevel: string;
+  selectedPlanRank: number;
+  candidateCount: number;
+};
+
 type PlanStructure = {
   avgRunDays: number;
   avgCrossDays: number;
@@ -202,6 +212,17 @@ function estimateIdealRank(profile: RunnerProfile, goal: RunnerGoal): number {
   return rank;
 }
 
+function clampRank(rank: number): number {
+  return Math.max(0, Math.min(rank, LEVEL_ORDER.length - 1));
+}
+
+function resolveLevelOffset(profile: RunnerProfile): number {
+  if (profile.planLevelMode !== "user_override") return 0;
+  const raw = Number(profile.planLevelOffset ?? 0);
+  if (!Number.isFinite(raw)) return 0;
+  return Math.trunc(raw);
+}
+
 /**
  * Calculate average weekly volume (km) of a plan.
  */
@@ -220,20 +241,38 @@ function planAverageVolume(plan: HalHigdonPlan): number {
 /**
  * Select the best Hal Higdon plan for this runner and goal.
  */
-export function selectPlan(
+export function selectPlanWithDebug(
   plans: HalHigdonPlan[],
   profile: RunnerProfile,
   goal: RunnerGoal
-): HalHigdonPlan | null {
+): { plan: HalHigdonPlan | null; debug: PlanSelectionDebug | null } {
   const targetCategory = CATEGORY_MAP[goal.distance] ?? goal.distance;
   const candidates = plans.filter(
     (p) => p.meta.category.toLowerCase() === targetCategory.toLowerCase()
   );
-  if (candidates.length === 0) return null;
-  if (candidates.length === 1) return candidates[0];
+  if (candidates.length === 0) return { plan: null, debug: null };
 
   const idealRank = estimateIdealRank(profile, goal);
+  const appliedLevelOffset = resolveLevelOffset(profile);
+  const effectiveIdealRank = clampRank(idealRank + appliedLevelOffset);
   const benchmarkRank = benchmarkRankForGoal(goal);
+
+  if (candidates.length === 1) {
+    const only = candidates[0];
+    return {
+      plan: only,
+      debug: {
+        idealRank,
+        effectiveIdealRank,
+        benchmarkRank,
+        appliedLevelOffset,
+        selectedPlanLevel: only.meta.level,
+        selectedPlanRank: getLevelRank(only.meta.level),
+        candidateCount: 1,
+      },
+    };
+  }
+
 
   // Prefer plans that satisfy benchmark intent:
   // - ambitious goals: enforce a minimum level
@@ -250,7 +289,7 @@ export function selectPlan(
 
   const scored: PlanCandidate[] = selectionPool.map((plan) => {
     const planRank = getLevelRank(plan.meta.level);
-    const rankDiff = Math.abs(planRank - idealRank);
+    const rankDiff = Math.abs(planRank - effectiveIdealRank);
     const avgVolume = planAverageVolume(plan);
     const volumeDiff = Math.abs(avgVolume - profile.weeklyCapacityKm);
     const benchmarkDiff = benchmarkRank == null ? 0 : Math.abs(planRank - benchmarkRank);
@@ -284,12 +323,45 @@ export function selectPlan(
 
   if (profile.riskLevel === "high") {
     const conservative = ordered.find(
-      (c) => getLevelRank(c.plan.meta.level) <= idealRank
+      (c) => getLevelRank(c.plan.meta.level) <= effectiveIdealRank
     );
-    if (conservative) return conservative.plan;
+    if (conservative) {
+      return {
+        plan: conservative.plan,
+        debug: {
+          idealRank,
+          effectiveIdealRank,
+          benchmarkRank,
+          appliedLevelOffset,
+          selectedPlanLevel: conservative.plan.meta.level,
+          selectedPlanRank: getLevelRank(conservative.plan.meta.level),
+          candidateCount: selectionPool.length,
+        },
+      };
+    }
   }
 
-  return ordered[0].plan;
+  const selected = ordered[0].plan;
+  return {
+    plan: selected,
+    debug: {
+      idealRank,
+      effectiveIdealRank,
+      benchmarkRank,
+      appliedLevelOffset,
+      selectedPlanLevel: selected.meta.level,
+      selectedPlanRank: getLevelRank(selected.meta.level),
+      candidateCount: selectionPool.length,
+    },
+  };
+}
+
+export function selectPlan(
+  plans: HalHigdonPlan[],
+  profile: RunnerProfile,
+  goal: RunnerGoal
+): HalHigdonPlan | null {
+  return selectPlanWithDebug(plans, profile, goal).plan;
 }
 
 /**

@@ -25,7 +25,7 @@ import type {
   GeneratedWeeklyPlan,
   RepairedPlan,
 } from "./types";
-import { selectPlan, calculateCurrentWeek } from "./plan-selector";
+import { selectPlanWithDebug, calculateCurrentWeek } from "./plan-selector";
 import { generateWeeklyPlan } from "./planner";
 import { validatePlan, type ValidatorContext } from "./validator";
 import { repairPlan } from "./repair";
@@ -57,6 +57,15 @@ export type PipelineResult = {
   repairs: RepairedPlan["repairs"];
   softViolations: RepairedPlan["remainingViolations"];
   wasRepaired: boolean;
+  selectorDebug: {
+    idealRank: number;
+    effectiveIdealRank: number;
+    benchmarkRank: number | null;
+    appliedLevelOffset: number;
+    selectedPlanLevel: string;
+    selectedPlanRank: number;
+    candidateCount: number;
+  } | null;
 };
 
 // --- Pipeline execution ---
@@ -72,7 +81,8 @@ export function runWeeklyPipeline(input: PipelineInput): PipelineResult {
   };
 
   // Step 1: Evaluate state machine
-  const selectedPlan = selectPlan(input.availablePlans, input.profile, input.goal);
+  const selection = selectPlanWithDebug(input.availablePlans, input.profile, input.goal);
+  const selectedPlan = selection.plan;
   if (!selectedPlan) {
     throw new Error(`No plan found for goal: ${input.goal.distance}`);
   }
@@ -148,5 +158,6 @@ export function runWeeklyPipeline(input: PipelineInput): PipelineResult {
     repairs: finalResult.repairs,
     softViolations: finalResult.remainingViolations,
     wasRepaired: finalResult.repairs.length > 0,
+    selectorDebug: selection.debug,
   };
 }

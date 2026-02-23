@@ -25,6 +25,8 @@ type ProfileData = {
     durabilityScore: number;
     consistencyScore: number;
     riskLevel: string;
+    planLevelOffset: number;
+    planLevelMode: "auto" | "user_override";
     primaryGoalDistance: string | null;
     primaryGoalDate: string | null;
     goalTimeSeconds: number | null;
@@ -92,6 +94,30 @@ function formatTime(seconds: number): string {
     const secs = seconds % 60;
     if (hrs > 0) return `${hrs}:${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
     return `${mins}:${String(secs).padStart(2, "0")}`;
+}
+
+function planPreferenceBadge(profile: ProfileData): {
+    label: string;
+    className: string;
+} {
+    if (profile.planLevelMode !== "user_override" || profile.planLevelOffset === 0) {
+        return {
+            label: "Plan: Auto",
+            className: "bg-white/10 text-white/70",
+        };
+    }
+
+    if (profile.planLevelOffset > 0) {
+        return {
+            label: `Plan: Harder (+${profile.planLevelOffset})`,
+            className: "bg-orange-500/20 text-orange-300",
+        };
+    }
+
+    return {
+        label: `Plan: Easier (${profile.planLevelOffset})`,
+        className: "bg-sky-500/20 text-sky-300",
+    };
 }
 
 export default function Dashboard() {
@@ -164,6 +190,7 @@ export default function Dashboard() {
     const health = dashData?.health;
     const compliance = dashData?.compliance;
     const performance = dashData?.performance;
+    const preference = profile ? planPreferenceBadge(profile) : null;
 
     return (
         <main className="min-h-screen bg-black text-white flex flex-col items-center px-6 py-10">
@@ -210,16 +237,23 @@ export default function Dashboard() {
                                 <div className={`w-2.5 h-2.5 rounded-full ${STATE_COLORS[profile.currentState] ?? "bg-white/40"}`} />
                                 <span className="text-sm font-medium">{profile.currentState}</span>
                             </div>
-                            {profile.riskLevel && (
-                                <span className={`text-xs px-2 py-0.5 rounded-full ${profile.riskLevel === "low"
-                                    ? "bg-green-500/20 text-green-400"
-                                    : profile.riskLevel === "high"
-                                        ? "bg-red-500/20 text-red-400"
-                                        : "bg-yellow-500/20 text-yellow-400"
-                                    }`}>
-                                    {profile.riskLevel} risk
-                                </span>
-                            )}
+                            <div className="flex items-center gap-2">
+                                {preference && (
+                                    <span className={`text-xs px-2 py-0.5 rounded-full ${preference.className}`}>
+                                        {preference.label}
+                                    </span>
+                                )}
+                                {profile.riskLevel && (
+                                    <span className={`text-xs px-2 py-0.5 rounded-full ${profile.riskLevel === "low"
+                                        ? "bg-green-500/20 text-green-400"
+                                        : profile.riskLevel === "high"
+                                            ? "bg-red-500/20 text-red-400"
+                                            : "bg-yellow-500/20 text-yellow-400"
+                                        }`}>
+                                        {profile.riskLevel} risk
+                                    </span>
+                                )}
+                            </div>
                         </div>
 
                         {/* Metrics grid */}

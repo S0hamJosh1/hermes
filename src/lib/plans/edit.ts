@@ -1,6 +1,11 @@
 import { prisma } from "@/lib/db/client";
+import { clampOffset, difficultyLabel } from "@/lib/plans/level-preference";
 
-type PlanEditAction = "volume_change" | "skip_workout" | "reschedule";
+type PlanEditAction =
+    | "volume_change"
+    | "skip_workout"
+    | "reschedule"
+    | "base_plan_level_change";
 
 export type PlanEditInput = {
     userId: string;
@@ -254,9 +259,51 @@ async function applyReschedule(input: PlanEditInput): Promise<PlanEditResult> {
     };
 }
 
+async function applyBasePlanLevelChange(input: PlanEditInput): Promise<PlanEditResult> {
+    const profile = await prisma.runnerProfile.findUnique({
+        where: { userId: input.userId },
+        select: { userId: true, planLevelOffset: true },
+    });
+    if (!profile) {
+        return { ok: false, message: "No runner profile found for this user.", changedWorkouts: 0 };
+    }
+
+    const direction = String(input.params?.direction ?? "increase").toLowerCase();
+    const delta = direction === "decrease" ? -1 : 1;
+    const currentOffset = profile.planLevelOffset ?? 0;
+    const nextOffset = clampOffset(currentOffset + delta);
+
+    if (nextOffset === currentOffset) {
+        return {
+            ok: true,
+            message:
+                direction === "decrease"
+                    ? "Base-plan difficulty is already at the easiest allowed setting."
+                    : "Base-plan difficulty is already at the hardest allowed setting.",
+            changedWorkouts: 0,
+        };
+    }
+
+    await prisma.runnerProfile.update({
+        where: { userId: input.userId },
+        data: {
+            planLevelOffset: nextOffset,
+            planLevelMode: "user_override",
+            planLevelUpdatedAt: new Date(),
+        },
+    });
+
+    return {
+        ok: true,
+        changedWorkouts: 0,
+        message: `Updated base-plan preference one step ${delta > 0 ? "harder" : "easier"} (${difficultyLabel(currentOffset)} -> ${difficultyLabel(nextOffset)}). Regenerate your plan to apply it.`,
+    };
+}
+
 export async function applyPlanEdit(input: PlanEditInput): Promise<PlanEditResult> {
     if (input.action === "volume_change") return applyVolumeChange(input);
     if (input.action === "skip_workout") return applySkipWorkout(input);
     if (input.action === "reschedule") return applyReschedule(input);
+    if (input.action === "base_plan_level_change") return applyBasePlanLevelChange(input);
     return { ok: false, message: "Unsupported edit action.", changedWorkouts: 0 };
 }

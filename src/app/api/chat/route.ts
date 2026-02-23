@@ -103,6 +103,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     let wasRateLimited = false;
     const supportsDirectEdit =
         intent.type === "volume_change" ||
+        intent.type === "plan_level_change" ||
         intent.type === "skip_workout" ||
         intent.type === "reschedule" ||
         intent.type === "modify_workout";
@@ -111,6 +112,70 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         const mapping = mapResponseToAction(userMessage);
         assistantMessage = mapping.description;
         intentApplied = true;
+    } else if (intent.type === "plan_level_change") {
+        const direction = String(intent.params?.direction ?? "increase").toLowerCase();
+        const normalizedDirection = direction === "decrease" ? "decrease" : "increase";
+        const changeType = String(intent.params?.changeType ?? "unspecified").toLowerCase();
+
+        if (
+            changeType !== "load" &&
+            changeType !== "workout_difficulty" &&
+            changeType !== "both"
+        ) {
+            assistantMessage =
+                "Do you want more training load (volume), harder workout types (base plan difficulty), or both?";
+        } else if (changeType === "load") {
+            const edit = await applyPlanEdit({
+                userId,
+                action: "volume_change",
+                params: {
+                    direction: normalizedDirection,
+                    amount: 0.1,
+                },
+                reason: "chat:plan_level_change_load",
+            });
+            assistantMessage = edit.ok
+                ? `${edit.message} If you also want tougher workout types (not just more volume), ask for a harder base plan.`
+                : `I couldn't adjust load yet: ${edit.message}`;
+            intentApplied = edit.ok;
+        } else if (changeType === "workout_difficulty") {
+            const edit = await applyPlanEdit({
+                userId,
+                action: "base_plan_level_change",
+                params: { direction: normalizedDirection },
+                reason: "chat:plan_level_change_difficulty",
+            });
+            assistantMessage = edit.ok
+                ? `${edit.message} This changes future plan selection (novice/intermediate/advanced fit), not just this week's distances.`
+                : `I couldn't change base-plan difficulty yet: ${edit.message}`;
+            intentApplied = edit.ok;
+        } else {
+            const levelEdit = await applyPlanEdit({
+                userId,
+                action: "base_plan_level_change",
+                params: { direction: normalizedDirection },
+                reason: "chat:plan_level_change_both_level",
+            });
+            const volumeEdit = await applyPlanEdit({
+                userId,
+                action: "volume_change",
+                params: {
+                    direction: normalizedDirection,
+                    amount: 0.1,
+                },
+                reason: "chat:plan_level_change_both_volume",
+            });
+            intentApplied = levelEdit.ok || volumeEdit.ok;
+            if (levelEdit.ok && volumeEdit.ok) {
+                assistantMessage = `${levelEdit.message} ${volumeEdit.message}`;
+            } else if (levelEdit.ok) {
+                assistantMessage = `${levelEdit.message} I couldn't adjust volume: ${volumeEdit.message}`;
+            } else if (volumeEdit.ok) {
+                assistantMessage = `${volumeEdit.message} I couldn't update base-plan difficulty: ${levelEdit.message}`;
+            } else {
+                assistantMessage = `I couldn't apply those changes yet: ${levelEdit.message}; ${volumeEdit.message}`;
+            }
+        }
     } else if (
         intent.type !== "ask_question" &&
         intent.type !== "unknown" &&
@@ -325,6 +390,12 @@ function describeIntentAction(
             return dir === "increase"
                 ? `Got it — I'll pass a ${amt}% volume increase request to the algorithm. It'll validate this against your safety limits (current capacity: ${context.weeklyCapacityKm} km) and apply it to your next plan.`
                 : `Understood — requesting a ${amt}% volume decrease. Your next plan will be lighter.`;
+        }
+        case "plan_level_change": {
+            const direction = String(params.direction ?? "increase");
+            return direction === "decrease"
+                ? "Understood — we'll shift your base plan one step easier and keep it there until you change it."
+                : "Understood — we'll shift your base plan one step harder and keep it there until you change it.";
         }
         case "skip_workout": {
             const date = params.date as string;

@@ -29,6 +29,7 @@ RUNNER CONTEXT:
 
 INTENT TYPES (pick exactly one):
 - "volume_change" — wants more/less running. Params: { "direction": "increase"|"decrease", "amount": number (0.0-1.0 fraction) }
+- "plan_level_change" — wants an easier/harder base plan template. Params: { "direction": "increase"|"decrease", "changeType": "load"|"workout_difficulty"|"both"|"unspecified" }
 - "skip_workout" — wants to skip a workout. Params: { "date": "YYYY-MM-DD"|"today"|"tomorrow", "reason": string }
 - "reschedule" — wants to move a workout. Params: { "fromDate": string, "toDate": string }
 - "modify_workout" — wants to change a specific workout. Params: { "date": string, "changes": string }
