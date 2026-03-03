@@ -348,6 +348,7 @@ export async function POST(req: NextRequest) {
         weekEndDate,
         weekNumber: result.weekNumber,
         stateAtGeneration: result.plan.state,
+        sourcePlanId: result.selectedPlanId,
         totalVolumeKm: result.plan.totalVolumeKm,
         totalDurationMinutes,
         validationStatus: result.wasRepaired ? "repaired" : "valid",

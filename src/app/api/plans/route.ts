@@ -50,6 +50,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
                     id: true,
                     workoutDate: true,
                     workoutType: true,
+                    workoutLabel: true,
                     plannedDistanceKm: true,
                     plannedDurationMinutes: true,
                     plannedPaceSecondsPerKm: true,
@@ -74,6 +75,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
         weekEndDate: plan.weekEndDate,
         weekNumber: plan.weekNumber,
         stateAtGeneration: plan.stateAtGeneration,
+        sourcePlanId: plan.sourcePlanId,
         totalVolumeKm: Number(plan.totalVolumeKm),
         totalDurationMinutes: plan.totalDurationMinutes,
         validationStatus: plan.validationStatus,
@@ -92,4 +94,36 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     }));
 
     return NextResponse.json({ plans: serialized });
+}
+
+/**
+ * DELETE /api/plans
+ *
+ * Deletes plans by ID. Used for regeneration.
+ * Body: { planIds: string[] }
+ */
+export async function DELETE(req: NextRequest): Promise<NextResponse> {
+    const session = await getSessionFromRequest(req);
+    if (!session) {
+        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    try {
+        const body = await req.json();
+        const planIds: string[] = body.planIds ?? [];
+        if (planIds.length === 0) {
+            return NextResponse.json({ error: "No plan IDs provided" }, { status: 400 });
+        }
+
+        await prisma.weeklyPlan.deleteMany({
+            where: {
+                id: { in: planIds },
+                userId: session.userId,
+            },
+        });
+
+        return NextResponse.json({ ok: true, deleted: planIds.length });
+    } catch {
+        return NextResponse.json({ error: "Failed to delete plans" }, { status: 500 });
+    }
 }

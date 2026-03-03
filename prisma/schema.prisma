@@ -197,6 +197,7 @@ model WeeklyPlan {
   weekNumber    Int      @map("week_number")
 
   stateAtGeneration  String  @map("state_at_generation") @db.VarChar(30)
+  sourcePlanId       String? @map("source_plan_id") @db.VarChar(60)
   totalVolumeKm      Decimal @map("total_volume_km") @db.Decimal(6, 2)
   totalDurationMinutes Int   @map("total_duration_minutes")
 

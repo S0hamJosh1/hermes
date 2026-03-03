@@ -29,6 +29,7 @@ type Plan = {
     weekEndDate: string;
     weekNumber: number;
     stateAtGeneration: string;
+    sourcePlanId: string | null;
     totalVolumeKm: number;
     totalDurationMinutes: number;
     validationStatus: string;
@@ -109,6 +110,22 @@ export default function PlanPage() {
         return d;
     }
 
+    async function generateWeeks(targets: Date[]) {
+        const errors: string[] = [];
+        for (const target of targets) {
+            const res = await fetch("/api/plans/generate", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ weekStartDate: target.toISOString() }),
+            });
+            if (!res.ok) {
+                const data = await res.json().catch(() => ({}));
+                errors.push(data.error ?? `Failed to generate week of ${formatDate(target.toISOString())}`);
+            }
+        }
+        return errors;
+    }
+
     async function handleGenerateTwoWeeks() {
         setGenerating(true);
         setGenError(null);
@@ -125,24 +142,47 @@ export default function PlanPage() {
             );
 
             if (targets.length === 0) {
-                setGenError("Current and next week plans already exist.");
+                setGenError("Current and next week plans already exist. Use Regenerate to rebuild them.");
             } else {
-                const errors: string[] = [];
-                for (const target of targets) {
-                    const res = await fetch("/api/plans/generate", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ weekStartDate: target.toISOString() }),
-                    });
-                    if (!res.ok) {
-                        const data = await res.json().catch(() => ({}));
-                        errors.push(data.error ?? `Failed to generate week of ${formatDate(target.toISOString())}`);
-                    }
-                }
-                if (errors.length > 0) {
-                    setGenError(errors.join(" | "));
-                }
+                const errors = await generateWeeks(targets);
+                if (errors.length > 0) setGenError(errors.join(" | "));
             }
+            await fetchPlans();
+        } catch {
+            setGenError("Network error");
+        } finally {
+            setGenerating(false);
+        }
+    }
+
+    async function handleRegenerateTwoWeeks() {
+        setGenerating(true);
+        setGenError(null);
+        try {
+            const now = new Date();
+            const thisWeekStart = startOfWeek(now);
+            const nextWeekStart = addDays(thisWeekStart, 7);
+            const k = (d: Date | string) => new Date(d).toISOString().slice(0, 10);
+            const byStart = new Map(plans.map((p) => [k(p.weekStartDate), p]));
+            const targets = [thisWeekStart, nextWeekStart];
+
+            // Delete existing plans for these weeks
+            const idsToDelete = targets
+                .map((t) => byStart.get(k(t))?.id)
+                .filter(Boolean) as string[];
+
+            if (idsToDelete.length > 0) {
+                await fetch("/api/plans", {
+                    method: "DELETE",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ planIds: idsToDelete }),
+                });
+            }
+
+            // Generate fresh plans
+            const errors = await generateWeeks(targets);
+            if (errors.length > 0) setGenError(errors.join(" | "));
+
             await fetchPlans();
         } catch {
             setGenError("Network error");
@@ -186,18 +226,21 @@ export default function PlanPage() {
                         </p>
                     </div>
                     <div className="flex items-center gap-3">
+                        {plans.length > 0 && (
+                            <button
+                                onClick={handleRegenerateTwoWeeks}
+                                disabled={generating}
+                                className="text-xs px-3 py-1.5 rounded-lg border border-blue-400/20 bg-blue-500/10 text-blue-300 hover:bg-blue-500/20 transition disabled:opacity-50"
+                            >
+                                {generating ? "Regenerating..." : "Regenerate Plans"}
+                            </button>
+                        )}
                         <button
                             onClick={handleGenerateTwoWeeks}
                             disabled={generating}
                             className="text-xs px-3 py-1.5 rounded-lg bg-white/10 text-white/60 hover:bg-white/20 transition disabled:opacity-50"
                         >
                             {generating ? "Generating..." : "+ Generate 2 Weeks"}
-                        </button>
-                        <button
-                            onClick={() => router.push("/dashboard")}
-                            className="text-xs text-white/40 hover:text-white/70 transition"
-                        >
-                            ← Dashboard
                         </button>
                     </div>
                 </div>
@@ -260,7 +303,7 @@ export default function PlanPage() {
                                 </p>
                             </div>
 
-                            <div className="flex items-center gap-4 flex-wrap text-xs text-white/40">
+                            <div className="flex items-center justify-center gap-4 flex-wrap text-xs text-white/40">
                                 <span>{formatMiles(plan.totalVolumeKm)} total</span>
                                 <span>·</span>
                                 <span>{Math.round(plan.totalDurationMinutes / 60 * 10) / 10} hrs</span>
@@ -276,6 +319,14 @@ export default function PlanPage() {
                                 }>
                                     {plan.validationStatus}
                                 </span>
+                                {plan.sourcePlanId && (
+                                    <>
+                                        <span>·</span>
+                                        <span className="text-blue-300/60">
+                                            {plan.sourcePlanId}
+                                        </span>
+                                    </>
+                                )}
                             </div>
 
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
