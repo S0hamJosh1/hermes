@@ -10,8 +10,9 @@ export default function GradientBackdrop() {
         alt=""
         fill
         priority
+        unoptimized
         sizes="100vw"
-        quality={92}
+        quality={100}
         className="object-cover object-[center_35%] md:object-[center_42%] lg:object-[center_45%]"
       />
       <div className="absolute inset-0 bg-[radial-gradient(1200px_700px_at_50%_-10%,rgba(50,120,255,0.14),transparent),radial-gradient(900px_500px_at_80%_120%,rgba(255,255,255,0.05),transparent)]" />
