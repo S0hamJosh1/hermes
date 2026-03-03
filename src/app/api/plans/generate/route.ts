@@ -348,6 +348,11 @@ export async function POST(req: NextRequest) {
       }, 0)
     );
 
+    // Remove any existing plan for this week (makes regeneration idempotent)
+    await prisma.weeklyPlan.deleteMany({
+      where: { userId: runner.user.id, weekStartDate },
+    });
+
     const savedPlan = await prisma.weeklyPlan.create({
       data: {
         userId: runner.user.id,
