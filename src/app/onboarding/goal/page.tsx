@@ -42,10 +42,10 @@ type ExistingGoalResponse = {
 };
 
 const DISTANCE_ICONS: Record<Distance, React.ReactNode> = {
-    "5K": <PersonIcon className="w-6 h-6 text-orange-400" />,
-    "10K": <LightningBoltIcon className="w-6 h-6 text-amber-400" />,
-    "Half Marathon": <RocketIcon className="w-6 h-6 text-orange-300" />,
-    "Marathon": <StarFilledIcon className="w-6 h-6 text-amber-300" />,
+    "5K": <PersonIcon className="w-6 h-6 text-white/60" />,
+    "10K": <LightningBoltIcon className="w-6 h-6 text-white/60" />,
+    "Half Marathon": <RocketIcon className="w-6 h-6 text-white/60" />,
+    "Marathon": <StarFilledIcon className="w-6 h-6 text-white/60" />,
 };
 
 const DISTANCES: { value: Distance; label: string; minWeeks: number }[] = [
@@ -59,7 +59,7 @@ const DISTANCES: { value: Distance; label: string; minWeeks: number }[] = [
 
 function cardClass(selected: boolean) {
     return `border rounded-xl text-left transition ${selected
-            ? "border-orange-400/60 bg-orange-400/10"
+            ? "border-white/50 bg-white/10"
             : "border-white/10 hover:border-white/30"
         }`;
 }
@@ -352,7 +352,7 @@ export default function GoalPage() {
                                 className={`${cardClass(hasTargetTime)} p-3 text-sm`}
                             >
                                 <div className="flex items-center gap-2">
-                                    <TargetIcon className="w-5 h-5 text-orange-400" />
+                                    <TargetIcon className="w-5 h-5 text-white/60" />
                                     <span className="font-medium">I have a time goal</span>
                                 </div>
                                 <p className="text-xs text-white/40 mt-1 ml-7">Set a target finish time</p>
@@ -367,7 +367,7 @@ export default function GoalPage() {
                                 className={`${cardClass(!hasTargetTime)} p-3 text-sm`}
                             >
                                 <div className="flex items-center gap-2">
-                                    <CheckCircledIcon className="w-5 h-5 text-amber-400" />
+                                    <CheckCircledIcon className="w-5 h-5 text-white/60" />
                                     <span className="font-medium">Just finish</span>
                                 </div>
                                 <p className="text-xs text-white/40 mt-1 ml-7">No specific time target</p>
