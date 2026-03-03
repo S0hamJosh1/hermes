@@ -149,12 +149,12 @@ export default function AppShell({ children }: AppShellProps) {
       <div className="relative z-10 px-3 py-3 lg:px-4 lg:py-4">
         <div className="lg:hidden mb-3 glass-panel px-3 py-2 flex items-center justify-between">
           <div>
-            <p className="text-xs uppercase tracking-widest text-white/50">Hermes</p>
+            <p className="text-xs uppercase tracking-widest text-blue-300/60">Hermes</p>
             <p className="text-sm text-white/85">{currentLabel}</p>
           </div>
           <button
             onClick={() => setMenuOpen(true)}
-            className="rounded-lg border border-white/20 px-2.5 py-1.5 text-sm text-white/80 hover:bg-white/10"
+            className="rounded-lg border border-blue-400/20 px-2.5 py-1.5 text-sm text-white/80 hover:bg-blue-500/10"
           >
             Menu
           </button>

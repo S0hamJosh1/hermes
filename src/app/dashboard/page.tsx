@@ -11,12 +11,6 @@ type SyncResult = {
     error?: string;
 };
 
-type MeResult = {
-    authenticated: boolean;
-    stravaUsername?: string;
-    userId?: string;
-};
-
 type ProfileData = {
     currentState: string;
     basePaceSecondsPerKm: number;
@@ -122,11 +116,9 @@ function planPreferenceBadge(profile: ProfileData): {
 
 export default function Dashboard() {
     const router = useRouter();
-    const [me, setMe] = useState<MeResult | null>(null);
     const [dashData, setDashData] = useState<DashboardData | null>(null);
     const [syncing, setSyncing] = useState(false);
     const [syncResult, setSyncResult] = useState<SyncResult | null>(null);
-    const [loggingOut, setLoggingOut] = useState(false);
     const [loading, setLoading] = useState(true);
 
     const fetchDashboard = useCallback(async () => {
@@ -139,8 +131,6 @@ export default function Dashboard() {
                 router.push("/");
                 return;
             }
-            const meData = (await meRes.json()) as MeResult;
-            setMe(meData);
             if (dashRes.ok) {
                 const data = (await dashRes.json()) as DashboardData;
                 setDashData(data);
@@ -172,16 +162,10 @@ export default function Dashboard() {
         }
     }
 
-    async function handleLogout() {
-        setLoggingOut(true);
-        await fetch("/api/auth/logout", { method: "POST" });
-        window.location.href = "/";
-    }
-
     if (loading) {
         return (
-            <main className="min-h-screen bg-black text-white flex items-center justify-center">
-                <div className="animate-pulse text-white/40">Loading...</div>
+            <main className="min-h-screen flex items-center justify-center">
+                <div className="animate-pulse text-blue-200/40">Loading...</div>
             </main>
         );
     }
@@ -195,30 +179,6 @@ export default function Dashboard() {
     return (
         <main className="text-white flex flex-col items-center px-2 py-2">
             <div className="w-full max-w-6xl flex flex-col gap-6">
-                {/* Header */}
-                <div className="flex items-center justify-between">
-                    <div>
-                        <h1 className="text-2xl font-black tracking-tight">HERMES</h1>
-                        <p className="text-xs text-white/40 uppercase tracking-widest mt-0.5">
-                            Training OS
-                        </p>
-                    </div>
-                    <div className="flex items-center gap-4">
-                        {me?.stravaUsername && (
-                            <span className="text-xs text-white/40">
-                                {me.stravaUsername}
-                            </span>
-                        )}
-                        <button
-                            onClick={handleLogout}
-                            disabled={loggingOut}
-                            className="text-xs text-white/40 hover:text-white/70 transition disabled:opacity-50"
-                        >
-                            {loggingOut ? "Logging out..." : "Logout →"}
-                        </button>
-                    </div>
-                </div>
-
                 {/* Runner State + Profile */}
                 {profile && (
                     <div className="glass-card p-5 flex flex-col gap-4">
@@ -249,27 +209,27 @@ export default function Dashboard() {
                         {/* Metrics grid */}
                         <div className="grid grid-cols-2 gap-3">
                             <div className="glass-card p-3">
-                                <p className="text-xs text-white/40 mb-1">Easy Pace</p>
+                                <p className="text-xs text-blue-200/40 mb-1">Easy Pace</p>
                                 <p className="text-sm font-medium">{formatPacePerMile(profile.basePaceSecondsPerKm)}</p>
                             </div>
                             <div className="glass-card p-3">
-                                <p className="text-xs text-white/40 mb-1">Threshold</p>
+                                <p className="text-xs text-blue-200/40 mb-1">Threshold</p>
                                 <p className="text-sm font-medium">{formatPacePerMile(profile.thresholdPaceSecondsPerKm)}</p>
                             </div>
                             <div className="glass-card p-3">
-                                <p className="text-xs text-white/40 mb-1">Weekly Capacity</p>
+                                <p className="text-xs text-blue-200/40 mb-1">Weekly Capacity</p>
                                 <p className="text-sm font-medium">{formatMiles(profile.weeklyCapacityKm)}</p>
                             </div>
                             <div className="glass-card p-3">
-                                <p className="text-xs text-white/40 mb-1">Consistency</p>
+                                <p className="text-xs text-blue-200/40 mb-1">Consistency</p>
                                 <p className="text-sm font-medium">{Math.round(profile.consistencyScore * 100)}%</p>
                             </div>
                         </div>
 
                         {/* Goal */}
                         {profile.primaryGoalDistance && (
-                            <div className="border-t border-white/10 pt-3">
-                                <p className="text-xs text-white/40 mb-1">Current Goal</p>
+                            <div className="border-t border-blue-400/10 pt-3">
+                                <p className="text-xs text-blue-200/40 mb-1">Current Goal</p>
                                 <p className="text-sm font-medium">
                                     {profile.primaryGoalDistance}
                                     {profile.primaryGoalDate && (
@@ -289,46 +249,10 @@ export default function Dashboard() {
                     </div>
                 )}
 
-                {/* Quick Nav */}
-                <div className="grid grid-cols-2 gap-3">
-                    <button
-                        onClick={() => router.push("/plan")}
-                        className="glass-card p-4 text-left transition hover:bg-white/10"
-                    >
-                        <p className="text-xs text-white/40 mb-1">📋</p>
-                        <p className="text-sm font-medium">Weekly Plan</p>
-                        <p className="text-xs text-white/30 mt-0.5">View training schedule</p>
-                    </button>
-                    <button
-                        onClick={() => router.push("/roadmap")}
-                        className="glass-card p-4 text-left transition hover:bg-white/10"
-                    >
-                        <p className="text-xs text-white/40 mb-1">🗺️</p>
-                        <p className="text-sm font-medium">Roadmap</p>
-                        <p className="text-xs text-white/30 mt-0.5">Phases & milestones</p>
-                    </button>
-                    <button
-                        onClick={() => router.push("/chat")}
-                        className="glass-card p-4 text-left transition hover:bg-white/10"
-                    >
-                        <p className="text-xs text-white/40 mb-1">💬</p>
-                        <p className="text-sm font-medium">Hermes Chat</p>
-                        <p className="text-xs text-white/30 mt-0.5">Your running assistant</p>
-                    </button>
-                    <button
-                        onClick={() => router.push("/onboarding/goal")}
-                        className="glass-card p-4 text-left transition hover:bg-white/10"
-                    >
-                        <p className="text-xs text-white/40 mb-1">🎯</p>
-                        <p className="text-sm font-medium">Goal Settings</p>
-                        <p className="text-xs text-white/30 mt-0.5">Change race & target</p>
-                    </button>
-                </div>
-
                 {/* Health & Injury Status */}
                 <div className="glass-card p-5 flex flex-col gap-4">
                     <div className="flex items-center justify-between">
-                        <p className="text-xs text-white/40 uppercase tracking-widest">
+                        <p className="text-xs text-blue-200/40 uppercase tracking-widest">
                             Health Status
                         </p>
                         {health && health.activeStrikes > 0 && (
@@ -368,7 +292,7 @@ export default function Dashboard() {
 
                     <button
                         onClick={() => router.push("/health/report")}
-                        className="w-full rounded-lg border border-white/20 bg-white/5 px-4 py-3 text-sm font-medium transition hover:bg-white/10"
+                        className="w-full rounded-lg border border-blue-400/20 bg-blue-500/5 px-4 py-3 text-sm font-medium transition hover:bg-blue-500/10"
                     >
                         Report Injury or Pain
                     </button>
@@ -377,7 +301,7 @@ export default function Dashboard() {
                 {/* Compliance */}
                 {compliance && compliance.currentWeekCompliance !== null && (
                     <div className="glass-card p-5 flex flex-col gap-4">
-                        <p className="text-xs text-white/40 uppercase tracking-widest">
+                        <p className="text-xs text-blue-200/40 uppercase tracking-widest">
                             Compliance
                         </p>
                         <div className="grid grid-cols-2 gap-3">
@@ -419,7 +343,7 @@ export default function Dashboard() {
                     <button
                         onClick={handleSync}
                         disabled={syncing}
-                        className="w-full rounded-lg border border-white/20 bg-white/5 px-4 py-3 text-sm font-medium transition hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full rounded-lg border border-blue-400/20 bg-blue-500/5 px-4 py-3 text-sm font-medium transition hover:bg-blue-500/10 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         {syncing ? "Syncing from Strava..." : "Sync Activities"}
                     </button>
@@ -447,7 +371,7 @@ export default function Dashboard() {
 
                 {performance && (
                     <div className="glass-card p-5 flex flex-col gap-4">
-                        <p className="text-xs text-white/40 uppercase tracking-widest">
+                        <p className="text-xs text-blue-200/40 uppercase tracking-widest">
                             Strava Best Efforts
                         </p>
                         <div className="grid grid-cols-1 gap-2">
@@ -482,33 +406,6 @@ export default function Dashboard() {
                     </div>
                 )}
 
-                {/* Systems Status */}
-                <div className="glass-card p-5">
-                    <p className="text-xs text-white/40 uppercase tracking-widest mb-4">
-                        Systems Online
-                    </p>
-                    <div className="flex flex-col gap-2">
-                        {[
-                            { name: "Strava OAuth & Sync", status: true },
-                            { name: "Auto-Calibration", status: true },
-                            { name: "Bootcamp Flow", status: true },
-                            { name: "Plan Generation Pipeline", status: true },
-                            { name: "State Machine (9 states)", status: true },
-                            { name: "Validator (8 safety rules)", status: true },
-                            { name: "Auto-Repair Engine", status: true },
-                            { name: "Health & Injury Tracking", status: true },
-                            { name: "Compliance System", status: true },
-                        ].map((item) => (
-                            <div
-                                key={item.name}
-                                className="flex items-center gap-3 text-sm text-white/60"
-                            >
-                                <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${item.status ? "bg-green-400" : "bg-white/20"}`} />
-                                {item.name}
-                            </div>
-                        ))}
-                    </div>
-                </div>
             </div>
         </main>
     );
