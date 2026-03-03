@@ -166,6 +166,17 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
 
     const now = new Date();
 
+    // Fetch all weekly plans to compute real volume per phase
+    const weeklyPlans = await prisma.weeklyPlan.findMany({
+        where: { userId },
+        select: {
+            weekStartDate: true,
+            weekEndDate: true,
+            totalVolumeKm: true,
+        },
+        orderBy: { weekStartDate: "asc" },
+    });
+
     const serialized = goals.map((goal) => ({
         id: goal.id,
         distance: goal.distance,
@@ -185,6 +196,21 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
             const isCurrent = nowMs >= startMs && nowMs <= endMs;
             const isPast = nowMs > endMs;
 
+            // Compute actual average weekly volume from plans overlapping this phase
+            const overlapping = weeklyPlans.filter((p) => {
+                const pStart = new Date(p.weekStartDate).getTime();
+                const pEnd = new Date(p.weekEndDate).getTime();
+                return pStart < endMs && pEnd > startMs;
+            });
+            const actualVolumeKm =
+                overlapping.length > 0
+                    ? Math.round(
+                        (overlapping.reduce((sum, p) => sum + Number(p.totalVolumeKm), 0) /
+                            overlapping.length) *
+                        10
+                    ) / 10
+                    : null;
+
             return {
                 id: roadmap.id,
                 phaseNumber: roadmap.phaseNumber,
@@ -194,6 +220,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
                 targetVolumeKm: roadmap.targetVolumeKm
                     ? Number(roadmap.targetVolumeKm)
                     : null,
+                actualVolumeKm,
                 focus: roadmap.focus,
                 progress,
                 isCurrent,

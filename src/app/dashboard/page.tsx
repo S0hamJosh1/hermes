@@ -165,7 +165,7 @@ export default function Dashboard() {
     if (loading) {
         return (
             <main className="min-h-screen flex items-center justify-center">
-                <div className="animate-pulse text-blue-200/40">Loading...</div>
+                <div className="animate-pulse text-white/40">Loading...</div>
             </main>
         );
     }
@@ -209,27 +209,27 @@ export default function Dashboard() {
                         {/* Metrics grid */}
                         <div className="grid grid-cols-2 gap-3">
                             <div className="glass-card p-3">
-                                <p className="text-xs text-blue-200/40 mb-1">Easy Pace</p>
+                                <p className="text-xs text-white/40 mb-1">Easy Pace</p>
                                 <p className="text-sm font-medium">{formatPacePerMile(profile.basePaceSecondsPerKm)}</p>
                             </div>
                             <div className="glass-card p-3">
-                                <p className="text-xs text-blue-200/40 mb-1">Threshold</p>
+                                <p className="text-xs text-white/40 mb-1">Threshold</p>
                                 <p className="text-sm font-medium">{formatPacePerMile(profile.thresholdPaceSecondsPerKm)}</p>
                             </div>
                             <div className="glass-card p-3">
-                                <p className="text-xs text-blue-200/40 mb-1">Weekly Capacity</p>
+                                <p className="text-xs text-white/40 mb-1">Weekly Capacity</p>
                                 <p className="text-sm font-medium">{formatMiles(profile.weeklyCapacityKm)}</p>
                             </div>
                             <div className="glass-card p-3">
-                                <p className="text-xs text-blue-200/40 mb-1">Consistency</p>
+                                <p className="text-xs text-white/40 mb-1">Consistency</p>
                                 <p className="text-sm font-medium">{Math.round(profile.consistencyScore * 100)}%</p>
                             </div>
                         </div>
 
                         {/* Goal */}
                         {profile.primaryGoalDistance && (
-                            <div className="border-t border-blue-400/10 pt-3">
-                                <p className="text-xs text-blue-200/40 mb-1">Current Goal</p>
+                            <div className="border-t border-white/10 pt-3">
+                                <p className="text-xs text-white/40 mb-1">Current Goal</p>
                                 <p className="text-sm font-medium">
                                     {profile.primaryGoalDistance}
                                     {profile.primaryGoalDate && (
@@ -252,7 +252,7 @@ export default function Dashboard() {
                 {/* Health & Injury Status */}
                 <div className="glass-card p-5 flex flex-col gap-4">
                     <div className="flex items-center justify-between">
-                        <p className="text-xs text-blue-200/40 uppercase tracking-widest">
+                        <p className="text-xs text-white/40 uppercase tracking-widest">
                             Health Status
                         </p>
                         {health && health.activeStrikes > 0 && (
@@ -292,7 +292,7 @@ export default function Dashboard() {
 
                     <button
                         onClick={() => router.push("/health/report")}
-                        className="w-full rounded-lg border border-blue-400/20 bg-blue-500/5 px-4 py-3 text-sm font-medium transition hover:bg-blue-500/10"
+                        className="w-full rounded-lg border border-white/15 bg-white/5 px-4 py-3 text-sm font-medium transition hover:bg-white/10"
                     >
                         Report Injury or Pain
                     </button>
@@ -343,7 +343,7 @@ export default function Dashboard() {
                     <button
                         onClick={handleSync}
                         disabled={syncing}
-                        className="w-full rounded-lg border border-blue-400/20 bg-blue-500/5 px-4 py-3 text-sm font-medium transition hover:bg-blue-500/10 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full rounded-lg border border-white/15 bg-white/5 px-4 py-3 text-sm font-medium transition hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         {syncing ? "Syncing from Strava..." : "Sync Activities"}
                     </button>
