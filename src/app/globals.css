@@ -1,16 +1,16 @@
 @import "tailwindcss";
 
 :root {
-  --background: #020a18;
-  --foreground: #e8f0ff;
-  --glass-bg: rgba(100, 160, 255, 0.06);
-  --glass-bg-strong: rgba(100, 160, 255, 0.10);
-  --glass-border: rgba(140, 190, 255, 0.15);
-  --glass-shadow: 0 24px 60px rgba(0, 6, 30, 0.55);
-  --glass-highlight: rgba(160, 210, 255, 0.30);
-  --accent-blue: #3b82f6;
-  --accent-cyan: #06b6d4;
-  --accent-indigo: #6366f1;
+  --background: #0a0806;
+  --foreground: #fff3e8;
+  --glass-bg: rgba(255, 160, 80, 0.06);
+  --glass-bg-strong: rgba(255, 160, 80, 0.10);
+  --glass-border: rgba(255, 180, 120, 0.15);
+  --glass-shadow: 0 24px 60px rgba(10, 4, 0, 0.55);
+  --glass-highlight: rgba(255, 200, 140, 0.30);
+  --accent-orange: #f97316;
+  --accent-amber: #f59e0b;
+  --accent-warm: #fb923c;
 }
 
 @theme inline {
@@ -32,12 +32,12 @@ body {
 .glass-panel {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(145deg, rgba(30, 80, 180, 0.14), rgba(15, 40, 100, 0.05));
+  background: linear-gradient(145deg, rgba(180, 100, 30, 0.14), rgba(100, 55, 15, 0.05));
   border: 1px solid var(--glass-border);
   backdrop-filter: blur(28px) saturate(170%);
   -webkit-backdrop-filter: blur(28px) saturate(170%);
   box-shadow: var(--glass-shadow),
-    inset 0 1px 0 rgba(140, 190, 255, 0.10);
+    inset 0 1px 0 rgba(255, 190, 120, 0.10);
   border-radius: 1.2rem;
 }
 
@@ -56,18 +56,18 @@ body {
 
 .glass-card {
   position: relative;
-  background: linear-gradient(145deg, rgba(40, 100, 200, 0.10), rgba(20, 50, 120, 0.04));
-  border: 1px solid rgba(100, 170, 255, 0.12);
+  background: linear-gradient(145deg, rgba(200, 120, 40, 0.10), rgba(120, 65, 20, 0.04));
+  border: 1px solid rgba(255, 170, 100, 0.12);
   backdrop-filter: blur(18px) saturate(150%);
   -webkit-backdrop-filter: blur(18px) saturate(150%);
-  box-shadow: 0 12px 35px rgba(0, 6, 30, 0.40);
+  box-shadow: 0 12px 35px rgba(10, 4, 0, 0.40);
   border-radius: 1rem;
   transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
 }
 
 .glass-card:hover {
-  border-color: rgba(100, 170, 255, 0.22);
-  background: linear-gradient(145deg, rgba(40, 100, 200, 0.14), rgba(20, 50, 120, 0.06));
+  border-color: rgba(255, 170, 100, 0.22);
+  background: linear-gradient(145deg, rgba(200, 120, 40, 0.14), rgba(120, 65, 20, 0.06));
 }
 
 /* --- Animations --- */
@@ -95,17 +95,17 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(20, 60, 130, 0.06);
+  background: rgba(130, 70, 20, 0.06);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(80, 140, 255, 0.20);
+  background: rgba(255, 160, 80, 0.20);
   border-radius: 999px;
   border: 2px solid transparent;
   background-clip: padding-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(80, 140, 255, 0.35);
+  background: rgba(255, 160, 80, 0.35);
   background-clip: padding-box;
 }

@@ -2,6 +2,15 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import {
+    PersonIcon,
+    LightningBoltIcon,
+    RocketIcon,
+    StarFilledIcon,
+    TargetIcon,
+    CheckCircledIcon,
+    TrashIcon,
+} from "@radix-ui/react-icons";
 
 type Distance = "5K" | "10K" | "Half Marathon" | "Marathon";
 
@@ -32,21 +41,40 @@ type ExistingGoalResponse = {
     error?: string;
 };
 
-const DISTANCES: { value: Distance; label: string; emoji: string; minWeeks: number }[] = [
-    { value: "5K", label: "5K", emoji: "🏃", minWeeks: 4 },
-    { value: "10K", label: "10K", emoji: "⚡", minWeeks: 6 },
-    { value: "Half Marathon", label: "Half Marathon", emoji: "🔥", minWeeks: 10 },
-    { value: "Marathon", label: "Marathon", emoji: "💀", minWeeks: 16 },
+const DISTANCE_ICONS: Record<Distance, React.ReactNode> = {
+    "5K": <PersonIcon className="w-6 h-6 text-orange-400" />,
+    "10K": <LightningBoltIcon className="w-6 h-6 text-amber-400" />,
+    "Half Marathon": <RocketIcon className="w-6 h-6 text-orange-300" />,
+    "Marathon": <StarFilledIcon className="w-6 h-6 text-amber-300" />,
+};
+
+const DISTANCES: { value: Distance; label: string; minWeeks: number }[] = [
+    { value: "5K", label: "5K", minWeeks: 4 },
+    { value: "10K", label: "10K", minWeeks: 6 },
+    { value: "Half Marathon", label: "Half Marathon", minWeeks: 10 },
+    { value: "Marathon", label: "Marathon", minWeeks: 16 },
 ];
 
-// Get minimum date for a given distance
+/* ── Shared class helpers ─────────────────────────────────── */
+
+function cardClass(selected: boolean) {
+    return `border rounded-xl text-left transition ${selected
+            ? "border-orange-400/60 bg-orange-400/10"
+            : "border-white/10 hover:border-white/30"
+        }`;
+}
+
+const deleteBtnClass =
+    "inline-flex items-center gap-1.5 text-xs text-red-400/80 hover:text-red-300 disabled:opacity-40 transition";
+
+/* ── Utilities ────────────────────────────────────────────── */
+
 function minDate(minWeeks: number): string {
     const d = new Date();
     d.setDate(d.getDate() + minWeeks * 7);
     return d.toISOString().split("T")[0];
 }
 
-// Format seconds as H:MM:SS or M:SS
 function formatTime(seconds: number): string {
     if (seconds >= 3600) {
         const h = Math.floor(seconds / 3600);
@@ -58,6 +86,8 @@ function formatTime(seconds: number): string {
     const s = seconds % 60;
     return `${m}:${String(s).padStart(2, "0")}`;
 }
+
+/* ── Component ────────────────────────────────────────────── */
 
 export default function GoalPage() {
     const router = useRouter();
@@ -118,8 +148,7 @@ export default function GoalPage() {
 
     async function handleSubmit() {
         if (!distance || !targetDate) return;
-        const replacingExisting = Boolean(existingGoalId);
-        if (replacingExisting) {
+        if (existingGoalId) {
             const confirmed = window.confirm(
                 "Replace your current goal with this new one? You can still keep or delete archived goals."
             );
@@ -228,8 +257,9 @@ export default function GoalPage() {
                     <button
                         onClick={handleDeleteCurrentGoal}
                         disabled={deletingGoalId !== null}
-                        className="self-start text-xs text-red-300 hover:text-red-200 disabled:opacity-50"
+                        className={`self-start rounded-full border border-red-400/20 bg-red-400/5 px-3 py-1.5 ${deleteBtnClass}`}
                     >
+                        <TrashIcon className="w-3.5 h-3.5" />
                         Delete current goal
                     </button>
                 )}
@@ -241,8 +271,9 @@ export default function GoalPage() {
                             <button
                                 onClick={handleDeleteArchived}
                                 disabled={deletingGoalId !== null}
-                                className="text-xs text-red-300 hover:text-red-200 disabled:opacity-50"
+                                className={`rounded-full border border-red-400/20 bg-red-400/5 px-3 py-1 ${deleteBtnClass}`}
                             >
+                                <TrashIcon className="w-3.5 h-3.5" />
                                 Delete all
                             </button>
                         </div>
@@ -256,9 +287,14 @@ export default function GoalPage() {
                                     <button
                                         onClick={() => handleDeleteGoal(g.id)}
                                         disabled={deletingGoalId !== null}
-                                        className="text-xs text-red-300 hover:text-red-200 disabled:opacity-50"
+                                        className={deleteBtnClass}
+                                        title="Delete goal"
                                     >
-                                        {deletingGoalId === g.id ? "Deleting..." : "Delete"}
+                                        {deletingGoalId === g.id ? (
+                                            <span className="text-xs">Deleting…</span>
+                                        ) : (
+                                            <TrashIcon className="w-4 h-4" />
+                                        )}
                                     </button>
                                 </div>
                             ))}
@@ -275,14 +311,11 @@ export default function GoalPage() {
                                 key={d.value}
                                 onClick={() => {
                                     setDistance(d.value);
-                                    setTargetDate(""); // reset date when distance changes
+                                    setTargetDate("");
                                 }}
-                                className={`border rounded-xl p-4 text-left transition ${distance === d.value
-                                    ? "border-white bg-white/10"
-                                    : "border-white/10 hover:border-white/30"
-                                    }`}
+                                className={`${cardClass(distance === d.value)} p-4`}
                             >
-                                <span className="text-2xl">{d.emoji}</span>
+                                {DISTANCE_ICONS[d.value]}
                                 <p className="font-semibold mt-2">{d.label}</p>
                                 <p className="text-xs text-white/40 mt-0.5">{d.minWeeks}+ weeks</p>
                             </button>
@@ -316,13 +349,13 @@ export default function GoalPage() {
                         <div className="grid grid-cols-2 gap-3 mb-3">
                             <button
                                 onClick={() => setHasTargetTime(true)}
-                                className={`border rounded-xl p-3 text-sm text-left transition ${hasTargetTime
-                                        ? "border-white bg-white/10"
-                                        : "border-white/10 hover:border-white/30"
-                                    }`}
+                                className={`${cardClass(hasTargetTime)} p-3 text-sm`}
                             >
-                                <p className="font-medium">🎯 I have a time goal</p>
-                                <p className="text-xs text-white/40 mt-0.5">Set a target finish time</p>
+                                <div className="flex items-center gap-2">
+                                    <TargetIcon className="w-5 h-5 text-orange-400" />
+                                    <span className="font-medium">I have a time goal</span>
+                                </div>
+                                <p className="text-xs text-white/40 mt-1 ml-7">Set a target finish time</p>
                             </button>
                             <button
                                 onClick={() => {
@@ -331,13 +364,13 @@ export default function GoalPage() {
                                     setTargetMinutes(0);
                                     setTargetSeconds(0);
                                 }}
-                                className={`border rounded-xl p-3 text-sm text-left transition ${!hasTargetTime
-                                        ? "border-white bg-white/10"
-                                        : "border-white/10 hover:border-white/30"
-                                    }`}
+                                className={`${cardClass(!hasTargetTime)} p-3 text-sm`}
                             >
-                                <p className="font-medium">🏁 Just finish</p>
-                                <p className="text-xs text-white/40 mt-0.5">No specific time target</p>
+                                <div className="flex items-center gap-2">
+                                    <CheckCircledIcon className="w-5 h-5 text-amber-400" />
+                                    <span className="font-medium">Just finish</span>
+                                </div>
+                                <p className="text-xs text-white/40 mt-1 ml-7">No specific time target</p>
                             </button>
                         </div>
                         {hasTargetTime && (
