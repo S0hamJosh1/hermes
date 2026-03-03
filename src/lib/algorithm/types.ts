@@ -39,6 +39,7 @@ export type GeneratedWorkout = {
   intensityZone: IntensityZone;
   templateSource: string;         // e.g. "marathon-novice-1:week-4:sat"
   isKeyWorkout: boolean;          // long run or quality session
+  label?: string;                 // original Hal Higdon label, e.g. "5 x 400"
 };
 
 export type WorkoutCategory =

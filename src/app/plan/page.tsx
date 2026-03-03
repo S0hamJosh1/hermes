@@ -8,6 +8,7 @@ type Workout = {
     id: string;
     workoutDate: string;
     workoutType: string;
+    workoutLabel: string | null;
     plannedDistanceKm: number | null;
     plannedDurationMinutes: number | null;
     plannedPaceSecondsPerKm: number | null;
@@ -267,7 +268,7 @@ export default function PlanPage() {
                                 <span>{plan.stateAtGeneration}</span>
                                 <span>·</span>
                                 <span className={
-                                    plan.validationStatus === "passed"
+                                    plan.validationStatus === "valid"
                                         ? "text-green-400"
                                         : plan.validationStatus === "repaired"
                                             ? "text-yellow-400"
@@ -319,24 +320,30 @@ export default function PlanPage() {
                                                     <p className={`text-sm font-medium ${style.text}`}>
                                                         {isOptionalRunDay
                                                             ? "Optional Easy Run"
-                                                            : prettifyType(workout.workoutType)}
+                                                            : workout.workoutLabel
+                                                                ? workout.workoutLabel
+                                                                : prettifyType(workout.workoutType)}
                                                     </p>
                                                     <div className="flex items-center gap-3 text-xs text-white/50 flex-wrap">
                                                         {isOptionalRunDay ? (
                                                             <span>Run by feel (20–30 min optional)</span>
-                                                        ) : workout.plannedDistanceKm ? (
-                                                            <span>{formatMiles(workout.plannedDistanceKm)}</span>
-                                                        ) : null}
-                                                        {!isOptionalRunDay && workout.plannedPaceSecondsPerKm && (
-                                                            <span>{formatPacePerMile(workout.plannedPaceSecondsPerKm)}</span>
-                                                        )}
-                                                        {!isOptionalRunDay && workout.plannedDurationMinutes && (
-                                                            <span>{workout.plannedDurationMinutes} min</span>
-                                                        )}
-                                                        {!isOptionalRunDay && workout.intensityZone && (
-                                                            <span className="px-1.5 py-0.5 rounded bg-white/5 text-white/40">
-                                                                {workout.intensityZone}
-                                                            </span>
+                                                        ) : (
+                                                            <>
+                                                                {workout.plannedDistanceKm ? (
+                                                                    <span>{formatMiles(workout.plannedDistanceKm)}</span>
+                                                                ) : null}
+                                                                {workout.plannedPaceSecondsPerKm && (
+                                                                    <span>{formatPacePerMile(workout.plannedPaceSecondsPerKm)}</span>
+                                                                )}
+                                                                {workout.plannedDurationMinutes && (
+                                                                    <span>{workout.plannedDurationMinutes} min</span>
+                                                                )}
+                                                                {workout.intensityZone && (
+                                                                    <span className="px-1.5 py-0.5 rounded bg-white/5 text-white/40">
+                                                                        {workout.intensityZone}
+                                                                    </span>
+                                                                )}
+                                                            </>
                                                         )}
                                                     </div>
 

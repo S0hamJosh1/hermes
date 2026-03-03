@@ -103,8 +103,13 @@ function repairRampLimit(
   const limit = profile.overrideModeEnabled
     ? config.overrideRampLimitPercent
     : config.rampLimitPercent;
-  const maxVolume = plan.previousWeekVolumeKm * (1 + limit / 100);
-  const scaleFactor = maxVolume / plan.totalVolumeKm;
+  let maxVolume = plan.previousWeekVolumeKm * (1 + limit / 100);
+
+  // Never scale below a reasonable floor — prevents death spiral
+  const REPAIR_FLOOR_KM = 5;
+  maxVolume = Math.max(maxVolume, REPAIR_FLOOR_KM);
+
+  const scaleFactor = Math.min(1, maxVolume / plan.totalVolumeKm);
   const originalVolume = plan.totalVolumeKm;
 
   for (const w of plan.workouts) {

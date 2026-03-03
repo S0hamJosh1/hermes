@@ -32,7 +32,7 @@ function mapDayType(hhType: HalHigdonDayType): WorkoutCategory {
     case "pace": return "pace_run";
     case "tempo": return "tempo";
     case "interval": return "interval";
-    case "fast": return "pace_run";
+    case "fast": return "tempo";
     case "optional_run": return "easy_run";
     case "long_run": return "long_run";
     case "race": return "race";
@@ -100,7 +100,6 @@ function maybeInjectQualityWorkout(
   );
   if (hasQuality) return workouts;
 
-  // Promote one mid-week easy run to a controlled tempo session.
   const candidate = workouts.find(
     (w) => w.type === "easy_run" && w.dayOfWeek >= 1 && w.dayOfWeek <= 4 && w.distanceKm >= 3
   );
@@ -129,19 +128,36 @@ function maybeInjectQualityWorkout(
  */
 const STATE_VOLUME_MULTIPLIERS: Record<RunnerState, number> = {
   "Stable": 1.0,
-  "Slump": 0.75,
-  "Probe": 0.85,
-  "Rebuild": 0.65,
-  "Overreach": 0.60,
-  "Injury Watch": 0.70,
-  "Injury Protection": 0.50,
+  "Slump": 0.85,
+  "Probe": 0.90,
+  "Rebuild": 0.75,
+  "Overreach": 0.70,
+  "Injury Watch": 0.75,
+  "Injury Protection": 0.55,
   "Override Active": 1.10,
-  "Taper": 0.60,
+  "Taper": 0.65,
 };
 
 /**
+ * Minimum weekly volume floors (km) by goal distance.
+ * The plan should never produce less than this, even after scaling/repair.
+ */
+const MIN_VOLUME_FLOOR_KM: Record<string, number> = {
+  "4K": 5,
+  "5K": 5,
+  "10K": 10,
+  "Half Marathon": 15,
+  "Marathon": 20,
+};
+
+export function getVolumeFloor(goalDistance: string): number {
+  return MIN_VOLUME_FLOOR_KM[goalDistance] ?? 5;
+}
+
+/**
  * Calculate a scaling factor to map template distances to this runner's capacity.
- * We compare the template's average weekly volume against the runner's weekly capacity.
+ * The plan selector already picks an appropriate-level plan, so we only do a
+ * gentle adjustment here. Never reduce by more than 25%.
  */
 function capacityScaleFactor(
   templateWeekVolumeKm: number,
@@ -149,7 +165,7 @@ function capacityScaleFactor(
 ): number {
   if (templateWeekVolumeKm <= 0) return 1;
   const raw = runnerCapacityKm / templateWeekVolumeKm;
-  return Math.max(0.5, Math.min(raw, 1.5));
+  return Math.max(0.75, Math.min(raw, 1.5));
 }
 
 // --- Core generation ---
@@ -191,7 +207,8 @@ export function generateWeeklyPlan(
 
     const paceForCategory = assignPace(category, profile);
     if (distanceKm <= 0 && day.durationMinutes && day.durationMinutes > 0 && paceForCategory > 0) {
-      distanceKm = Math.round(((day.durationMinutes * 60) / paceForCategory) * 10) / 10;
+      const durationDist = Math.round(((day.durationMinutes * 60) / paceForCategory) * scaleFactor * stateMultiplier * 10) / 10;
+      distanceKm = durationDist;
     }
 
     if (category === "rest" || category === "cross_training") {
@@ -208,7 +225,20 @@ export function generateWeeklyPlan(
       intensityZone: assignZone(category),
       templateSource: `${plan.meta.id}:week-${clampedWeek}:${dayName(day.dayOfWeek)}`,
       isKeyWorkout: isKeyWorkout(category),
+      label: day.label,
     });
+  }
+
+  // Enforce minimum volume floor
+  const floor = getVolumeFloor(goal.distance);
+  if (totalVolume > 0 && totalVolume < floor) {
+    const boost = floor / totalVolume;
+    for (const w of workouts) {
+      if (w.distanceKm > 0) {
+        w.distanceKm = Math.round(w.distanceKm * boost * 10) / 10;
+      }
+    }
+    totalVolume = workouts.reduce((sum, w) => sum + w.distanceKm, 0);
   }
 
   const rampPercentage = previousWeekVolumeKm > 0

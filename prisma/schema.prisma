@@ -233,6 +233,7 @@ model Workout {
 
   workoutDate            DateTime @map("workout_date") @db.Date
   workoutType            String   @map("workout_type") @db.VarChar(30)
+  workoutLabel           String?  @map("workout_label") @db.VarChar(60)
   plannedDistanceKm      Decimal? @map("planned_distance_km") @db.Decimal(5, 2)
   plannedDurationMinutes Int?     @map("planned_duration_minutes")
   plannedPaceSecondsPerKm Int?    @map("planned_pace_seconds_per_km")

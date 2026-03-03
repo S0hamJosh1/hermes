@@ -363,6 +363,7 @@ export async function POST(req: NextRequest) {
             .map((w: typeof result.plan.workouts[0], idx: number) => ({
               workoutDate: addDays(weekStartDate, w.dayOfWeek),
               workoutType: w.type,
+              workoutLabel: w.label ?? null,
               plannedDistanceKm: w.distanceKm,
               plannedDurationMinutes:
                 w.distanceKm > 0 && w.paceSecondsPerKm > 0

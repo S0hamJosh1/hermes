@@ -24,7 +24,7 @@ export { DEFAULT_CONFIG } from "./types";
 export { selectPlan, calculateCurrentWeek } from "./plan-selector";
 
 // Plan generation
-export { generateWeeklyPlan } from "./planner";
+export { generateWeeklyPlan, getVolumeFloor } from "./planner";
 
 // Validation
 export { validatePlan } from "./validator";

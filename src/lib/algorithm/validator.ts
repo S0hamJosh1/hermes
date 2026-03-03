@@ -45,7 +45,10 @@ function checkRampLimit(
   profile: RunnerProfile,
   config: PlannerConfig,
 ): ValidationViolation[] {
-  if (plan.previousWeekVolumeKm <= 0) return [];
+  // Skip ramp check if previous volume is 0 or below a meaningful threshold.
+  // A very low previous week (e.g. from a crushed repair) shouldn't cap future weeks.
+  const RAMP_CHECK_THRESHOLD_KM = 3;
+  if (plan.previousWeekVolumeKm <= RAMP_CHECK_THRESHOLD_KM) return [];
 
   const limit = profile.overrideModeEnabled
     ? config.overrideRampLimitPercent
