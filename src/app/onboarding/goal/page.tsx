@@ -41,6 +41,13 @@ type ExistingGoalResponse = {
     error?: string;
 };
 
+type ActiveGoal = {
+    id: string;
+    distance: Distance;
+    targetDate: string;
+    targetTimeSeconds: number | null;
+};
+
 const DISTANCE_ICONS: Record<Distance, React.ReactNode> = {
     "5K": <PersonIcon className="w-6 h-6 text-white/60" />,
     "10K": <LightningBoltIcon className="w-6 h-6 text-white/60" />,
@@ -103,6 +110,7 @@ export default function GoalPage() {
     const [archivedGoals, setArchivedGoals] = useState<NonNullable<ExistingGoalResponse["archivedGoals"]>>([]);
     const [deletingGoalId, setDeletingGoalId] = useState<string | null>(null);
     const [result, setResult] = useState<GoalResult | null>(null);
+    const [activeGoal, setActiveGoal] = useState<ActiveGoal | null>(null);
 
     const selectedDist = DISTANCES.find((d) => d.value === distance);
     const targetTimeSeconds = hasTargetTime
@@ -122,6 +130,7 @@ export default function GoalPage() {
                 setArchivedGoals(data.archivedGoals ?? []);
                 if (!data.goal) return;
 
+                setActiveGoal(data.goal);
                 setExistingGoalId(data.goal.id);
                 setDistance(data.goal.distance);
                 setTargetDate(data.goal.targetDate);
@@ -150,7 +159,7 @@ export default function GoalPage() {
         if (!distance || !targetDate) return;
         if (existingGoalId) {
             const confirmed = window.confirm(
-                "Replace your current goal with this new one? You can still keep or delete archived goals."
+                "Update your current active goal with these values?"
             );
             if (!confirmed) return;
         }
@@ -167,6 +176,12 @@ export default function GoalPage() {
             setResult(data);
             if (data.ok) {
                 setExistingGoalId(data.goalId ?? existingGoalId);
+                setActiveGoal({
+                    id: data.goalId ?? existingGoalId ?? "active",
+                    distance,
+                    targetDate,
+                    targetTimeSeconds: targetTimeSeconds ?? null,
+                });
                 setTimeout(() => router.push("/dashboard"), 1200);
             }
         } catch {
@@ -224,6 +239,7 @@ export default function GoalPage() {
             if (!res.ok) return;
 
             setExistingGoalId(null);
+            setActiveGoal(null);
             setDistance(null);
             setTargetDate("");
             setHasTargetTime(false);
@@ -264,6 +280,25 @@ export default function GoalPage() {
                     </button>
                 )}
 
+                {activeGoal && (
+                    <div className="glass-card p-4 border border-green-500/20">
+                        <div className="flex items-center justify-between mb-2">
+                            <p className="text-xs text-white/40 uppercase tracking-widest">Current Saved Goal</p>
+                            <span className="text-[10px] px-2 py-0.5 rounded-full bg-green-500/20 text-green-300">
+                                Active
+                            </span>
+                        </div>
+                        <p className="text-sm font-semibold text-white/90">
+                            {activeGoal.distance} {"->"} {activeGoal.targetDate}
+                        </p>
+                        <p className="text-xs text-white/50 mt-1">
+                            {activeGoal.targetTimeSeconds && activeGoal.targetTimeSeconds > 0
+                                ? `Target time ${formatTime(activeGoal.targetTimeSeconds)}`
+                                : "No specific finish-time target"}
+                        </p>
+                    </div>
+                )}
+
                 {archivedGoals.length > 0 && (
                     <div className="glass-card p-4">
                         <div className="flex items-center justify-between mb-3">
@@ -277,6 +312,9 @@ export default function GoalPage() {
                                 Delete all
                             </button>
                         </div>
+                        <p className="text-xs text-white/40 mb-3">
+                            Active goal is the one used by planner/dashboard. Archived goals are previous goals only.
+                        </p>
                         <div className="flex flex-col gap-2">
                             {archivedGoals.map((g) => (
                                 <div key={g.id} className="flex items-center justify-between rounded-lg border border-white/10 px-3 py-2">
