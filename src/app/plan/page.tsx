@@ -46,10 +46,11 @@ const TYPE_STYLES: Record<string, { bg: string; text: string; border: string }> 
     recovery: { bg: "bg-green-500/10", text: "text-green-300", border: "border-green-500/20" },
     long_run: { bg: "bg-blue-500/10", text: "text-blue-400", border: "border-blue-500/20" },
     tempo: { bg: "bg-yellow-500/10", text: "text-yellow-400", border: "border-yellow-500/20" },
+    fast: { bg: "bg-orange-500/10", text: "text-orange-400", border: "border-orange-500/20" },
     interval: { bg: "bg-red-500/10", text: "text-red-400", border: "border-red-500/20" },
     fartlek: { bg: "bg-orange-500/10", text: "text-orange-400", border: "border-orange-500/20" },
     pace_run: { bg: "bg-purple-500/10", text: "text-purple-400", border: "border-purple-500/20" },
-    time_trial: { bg: "bg-pink-500/10", text: "text-pink-400", border: "border-pink-500/20" },
+    race: { bg: "bg-pink-500/10", text: "text-pink-400", border: "border-pink-500/20" },
     rest: { bg: "bg-white/5", text: "text-white/30", border: "border-white/10" },
     cross_training: { bg: "bg-cyan-500/10", text: "text-cyan-400", border: "border-cyan-500/20" },
 };
@@ -62,6 +63,15 @@ function prettifyType(type: string): string {
     return type
         .replace(/_/g, " ")
         .replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+/**
+ * Returns true for structural labels like "6 x 400", "8 x 200" that describe
+ * workout structure. Returns false for duration labels like "35 min tempo",
+ * "70 min run" which conflict with scaled metrics.
+ */
+function isStructuralLabel(label: string): boolean {
+    return /\d+\s*x\s*\d+/.test(label);
 }
 
 function formatDate(dateStr: string): string {
@@ -371,7 +381,7 @@ export default function PlanPage() {
                                                     <p className={`text-sm font-medium ${style.text}`}>
                                                         {isOptionalRunDay
                                                             ? "Optional Easy Run"
-                                                            : workout.workoutLabel
+                                                            : workout.workoutLabel && isStructuralLabel(workout.workoutLabel)
                                                                 ? workout.workoutLabel
                                                                 : prettifyType(workout.workoutType)}
                                                     </p>

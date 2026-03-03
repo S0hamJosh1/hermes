@@ -13,7 +13,7 @@ export default function GradientBackdrop() {
         className="object-cover"
         quality={90}
       />
-      <div className="absolute inset-0 bg-[#020a18]/40" />
+      <div className="absolute inset-0 bg-[#020a18]/20" />
     </div>
   );
 }

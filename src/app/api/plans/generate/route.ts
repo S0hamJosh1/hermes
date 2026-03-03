@@ -394,7 +394,7 @@ export async function POST(req: NextRequest) {
             weekNumber: result.weekNumber,
             selectorDebug: result.selectorDebug,
           },
-          volumeChangePercentage: result.plan.rampPercentage,
+          volumeChangePercentage: Math.max(-999.99, Math.min(999.99, result.plan.rampPercentage)),
           adaptationRationale: "Automatic transition from weekly pipeline generation.",
           window7Day: windows.window7Day,
           window28Day: windows.window28Day,

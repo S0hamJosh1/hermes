@@ -199,7 +199,7 @@ function repairInjuryReducedIntensity(
 ): RepairAction {
   const affected: number[] = [];
   for (const w of plan.workouts) {
-    if (w.type === "tempo" || w.type === "interval" || w.type === "pace_run") {
+    if (w.type === "tempo" || w.type === "fast" || w.type === "interval" || w.type === "pace_run") {
       affected.push(w.dayOfWeek);
       w.type = "easy_run";
       w.paceSecondsPerKm = profile.basePaceSecondsPerKm + 30;
@@ -242,7 +242,7 @@ function repairTaperIntensity(
 ): RepairAction {
   const affected: number[] = [];
   for (const w of plan.workouts) {
-    if (w.type === "interval" || w.type === "tempo") {
+    if (w.type === "interval" || w.type === "tempo" || w.type === "fast") {
       affected.push(w.dayOfWeek);
       w.type = "easy_run";
       w.paceSecondsPerKm = profile.basePaceSecondsPerKm + 30;

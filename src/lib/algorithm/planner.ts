@@ -32,7 +32,7 @@ function mapDayType(hhType: HalHigdonDayType): WorkoutCategory {
     case "pace": return "pace_run";
     case "tempo": return "tempo";
     case "interval": return "interval";
-    case "fast": return "tempo";
+    case "fast": return "fast";
     case "optional_run": return "easy_run";
     case "long_run": return "long_run";
     case "race": return "race";
@@ -41,7 +41,7 @@ function mapDayType(hhType: HalHigdonDayType): WorkoutCategory {
 }
 
 function isKeyWorkout(category: WorkoutCategory): boolean {
-  return category === "long_run" || category === "pace_run" || category === "tempo" || category === "interval" || category === "race";
+  return category === "long_run" || category === "pace_run" || category === "tempo" || category === "fast" || category === "interval" || category === "race";
 }
 
 // --- Pace assignment ---
@@ -57,9 +57,10 @@ function assignPace(
   switch (category) {
     case "easy_run": return easyPace;
     case "recovery": return recoveryPace;
-    case "long_run": return easyPace + 15;       // long run slightly slower than easy
-    case "pace_run": return basePaceSecondsPerKm; // marathon race pace
+    case "long_run": return easyPace + 15;
+    case "pace_run": return basePaceSecondsPerKm;
     case "tempo": return thresholdPaceSecondsPerKm;
+    case "fast": return thresholdPaceSecondsPerKm + 10; // faster than easy, ~tempo effort
     case "interval": return thresholdPaceSecondsPerKm - 15;
     case "cross_training": return 0;
     case "rest": return 0;
@@ -75,6 +76,7 @@ function assignZone(category: WorkoutCategory): IntensityZone {
     case "long_run": return "Zone 2";
     case "pace_run": return "Zone 3";
     case "tempo": return "Threshold";
+    case "fast": return "Zone 3";
     case "interval": return "Zone 4";
     case "race": return "Zone 3";
     case "cross_training": return "Zone 1";
@@ -96,7 +98,7 @@ function maybeInjectQualityWorkout(
   if (!shortRace || blockedState) return workouts;
 
   const hasQuality = workouts.some((w) =>
-    w.type === "tempo" || w.type === "interval" || w.type === "pace_run" || w.type === "race"
+    w.type === "tempo" || w.type === "fast" || w.type === "interval" || w.type === "pace_run" || w.type === "race"
   );
   if (hasQuality) return workouts;
 

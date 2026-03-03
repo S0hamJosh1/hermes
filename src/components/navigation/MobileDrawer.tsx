@@ -85,7 +85,9 @@ export default function MobileDrawer({
         )}
 
         <nav className="space-y-1">
-          {APP_NAV_ITEMS.map((item) => {
+          {APP_NAV_ITEMS.filter((item) =>
+            item.href !== "/onboarding/bootcamp" || !bootcampCompleted
+          ).map((item) => {
             const blocked = Boolean(item.requiresBootcampComplete && !bootcampCompleted);
             const active = isActive(pathname, item.href);
             return (

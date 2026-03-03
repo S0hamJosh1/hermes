@@ -134,7 +134,7 @@ function checkInjuryLock(
     }
     if (injury.reducedIntensity) {
       const qualityWorkouts = plan.workouts.filter(
-        (w) => w.type === "tempo" || w.type === "interval" || w.type === "pace_run"
+        (w) => w.type === "tempo" || w.type === "fast" || w.type === "interval" || w.type === "pace_run"
       );
       if (qualityWorkouts.length > 0) {
         violations.push({
@@ -174,7 +174,7 @@ function checkTaperProtection(
   }
 
   const highIntensity = plan.workouts.filter(
-    (w) => w.type === "interval" || w.type === "tempo"
+    (w) => w.type === "interval" || w.type === "tempo" || w.type === "fast"
   );
   if (highIntensity.length > 0) {
     violations.push({

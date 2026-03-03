@@ -46,6 +46,7 @@ export type WorkoutCategory =
   | "easy_run"
   | "long_run"
   | "tempo"
+  | "fast"
   | "pace_run"
   | "interval"
   | "recovery"
