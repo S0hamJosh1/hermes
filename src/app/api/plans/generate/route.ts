@@ -425,9 +425,18 @@ export async function POST(req: NextRequest) {
       totalVolumeKm: result.plan.totalVolumeKm,
       wasRepaired: result.wasRepaired,
       repairsApplied: result.repairs.length,
+      repairs: result.repairs,
       softViolations: result.softViolations.length,
       workouts: savedPlan.workouts.length,
       selectorDebug: result.selectorDebug,
+      _debug: {
+        previousWeekVolumeKm,
+        capacityKm,
+        hadPreviousPlan: !!previousPlan,
+        previousPlanVolumeKm: previousPlan ? toNumber(previousPlan.totalVolumeKm, 0) : null,
+        window7DayVolumeKm: byActivity.window7Day.volumeKm,
+        profileState: profile.currentState,
+      },
     });
   } catch (error) {
     console.error("POST /api/plans/generate failed:", error);

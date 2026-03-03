@@ -128,9 +128,12 @@ export default function PlanPage() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ weekStartDate: target.toISOString() }),
             });
+            const data = await res.json().catch(() => ({}));
             if (!res.ok) {
-                const data = await res.json().catch(() => ({}));
+                console.error("Generate failed for", target.toISOString(), data);
                 errors.push(data.error ?? `Failed to generate week of ${formatDate(target.toISOString())}`);
+            } else {
+                console.log("Generated week", target.toISOString(), data);
             }
         }
         return errors;
