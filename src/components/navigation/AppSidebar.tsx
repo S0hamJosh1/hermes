@@ -61,22 +61,22 @@ export default function AppSidebar({
   return (
     <GlassPanel className="hidden lg:flex lg:w-72 lg:shrink-0 lg:flex-col p-4">
       <div className="mb-6 px-2">
-        <p className="text-xs tracking-[0.2em] uppercase text-blue-300/60">Hermes</p>
+        <p className="text-xs tracking-[0.2em] uppercase text-white/50">Hermes</p>
         <p className="text-2xl font-semibold text-white mt-1">Training OS</p>
-        {username ? <p className="text-xs text-blue-200/40 mt-2">@{username}</p> : null}
+        {username ? <p className="text-xs text-white/40 mt-2">@{username}</p> : null}
       </div>
 
       {!bootcampCompleted && (
-        <div className="mb-5 rounded-xl border border-blue-400/15 bg-blue-500/5 p-3">
-          <p className="text-xs uppercase tracking-widest text-blue-300/50">Bootcamp</p>
+        <div className="mb-5 rounded-xl border border-white/15 bg-white/5 p-3">
+          <p className="text-xs uppercase tracking-widest text-white/45">Bootcamp</p>
           <p className="text-sm text-white/80 mt-1">Calibration in progress</p>
           <div className="mt-3 h-1.5 rounded-full bg-white/10 overflow-hidden">
             <div
-              className="h-full rounded-full bg-gradient-to-r from-blue-400 to-cyan-300 transition-all"
+              className="h-full rounded-full bg-gradient-to-r from-white/50 to-white/30 transition-all"
               style={{ width: `${Math.max(0, Math.min(100, bootcampProgressPct ?? 0))}%` }}
             />
           </div>
-          <p className="mt-2 text-[11px] text-blue-200/40">
+          <p className="mt-2 text-[11px] text-white/40">
             {Math.round(Math.max(0, Math.min(100, bootcampProgressPct ?? 0)))}% complete
           </p>
         </div>
@@ -92,18 +92,17 @@ export default function AppSidebar({
             <Link
               key={item.href}
               href={blocked ? "/onboarding/bootcamp" : item.href}
-              className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition ${
-                active
-                  ? "bg-blue-500/15 text-white border border-blue-400/25"
-                  : "text-white/70 hover:text-white hover:bg-blue-500/10 border border-transparent"
-              }`}
+              className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition ${active
+                  ? "bg-white/10 text-white border border-white/20"
+                  : "text-white/70 hover:text-white hover:bg-white/5 border border-transparent"
+                }`}
             >
-              <span className={active ? "text-blue-300" : "text-white/50"}>
+              <span className={active ? "text-white/80" : "text-white/50"}>
                 {ICON_MAP[item.iconKey]}
               </span>
               <span>{item.label}</span>
               {item.href === "/onboarding/bootcamp" && !bootcampCompleted ? (
-                <span className="ml-auto text-[10px] px-2 py-0.5 rounded-full bg-blue-500/25 text-blue-200">
+                <span className="ml-auto text-[10px] px-2 py-0.5 rounded-full bg-white/15 text-white/60">
                   Active
                 </span>
               ) : null}
@@ -134,7 +133,7 @@ export default function AppSidebar({
       <button
         onClick={() => void onLogout()}
         disabled={loggingOut}
-        className="mt-5 flex items-center justify-center gap-2 rounded-xl border border-blue-400/15 bg-blue-500/5 px-3 py-2 text-sm text-white/60 hover:text-white hover:bg-blue-500/10 transition disabled:opacity-50"
+        className="mt-5 flex items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/5 px-3 py-2 text-sm text-white/60 hover:text-white hover:bg-white/10 transition disabled:opacity-50"
       >
         <ExitIcon className="w-3.5 h-3.5" />
         {loggingOut ? "Logging out..." : "Logout"}
