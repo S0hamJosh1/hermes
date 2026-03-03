@@ -105,8 +105,9 @@ function repairRampLimit(
     : config.rampLimitPercent;
   let maxVolume = plan.previousWeekVolumeKm * (1 + limit / 100);
 
-  // Never scale below a reasonable floor — prevents death spiral
-  const REPAIR_FLOOR_KM = 5;
+  // Never scale below a reasonable floor — prevents death spiral.
+  // Use 40% of runner capacity as floor (e.g. 14km for a 35km/wk runner).
+  const REPAIR_FLOOR_KM = Math.max(5, profile.weeklyCapacityKm * 0.4);
   maxVolume = Math.max(maxVolume, REPAIR_FLOOR_KM);
 
   const scaleFactor = Math.min(1, maxVolume / plan.totalVolumeKm);

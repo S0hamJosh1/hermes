@@ -212,7 +212,10 @@ export async function POST(req: NextRequest) {
     const weekEndDate = addDays(weekStartDate, 6);
 
     const previousPlan = await prisma.weeklyPlan.findFirst({
-      where: { userId: runner.user.id },
+      where: {
+        userId: runner.user.id,
+        weekStartDate: { lt: weekStartDate },
+      },
       orderBy: { weekStartDate: "desc" },
     });
     const recentActivities = await prisma.stravaActivity.findMany({
@@ -239,9 +242,13 @@ export async function POST(req: NextRequest) {
       window90Day: summarizeActivities(recentActivities, 90),
     };
 
+    // Use previous plan volume, or recent activity, or capacity as floor
+    const capacityKm = toNumber(runner.profile.weeklyCapacityKm, 35);
     const previousWeekVolumeKm = previousPlan
-      ? toNumber(previousPlan.totalVolumeKm, 0)
-      : byActivity.window7Day.volumeKm;
+      ? toNumber(previousPlan.totalVolumeKm, capacityKm)
+      : byActivity.window7Day.volumeKm > 0
+        ? byActivity.window7Day.volumeKm
+        : capacityKm;
 
     const windows = {
       window7Day: {

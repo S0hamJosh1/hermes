@@ -240,7 +240,7 @@ export default function PlanPage() {
                             <button
                                 onClick={handleRegenerateTwoWeeks}
                                 disabled={generating}
-                                className="text-xs px-3 py-1.5 rounded-lg border border-blue-400/20 bg-blue-500/10 text-blue-300 hover:bg-blue-500/20 transition disabled:opacity-50"
+                                className="text-xs px-3 py-1.5 rounded-lg border border-white/20 bg-white/10 text-white/60 hover:bg-white/20 transition disabled:opacity-50"
                             >
                                 {generating ? "Regenerating..." : "Regenerate Plans"}
                             </button>
