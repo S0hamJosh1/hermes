@@ -192,7 +192,7 @@ function checkTaperProtection(
 // ─── Hard Rule 5: Overreach Detection ───────────────────────────────────────
 
 function checkOverreach(
-  _plan: GeneratedWeeklyPlan,
+  plan: GeneratedWeeklyPlan,
   _profile: RunnerProfile,
   _config: PlannerConfig,
   context: ValidatorContext,
@@ -203,13 +203,21 @@ function checkOverreach(
   ) return [];
 
   if (context.overreach28DayVolume > context.overreach28DayThreshold) {
+    // Overreach is historical (28-day window), so this week's plan cannot
+    // "fix" history directly. We enforce a recovery-week target instead.
+    const targetRecoveryVolume = plan.previousWeekVolumeKm > 0
+      ? Math.round(plan.previousWeekVolumeKm * 0.6 * 10) / 10
+      : Math.round(plan.totalVolumeKm * 0.6 * 10) / 10;
+
+    if (plan.totalVolumeKm <= targetRecoveryVolume) return [];
+
     return [{
       ruleId: "OVERREACH_DETECTION",
       ruleName: "Overreach Detection",
       severity: "hard",
       message: `28-day cumulative volume (${Math.round(context.overreach28DayVolume)}km) exceeds safe threshold (${Math.round(context.overreach28DayThreshold)}km).`,
       affectedDays: [],
-      suggestedAction: "Trigger recovery week: reduce volume 40%.",
+      suggestedAction: `Trigger recovery week: reduce volume to \u2264${targetRecoveryVolume}km.`,
     }];
   }
   return [];

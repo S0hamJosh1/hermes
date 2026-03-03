@@ -34,6 +34,18 @@ export type RunnerContext = {
     goalDate: string;
 };
 
+function isActionableIntent(type: IntentType): boolean {
+    return (
+        type === "volume_change" ||
+        type === "plan_level_change" ||
+        type === "skip_workout" ||
+        type === "reschedule" ||
+        type === "modify_workout" ||
+        type === "report_health" ||
+        type === "context_response"
+    );
+}
+
 const VALID_INTENTS: IntentType[] = [
     "volume_change",
     "plan_level_change",
@@ -110,12 +122,23 @@ export async function parseIntent(
             ? (parsed.type as IntentType)
             : keywordResult.type;
 
+        const parsedConfidence = typeof parsed.confidence === "number"
+            ? Math.max(0, Math.min(1, parsed.confidence))
+            : 0.6;
+
+        // Guardrail: if keyword detection found an actionable edit intent,
+        // don't allow the model to downgrade it into conversational/unknown.
+        if (
+            isActionableIntent(keywordResult.type) &&
+            (!isActionableIntent(intentType) || parsedConfidence < 0.45)
+        ) {
+            return keywordResult;
+        }
+
         return {
             type: intentType,
             params: parsed.params ?? keywordResult.params,
-            confidence: typeof parsed.confidence === "number"
-                ? Math.max(0, Math.min(1, parsed.confidence))
-                : 0.6,
+            confidence: parsedConfidence,
         };
     } catch {
         return keywordResult;

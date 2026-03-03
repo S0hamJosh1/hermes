@@ -261,7 +261,12 @@ function repairTaperIntensity(
 }
 
 function repairOverreach(plan: GeneratedWeeklyPlan): RepairAction {
-  const scaleFactor = 0.6; // 40% reduction
+  const targetVolume = plan.previousWeekVolumeKm > 0
+    ? plan.previousWeekVolumeKm * 0.6
+    : plan.totalVolumeKm * 0.6;
+  const scaleFactor = plan.totalVolumeKm > 0
+    ? Math.min(1, targetVolume / plan.totalVolumeKm)
+    : 1;
   const originalVolume = plan.totalVolumeKm;
 
   for (const w of plan.workouts) {
@@ -274,7 +279,7 @@ function repairOverreach(plan: GeneratedWeeklyPlan): RepairAction {
     ruleId: "OVERREACH_DETECTION",
     description: "Applied 40% volume reduction due to overreach.",
     originalValue: `${originalVolume}km`,
-    repairedValue: `${Math.round(originalVolume * scaleFactor * 10) / 10}km`,
+    repairedValue: `${Math.round(targetVolume * 10) / 10}km`,
     affectedDays: plan.workouts.filter((w) => w.distanceKm > 0).map((w) => w.dayOfWeek),
   };
 }
