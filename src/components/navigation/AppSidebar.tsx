@@ -1,10 +1,20 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { APP_NAV_ITEMS } from "@/lib/navigation/app-nav";
 import GlassPanel from "@/components/ui/GlassPanel";
+import {
+  DashboardIcon,
+  CalendarIcon,
+  RocketIcon,
+  ChatBubbleIcon,
+  TargetIcon,
+  LightningBoltIcon,
+  CheckCircledIcon,
+  ExitIcon,
+} from "@radix-ui/react-icons";
+import type { ReactNode } from "react";
 
 type AppSidebarProps = {
   username?: string;
@@ -14,16 +24,25 @@ type AppSidebarProps = {
   loggingOut?: boolean;
 };
 
+const ICON_MAP: Record<string, ReactNode> = {
+  dashboard: <DashboardIcon className="w-4 h-4" />,
+  calendar: <CalendarIcon className="w-4 h-4" />,
+  rocket: <RocketIcon className="w-4 h-4" />,
+  chat: <ChatBubbleIcon className="w-4 h-4" />,
+  target: <TargetIcon className="w-4 h-4" />,
+  lightning: <LightningBoltIcon className="w-4 h-4" />,
+};
+
 const SYSTEMS = [
   "Strava OAuth & Sync",
   "Auto-Calibration",
   "Bootcamp Flow",
-  "Plan Generation Pipeline",
-  "State Machine (9 states)",
-  "Validator (8 safety rules)",
-  "Auto-Repair Engine",
-  "Health & Injury Tracking",
-  "Compliance System",
+  "Plan Generation",
+  "State Machine",
+  "Safety Validator",
+  "Auto-Repair",
+  "Health Tracking",
+  "Compliance",
 ];
 
 function isActive(pathname: string, href: string): boolean {
@@ -38,10 +57,9 @@ export default function AppSidebar({
   loggingOut = false,
 }: AppSidebarProps) {
   const pathname = usePathname();
-  const [systemsExpanded, setSystemsExpanded] = useState(false);
 
   return (
-    <GlassPanel className="hidden lg:flex lg:w-72 lg:shrink-0 lg:flex-col p-4 h-[calc(100vh-2rem)] sticky top-4">
+    <GlassPanel className="hidden lg:flex lg:w-72 lg:shrink-0 lg:flex-col p-4">
       <div className="mb-6 px-2">
         <p className="text-xs tracking-[0.2em] uppercase text-blue-300/60">Hermes</p>
         <p className="text-2xl font-semibold text-white mt-1">Training OS</p>
@@ -64,7 +82,7 @@ export default function AppSidebar({
         </div>
       )}
 
-      <nav className="flex-1 space-y-1">
+      <nav className="space-y-1">
         {APP_NAV_ITEMS.map((item) => {
           const blocked = Boolean(item.requiresBootcampComplete && !bootcampCompleted);
           const active = isActive(pathname, item.href);
@@ -78,7 +96,9 @@ export default function AppSidebar({
                   : "text-white/70 hover:text-white hover:bg-blue-500/10 border border-transparent"
               }`}
             >
-              <span className={active ? "text-blue-300" : "text-white/50"}>{item.icon}</span>
+              <span className={active ? "text-blue-300" : "text-white/50"}>
+                {ICON_MAP[item.iconKey]}
+              </span>
               <span>{item.label}</span>
               {item.href === "/onboarding/bootcamp" && !bootcampCompleted ? (
                 <span className="ml-auto text-[10px] px-2 py-0.5 rounded-full bg-blue-500/25 text-blue-200">
@@ -90,45 +110,31 @@ export default function AppSidebar({
         })}
       </nav>
 
-      {/* Systems status */}
-      <div className="mt-3 mb-3">
-        <button
-          onClick={() => setSystemsExpanded((v) => !v)}
-          className="w-full flex items-center gap-2.5 rounded-xl px-3 py-2 text-xs text-white/50 hover:text-white/70 hover:bg-blue-500/5 transition"
-        >
+      {/* Systems status - always visible, fills remaining space */}
+      <div className="mt-auto pt-5">
+        <div className="flex items-center gap-2.5 px-3 mb-3">
           <span className="relative flex h-2 w-2">
             <span className="absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-40 animate-ping" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-green-400" />
           </span>
-          <span>All Systems Online</span>
-          <svg
-            className={`ml-auto h-3 w-3 transition-transform ${systemsExpanded ? "rotate-180" : ""}`}
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={2}
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-          </svg>
-        </button>
-
-        {systemsExpanded && (
-          <div className="mt-1 ml-3 pl-4 border-l border-blue-400/10 space-y-1 animate-fade-in">
-            {SYSTEMS.map((name) => (
-              <div key={name} className="flex items-center gap-2 text-[11px] text-white/40 py-0.5">
-                <span className="w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
-                {name}
-              </div>
-            ))}
-          </div>
-        )}
+          <span className="text-xs text-white/50 uppercase tracking-widest">Systems Online</span>
+        </div>
+        <div className="space-y-1 px-3">
+          {SYSTEMS.map((name) => (
+            <div key={name} className="flex items-center gap-2.5 text-[11px] text-white/35 py-0.5">
+              <CheckCircledIcon className="w-3 h-3 text-green-400/60 flex-shrink-0" />
+              {name}
+            </div>
+          ))}
+        </div>
       </div>
 
       <button
         onClick={() => void onLogout()}
         disabled={loggingOut}
-        className="rounded-xl border border-blue-400/15 bg-blue-500/5 px-3 py-2 text-sm text-white/60 hover:text-white hover:bg-blue-500/10 transition disabled:opacity-50"
+        className="mt-5 flex items-center justify-center gap-2 rounded-xl border border-blue-400/15 bg-blue-500/5 px-3 py-2 text-sm text-white/60 hover:text-white hover:bg-blue-500/10 transition disabled:opacity-50"
       >
+        <ExitIcon className="w-3.5 h-3.5" />
         {loggingOut ? "Logging out..." : "Logout"}
       </button>
     </GlassPanel>

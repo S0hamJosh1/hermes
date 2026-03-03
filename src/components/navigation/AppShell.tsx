@@ -135,7 +135,7 @@ export default function AppShell({ children }: AppShellProps) {
   }
 
   return (
-    <div className="min-h-screen app-surface text-white">
+    <div className="min-h-screen text-white">
       <GradientBackdrop />
       <MobileDrawer
         open={menuOpen}
@@ -160,7 +160,7 @@ export default function AppShell({ children }: AppShellProps) {
           </button>
         </div>
 
-        <div className="mx-auto flex w-full max-w-[1600px] gap-4">
+        <div className="mx-auto flex items-stretch w-full max-w-[1600px] gap-4 min-h-[calc(100vh-2rem)]">
           <AppSidebar
             username={username}
             bootcampCompleted={flow?.bootcampCompleted ?? false}
@@ -170,7 +170,7 @@ export default function AppShell({ children }: AppShellProps) {
           />
 
           <main className="flex-1 min-w-0">
-            <div className="glass-panel p-4 lg:p-6 min-h-[calc(100vh-2rem)] animate-fade-in">
+            <div className="glass-panel p-4 lg:p-6 h-full animate-fade-in">
               {!gateReady ? (
                 <div className="h-[60vh] flex items-center justify-center text-white/60 text-sm">
                   Loading workspace...
