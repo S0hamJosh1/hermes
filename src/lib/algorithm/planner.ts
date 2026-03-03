@@ -156,6 +156,29 @@ export function getVolumeFloor(goalDistance: string): number {
   return MIN_VOLUME_FLOOR_KM[goalDistance] ?? 5;
 }
 
+function goalDistanceKm(goalDistance: RunnerGoal["distance"]): number {
+  switch (goalDistance) {
+    case "4K": return 4;
+    case "5K": return 5;
+    case "10K": return 10;
+    case "Half Marathon": return 21.1;
+    case "Marathon": return 42.2;
+    default: return 5;
+  }
+}
+
+function isSameMondayWeek(a: Date, b: Date): boolean {
+  const a0 = new Date(a);
+  const b0 = new Date(b);
+  const aDay = (a0.getDay() + 6) % 7; // Mon=0
+  const bDay = (b0.getDay() + 6) % 7;
+  a0.setDate(a0.getDate() - aDay);
+  b0.setDate(b0.getDate() - bDay);
+  a0.setHours(0, 0, 0, 0);
+  b0.setHours(0, 0, 0, 0);
+  return a0.getTime() === b0.getTime();
+}
+
 /**
  * Calculate a scaling factor to map template distances to this runner's capacity.
  * The plan selector already picks an appropriate-level plan, so we only do a
@@ -203,9 +226,19 @@ export function generateWeeklyPlan(
   let totalVolume = 0;
 
   for (const day of templateWeek.days) {
-    const category = mapDayType(day.type);
+    const templateCategory = mapDayType(day.type);
+    // Some templates include tune-up "race" workouts in mid-plan weeks.
+    // Keep true race only in the user's target-race week; otherwise treat as fast.
+    const category: WorkoutCategory =
+      templateCategory === "race" && !isSameMondayWeek(weekStartDate, goal.targetDate)
+        ? "fast"
+        : templateCategory;
     const templateDistKm = day.distanceKm ?? 0;
     let distanceKm = Math.round(templateDistKm * scaleFactor * stateMultiplier * 10) / 10;
+
+    if (templateCategory === "race" && distanceKm <= 0) {
+      distanceKm = Math.round(goalDistanceKm(goal.distance) * scaleFactor * stateMultiplier * 10) / 10;
+    }
 
     const paceForCategory = assignPace(category, profile);
     if (distanceKm <= 0 && day.durationMinutes && day.durationMinutes > 0 && paceForCategory > 0) {

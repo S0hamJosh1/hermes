@@ -51,6 +51,24 @@ function atProgress(start: Date, end: Date, pct: number): Date {
     return new Date(ms);
 }
 
+function parseDateOnly(raw: string): Date | null {
+    const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(raw);
+    if (!m) return null;
+    const year = Number(m[1]);
+    const month = Number(m[2]);
+    const day = Number(m[3]);
+    if (!Number.isFinite(year) || !Number.isFinite(month) || !Number.isFinite(day)) return null;
+    if (month < 1 || month > 12 || day < 1 || day > 31) return null;
+    return new Date(Date.UTC(year, month - 1, day));
+}
+
+function formatDateOnlyUTC(date: Date): string {
+    const y = date.getUTCFullYear();
+    const m = String(date.getUTCMonth() + 1).padStart(2, "0");
+    const d = String(date.getUTCDate()).padStart(2, "0");
+    return `${y}-${m}-${d}`;
+}
+
 async function regenerateRoadmapForGoal(params: {
     userId: string;
     goalId: string;
@@ -165,8 +183,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     }
 
     // Validate date
-    const targetDate = new Date(body.targetDate);
-    if (isNaN(targetDate.getTime())) {
+    const targetDate = parseDateOnly(body.targetDate);
+    if (!targetDate || isNaN(targetDate.getTime())) {
         return NextResponse.json({ error: "Invalid target date." }, { status: 400 });
     }
 
@@ -193,22 +211,38 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         );
     }
 
-    // Deactivate any existing goals (set priority to 0)
-    await prisma.longTermGoal.updateMany({
-        where: { userId: session.userId },
-        data: { priority: 0 },
+    const activeGoal = await prisma.longTermGoal.findFirst({
+        where: { userId: session.userId, priority: 1 },
+        orderBy: { createdAt: "desc" },
+        select: { id: true },
     });
 
-    // Create the new goal
-    const goal = await prisma.longTermGoal.create({
-        data: {
-            userId: session.userId,
-            distance: body.distance,
-            targetDate,
-            targetTimeSeconds: body.targetTimeSeconds ?? null,
-            priority: 1,
-        },
-    });
+    let goal;
+    if (activeGoal) {
+        goal = await prisma.longTermGoal.update({
+            where: { id: activeGoal.id },
+            data: {
+                distance: body.distance,
+                targetDate,
+                targetTimeSeconds: body.targetTimeSeconds ?? null,
+                priority: 1,
+            },
+        });
+    } else {
+        await prisma.longTermGoal.updateMany({
+            where: { userId: session.userId, priority: 1 },
+            data: { priority: 0 },
+        });
+        goal = await prisma.longTermGoal.create({
+            data: {
+                userId: session.userId,
+                distance: body.distance,
+                targetDate,
+                targetTimeSeconds: body.targetTimeSeconds ?? null,
+                priority: 1,
+            },
+        });
+    }
 
     await prisma.runnerProfile.update({
         where: { userId: session.userId },
@@ -246,7 +280,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         ok: true,
         goalId: goal.id,
         distance: goal.distance,
-        targetDate: goal.targetDate.toISOString().split("T")[0],
+        targetDate: formatDateOnlyUTC(goal.targetDate),
         weeksUntilRace,
         feasible,
         feasibilityNote: feasible
@@ -263,7 +297,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
 
     const goals = await prisma.longTermGoal.findMany({
         where: { userId: session.userId },
-        orderBy: [{ priority: "asc" }, { createdAt: "desc" }],
+        orderBy: [{ priority: "desc" }, { createdAt: "desc" }],
         select: {
             id: true,
             distance: true,
@@ -274,8 +308,35 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
         },
     });
 
-    const activeGoal = goals.find((g) => g.priority === 1) ?? null;
+    let activeGoal = goals.find((g) => g.priority === 1) ?? null;
+    if (!activeGoal && goals.length > 0) {
+        activeGoal = goals[0];
+        await prisma.longTermGoal.update({
+            where: { id: activeGoal.id },
+            data: { priority: 1 },
+        });
+    }
     const archivedGoals = goals.filter((g) => g.priority !== 1);
+
+    if (activeGoal) {
+        await prisma.runnerProfile.updateMany({
+            where: { userId: session.userId },
+            data: {
+                primaryGoalDistance: activeGoal.distance,
+                primaryGoalDate: activeGoal.targetDate,
+                goalTimeSeconds: activeGoal.targetTimeSeconds ?? null,
+            },
+        });
+    } else {
+        await prisma.runnerProfile.updateMany({
+            where: { userId: session.userId },
+            data: {
+                primaryGoalDistance: null,
+                primaryGoalDate: null,
+                goalTimeSeconds: null,
+            },
+        });
+    }
 
     return NextResponse.json({
         ok: true,
@@ -283,14 +344,14 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
             ? {
                 id: activeGoal.id,
                 distance: activeGoal.distance,
-                targetDate: activeGoal.targetDate.toISOString().split("T")[0],
+                targetDate: formatDateOnlyUTC(activeGoal.targetDate),
                 targetTimeSeconds: activeGoal.targetTimeSeconds,
             }
             : null,
         archivedGoals: archivedGoals.map((g) => ({
             id: g.id,
             distance: g.distance,
-            targetDate: g.targetDate.toISOString().split("T")[0],
+            targetDate: formatDateOnlyUTC(g.targetDate),
             targetTimeSeconds: g.targetTimeSeconds,
             createdAt: g.createdAt.toISOString(),
         })),

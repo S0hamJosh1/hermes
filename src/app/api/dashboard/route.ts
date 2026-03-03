@@ -12,6 +12,14 @@ import { getSessionFromRequest } from "@/lib/auth/session";
 import { prisma } from "@/lib/db/client";
 import { computePersonalBests } from "@/lib/strava/performance";
 
+function formatDateOnlyUTC(date: Date | null): string | null {
+    if (!date) return null;
+    const y = date.getUTCFullYear();
+    const m = String(date.getUTCMonth() + 1).padStart(2, "0");
+    const d = String(date.getUTCDate()).padStart(2, "0");
+    return `${y}-${m}-${d}`;
+}
+
 export async function GET(req: NextRequest): Promise<NextResponse> {
     const session = await getSessionFromRequest(req);
     if (!session) {
@@ -21,7 +29,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     const userId = session.userId;
 
     // Fetch profile, health records, strikes, and weekly summaries in parallel
-    const [profile, activeInjuries, strikeCount, recentRecords, weeklySummaries, activities] =
+    const [profile, activeGoal, activeInjuries, strikeCount, recentRecords, weeklySummaries, activities] =
         await Promise.all([
             prisma.runnerProfile.findUnique({
                 where: { userId },
@@ -38,6 +46,15 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
                     primaryGoalDistance: true,
                     primaryGoalDate: true,
                     goalTimeSeconds: true,
+                },
+            }),
+            prisma.longTermGoal.findFirst({
+                where: { userId, priority: 1 },
+                orderBy: { createdAt: "desc" },
+                select: {
+                    distance: true,
+                    targetDate: true,
+                    targetTimeSeconds: true,
                 },
             }),
             // Active injuries: health records of type 'injury' or 'pain' with severity >= 4, from last 30 days
@@ -151,6 +168,11 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
                 weeklyCapacityKm: Number(profile.weeklyCapacityKm),
                 durabilityScore: Number(profile.durabilityScore),
                 consistencyScore: Number(profile.consistencyScore),
+                primaryGoalDistance: activeGoal?.distance ?? profile.primaryGoalDistance,
+                primaryGoalDate: activeGoal?.targetDate
+                    ? formatDateOnlyUTC(activeGoal.targetDate)
+                    : formatDateOnlyUTC(profile.primaryGoalDate),
+                goalTimeSeconds: activeGoal?.targetTimeSeconds ?? profile.goalTimeSeconds,
             }
             : null,
         health: {

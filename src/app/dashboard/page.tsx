@@ -234,7 +234,7 @@ export default function Dashboard() {
                                     {profile.primaryGoalDistance}
                                     {profile.primaryGoalDate && (
                                         <span className="text-white/50 ml-2">
-                                            → {new Date(profile.primaryGoalDate).toLocaleDateString()}
+                                            → {profile.primaryGoalDate}
                                         </span>
                                     )}
                                 </p>
