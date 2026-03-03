@@ -33,6 +33,21 @@ function startOfToday(): Date {
     return d;
 }
 
+function startOfWeek(date: Date): Date {
+    const d = new Date(date);
+    const day = d.getDay();
+    const diff = (day + 6) % 7; // Mon=0
+    d.setDate(d.getDate() - diff);
+    d.setHours(0, 0, 0, 0);
+    return d;
+}
+
+function addDays(date: Date, days: number): Date {
+    const d = new Date(date);
+    d.setDate(d.getDate() + days);
+    return d;
+}
+
 function dateOnlyKey(date: Date): string {
     return date.toISOString().slice(0, 10);
 }
@@ -79,7 +94,31 @@ async function refreshPlanTotals(planId: string) {
     return { totalVolumeKm: Math.round(totalVolumeKm * 10) / 10 };
 }
 
-function resolveTargetDate(raw: unknown): Date | null {
+export function resolveWeekday(raw: string): number | null {
+    const normalized = raw.toLowerCase().trim().replace(/\./g, "");
+    const weekdays: Record<string, number> = {
+        monday: 0,
+        mon: 0,
+        tuesday: 1,
+        tue: 1,
+        tues: 1,
+        wednesday: 2,
+        wed: 2,
+        thursday: 3,
+        thu: 3,
+        thur: 3,
+        thurs: 3,
+        friday: 4,
+        fri: 4,
+        saturday: 5,
+        sat: 5,
+        sunday: 6,
+        sun: 6,
+    };
+    return weekdays[normalized] ?? null;
+}
+
+function resolveTargetDate(raw: unknown, referenceWeekStart?: Date): Date | null {
     if (typeof raw !== "string" || !raw.trim()) return null;
     const lower = raw.toLowerCase().trim();
     if (lower === "today") return startOfToday();
@@ -87,6 +126,13 @@ function resolveTargetDate(raw: unknown): Date | null {
         const d = startOfToday();
         d.setDate(d.getDate() + 1);
         return d;
+    }
+    const weekday = resolveWeekday(lower);
+    if (weekday !== null) {
+        const weekStart = referenceWeekStart
+            ? startOfWeek(referenceWeekStart)
+            : startOfWeek(new Date());
+        return addDays(weekStart, weekday);
     }
     const parsed = new Date(raw);
     if (Number.isNaN(parsed.getTime())) return null;
@@ -190,8 +236,10 @@ async function applyReschedule(input: PlanEditInput): Promise<PlanEditResult> {
     const plan = await getCurrentPlan(input.userId);
     if (!plan) return { ok: false, message: "No plan found to edit.", changedWorkouts: 0 };
 
-    const fromDate = resolveTargetDate(input.params?.fromDate) ?? resolveTargetDate(input.params?.date);
-    const toDate = resolveTargetDate(input.params?.toDate);
+    const fromDate =
+        resolveTargetDate(input.params?.fromDate, plan.weekStartDate) ??
+        resolveTargetDate(input.params?.date, plan.weekStartDate);
+    const toDate = resolveTargetDate(input.params?.toDate, plan.weekStartDate);
     if (!toDate) {
         return { ok: false, message: "Need a target date to reschedule.", changedWorkouts: 0 };
     }
@@ -214,40 +262,66 @@ async function applyReschedule(input: PlanEditInput): Promise<PlanEditResult> {
     if (target.id === source.id) {
         return { ok: true, message: "Workout is already on that day.", changedWorkouts: 0 };
     }
-    if (target.workoutType !== "rest") {
-        return {
-            ok: false,
-            message: "Target day already has a workout. Pick a rest day or skip that workout first.",
-            changedWorkouts: 0,
-        };
-    }
 
-    await prisma.$transaction([
-        prisma.workout.update({
-            where: { id: target.id },
-            data: {
-                workoutType: source.workoutType,
-                plannedDistanceKm: source.plannedDistanceKm,
-                plannedDurationMinutes: source.plannedDurationMinutes,
-                plannedPaceSecondsPerKm: source.plannedPaceSecondsPerKm,
-                intensityZone: source.intensityZone,
-                userModified: true,
-                userModificationReason: input.reason ?? "chat:reschedule_target",
-            },
-        }),
-        prisma.workout.update({
-            where: { id: source.id },
-            data: {
-                workoutType: "rest",
-                plannedDistanceKm: null,
-                plannedDurationMinutes: null,
-                plannedPaceSecondsPerKm: null,
-                intensityZone: "Zone 1",
-                userModified: true,
-                userModificationReason: input.reason ?? "chat:reschedule_source",
-            },
-        }),
-    ]);
+    const sourcePayload = {
+        workoutType: source.workoutType,
+        plannedDistanceKm: source.plannedDistanceKm,
+        plannedDurationMinutes: source.plannedDurationMinutes,
+        plannedPaceSecondsPerKm: source.plannedPaceSecondsPerKm,
+        intensityZone: source.intensityZone,
+    };
+    const targetPayload = {
+        workoutType: target.workoutType,
+        plannedDistanceKm: target.plannedDistanceKm,
+        plannedDurationMinutes: target.plannedDurationMinutes,
+        plannedPaceSecondsPerKm: target.plannedPaceSecondsPerKm,
+        intensityZone: target.intensityZone,
+    };
+
+    if (target.workoutType === "rest") {
+        await prisma.$transaction([
+            prisma.workout.update({
+                where: { id: target.id },
+                data: {
+                    ...sourcePayload,
+                    userModified: true,
+                    userModificationReason: input.reason ?? "chat:reschedule_target",
+                },
+            }),
+            prisma.workout.update({
+                where: { id: source.id },
+                data: {
+                    workoutType: "rest",
+                    plannedDistanceKm: null,
+                    plannedDurationMinutes: null,
+                    plannedPaceSecondsPerKm: null,
+                    intensityZone: "Zone 1",
+                    userModified: true,
+                    userModificationReason: input.reason ?? "chat:reschedule_source",
+                },
+            }),
+        ]);
+    } else {
+        // If target already has a workout, swap the two days.
+        await prisma.$transaction([
+            prisma.workout.update({
+                where: { id: target.id },
+                data: {
+                    ...sourcePayload,
+                    userModified: true,
+                    userModificationReason: input.reason ?? "chat:reschedule_swap_target",
+                },
+            }),
+            prisma.workout.update({
+                where: { id: source.id },
+                data: {
+                    ...targetPayload,
+                    userModified: true,
+                    userModificationReason: input.reason ?? "chat:reschedule_swap_source",
+                },
+            }),
+        ]);
+    }
 
     const totals = await refreshPlanTotals(plan.id);
     return {
@@ -255,7 +329,10 @@ async function applyReschedule(input: PlanEditInput): Promise<PlanEditResult> {
         weeklyPlanId: plan.id,
         changedWorkouts: 2,
         totalVolumeKm: totals.totalVolumeKm,
-        message: `Moved workout to ${toDate.toLocaleDateString()}.`,
+        message:
+            target.workoutType === "rest"
+                ? `Moved workout to ${toDate.toLocaleDateString()}.`
+                : `Swapped workouts between ${new Date(source.workoutDate).toLocaleDateString()} and ${toDate.toLocaleDateString()}.`,
     };
 }
 

@@ -208,33 +208,18 @@ export default function GoalPage() {
     }
 
     return (
-        <main className="min-h-screen bg-black text-white flex flex-col items-center justify-center px-6 py-12">
-            <div
-                className="fixed inset-0 pointer-events-none"
-                style={{
-                    backgroundImage:
-                        "linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)",
-                    backgroundSize: "40px 40px",
-                }}
-            />
-
-            <div className="relative z-10 w-full max-w-lg flex flex-col gap-6">
+        <main className="text-white flex flex-col items-center justify-center px-2 py-2">
+            <div className="w-full max-w-3xl flex flex-col gap-6">
                 <div>
-                    <p className="text-xs text-white/40 uppercase tracking-widest mb-1">Step 2 of 2</p>
+                    <p className="text-xs text-white/40 uppercase tracking-widest mb-1">Onboarding</p>
                     <h1 className="text-2xl font-black tracking-tight">Set Your Goal</h1>
                     <p className="text-sm text-white/50 mt-1">
                         What are you training for? You can update this anytime.
                     </p>
-                    <button
-                        onClick={() => router.push("/dashboard")}
-                        className="mt-3 text-xs text-white/50 hover:text-white/80 transition"
-                    >
-                        ← Back to Dashboard
-                    </button>
                 </div>
 
                 {loadingExistingGoal && (
-                    <div className="border border-white/10 rounded-xl p-3 text-xs text-white/40">
+                    <div className="glass-card p-3 text-xs text-white/40">
                         Loading current goal...
                     </div>
                 )}
@@ -250,7 +235,7 @@ export default function GoalPage() {
                 )}
 
                 {archivedGoals.length > 0 && (
-                    <div className="border border-white/10 rounded-xl p-4">
+                    <div className="glass-card p-4">
                         <div className="flex items-center justify-between mb-3">
                             <p className="text-xs text-white/40 uppercase tracking-widest">Archived Goals</p>
                             <button

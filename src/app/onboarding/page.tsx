@@ -2,7 +2,7 @@
  * /onboarding — Server component router.
  *
  * Checks the user's onboarding state and redirects accordingly:
- *   - No profile → /onboarding/check (calibration or bootcamp)
+ *   - No profile → /onboarding/bootcamp
  *   - Profile, no active goal → /onboarding/goal
  *   - Profile + goal → /dashboard
  */
@@ -21,7 +21,7 @@ export default async function OnboardingPage() {
     });
 
     if (!profile || !profile.bootcampCompleted) {
-        redirect("/onboarding/check");
+        redirect("/onboarding/bootcamp");
     }
 
     const activeGoal = await prisma.longTermGoal.findFirst({

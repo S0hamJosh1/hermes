@@ -193,18 +193,8 @@ export default function Dashboard() {
     const preference = profile ? planPreferenceBadge(profile) : null;
 
     return (
-        <main className="min-h-screen bg-black text-white flex flex-col items-center px-6 py-10">
-            {/* Background grid */}
-            <div
-                className="fixed inset-0 pointer-events-none"
-                style={{
-                    backgroundImage:
-                        "linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)",
-                    backgroundSize: "40px 40px",
-                }}
-            />
-
-            <div className="relative z-10 w-full max-w-lg flex flex-col gap-6">
+        <main className="text-white flex flex-col items-center px-2 py-2">
+            <div className="w-full max-w-6xl flex flex-col gap-6">
                 {/* Header */}
                 <div className="flex items-center justify-between">
                     <div>
@@ -231,7 +221,7 @@ export default function Dashboard() {
 
                 {/* Runner State + Profile */}
                 {profile && (
-                    <div className="border border-white/10 rounded-xl p-5 flex flex-col gap-4">
+                    <div className="glass-card p-5 flex flex-col gap-4">
                         <div className="flex items-center justify-between">
                             <div className="flex items-center gap-3">
                                 <div className={`w-2.5 h-2.5 rounded-full ${STATE_COLORS[profile.currentState] ?? "bg-white/40"}`} />
@@ -258,19 +248,19 @@ export default function Dashboard() {
 
                         {/* Metrics grid */}
                         <div className="grid grid-cols-2 gap-3">
-                            <div className="bg-white/5 rounded-lg p-3">
+                            <div className="glass-card p-3">
                                 <p className="text-xs text-white/40 mb-1">Easy Pace</p>
                                 <p className="text-sm font-medium">{formatPacePerMile(profile.basePaceSecondsPerKm)}</p>
                             </div>
-                            <div className="bg-white/5 rounded-lg p-3">
+                            <div className="glass-card p-3">
                                 <p className="text-xs text-white/40 mb-1">Threshold</p>
                                 <p className="text-sm font-medium">{formatPacePerMile(profile.thresholdPaceSecondsPerKm)}</p>
                             </div>
-                            <div className="bg-white/5 rounded-lg p-3">
+                            <div className="glass-card p-3">
                                 <p className="text-xs text-white/40 mb-1">Weekly Capacity</p>
                                 <p className="text-sm font-medium">{formatMiles(profile.weeklyCapacityKm)}</p>
                             </div>
-                            <div className="bg-white/5 rounded-lg p-3">
+                            <div className="glass-card p-3">
                                 <p className="text-xs text-white/40 mb-1">Consistency</p>
                                 <p className="text-sm font-medium">{Math.round(profile.consistencyScore * 100)}%</p>
                             </div>
@@ -303,7 +293,7 @@ export default function Dashboard() {
                 <div className="grid grid-cols-2 gap-3">
                     <button
                         onClick={() => router.push("/plan")}
-                        className="rounded-xl border border-white/10 bg-white/5 p-4 text-left transition hover:bg-white/10"
+                        className="glass-card p-4 text-left transition hover:bg-white/10"
                     >
                         <p className="text-xs text-white/40 mb-1">📋</p>
                         <p className="text-sm font-medium">Weekly Plan</p>
@@ -311,7 +301,7 @@ export default function Dashboard() {
                     </button>
                     <button
                         onClick={() => router.push("/roadmap")}
-                        className="rounded-xl border border-white/10 bg-white/5 p-4 text-left transition hover:bg-white/10"
+                        className="glass-card p-4 text-left transition hover:bg-white/10"
                     >
                         <p className="text-xs text-white/40 mb-1">🗺️</p>
                         <p className="text-sm font-medium">Roadmap</p>
@@ -319,7 +309,7 @@ export default function Dashboard() {
                     </button>
                     <button
                         onClick={() => router.push("/chat")}
-                        className="rounded-xl border border-white/10 bg-white/5 p-4 text-left transition hover:bg-white/10"
+                        className="glass-card p-4 text-left transition hover:bg-white/10"
                     >
                         <p className="text-xs text-white/40 mb-1">💬</p>
                         <p className="text-sm font-medium">Hermes Chat</p>
@@ -327,7 +317,7 @@ export default function Dashboard() {
                     </button>
                     <button
                         onClick={() => router.push("/onboarding/goal")}
-                        className="rounded-xl border border-white/10 bg-white/5 p-4 text-left transition hover:bg-white/10"
+                        className="glass-card p-4 text-left transition hover:bg-white/10"
                     >
                         <p className="text-xs text-white/40 mb-1">🎯</p>
                         <p className="text-sm font-medium">Goal Settings</p>
@@ -336,7 +326,7 @@ export default function Dashboard() {
                 </div>
 
                 {/* Health & Injury Status */}
-                <div className="border border-white/10 rounded-xl p-5 flex flex-col gap-4">
+                <div className="glass-card p-5 flex flex-col gap-4">
                     <div className="flex items-center justify-between">
                         <p className="text-xs text-white/40 uppercase tracking-widest">
                             Health Status
@@ -386,12 +376,12 @@ export default function Dashboard() {
 
                 {/* Compliance */}
                 {compliance && compliance.currentWeekCompliance !== null && (
-                    <div className="border border-white/10 rounded-xl p-5 flex flex-col gap-4">
+                    <div className="glass-card p-5 flex flex-col gap-4">
                         <p className="text-xs text-white/40 uppercase tracking-widest">
                             Compliance
                         </p>
                         <div className="grid grid-cols-2 gap-3">
-                            <div className="bg-white/5 rounded-lg p-3">
+                            <div className="glass-card p-3">
                                 <p className="text-xs text-white/40 mb-1">This Week</p>
                                 <p className={`text-lg font-bold ${compliance.currentWeekCompliance >= 80
                                     ? "text-green-400"
@@ -402,7 +392,7 @@ export default function Dashboard() {
                                     {Math.round(compliance.currentWeekCompliance)}%
                                 </p>
                             </div>
-                            <div className="bg-white/5 rounded-lg p-3">
+                            <div className="glass-card p-3">
                                 <p className="text-xs text-white/40 mb-1">4-Week Avg</p>
                                 <p className="text-lg font-bold text-white/80">
                                     {compliance.last4WeekAverage !== null
@@ -420,7 +410,7 @@ export default function Dashboard() {
                 )}
 
                 {/* Strava Sync */}
-                <div className="border border-white/10 rounded-xl p-5 flex flex-col gap-4">
+                <div className="glass-card p-5 flex flex-col gap-4">
                     <div className="flex items-center gap-3">
                         <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
                         <span className="text-sm text-white/70">Connected to Strava</span>
@@ -456,7 +446,7 @@ export default function Dashboard() {
                 </div>
 
                 {performance && (
-                    <div className="border border-white/10 rounded-xl p-5 flex flex-col gap-4">
+                    <div className="glass-card p-5 flex flex-col gap-4">
                         <p className="text-xs text-white/40 uppercase tracking-widest">
                             Strava Best Efforts
                         </p>
@@ -464,7 +454,7 @@ export default function Dashboard() {
                             {(["5K", "10K", "Half Marathon", "Marathon"] as const).map((d) => {
                                 const effort = performance[d];
                                 return (
-                                    <div key={d} className="rounded-lg border border-white/10 bg-white/5 px-3 py-2">
+                                    <div key={d} className="glass-card px-3 py-2">
                                         <div className="flex items-center justify-between text-sm">
                                             <span className="text-white/70">{d}</span>
                                             {effort.secondBest ? (
@@ -493,7 +483,7 @@ export default function Dashboard() {
                 )}
 
                 {/* Systems Status */}
-                <div className="border border-white/10 rounded-xl p-5">
+                <div className="glass-card p-5">
                     <p className="text-xs text-white/40 uppercase tracking-widest mb-4">
                         Systems Online
                     </p>

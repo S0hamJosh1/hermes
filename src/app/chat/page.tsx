@@ -126,6 +126,7 @@ export default function ChatPage() {
 
     const intentLabel: Record<string, string> = {
         volume_change: "📊 Volume Change",
+        plan_level_change: "🎚️ Plan Level Change",
         skip_workout: "⏭️ Skip Workout",
         reschedule: "📅 Reschedule",
         modify_workout: "✏️ Modify Workout",
@@ -134,16 +135,24 @@ export default function ChatPage() {
         context_response: "💬 Check-In Response",
     };
 
+    const planEditIntentTypes = new Set([
+        "volume_change",
+        "plan_level_change",
+        "skip_workout",
+        "reschedule",
+        "modify_workout",
+    ]);
+
     if (loading) {
         return (
-            <main className="min-h-screen bg-black text-white flex items-center justify-center">
+            <main className="h-[70vh] text-white flex items-center justify-center">
                 <div className="animate-pulse text-white/40 text-sm">Loading chat...</div>
             </main>
         );
     }
 
     return (
-        <main className="min-h-screen bg-black text-white flex flex-col">
+        <main className="h-[calc(100vh-8rem)] text-white flex flex-col">
             {/* Header */}
             <header className="border-b border-white/10 px-6 py-4 flex items-center justify-between shrink-0">
                 <div className="flex items-center gap-3">
@@ -234,6 +243,23 @@ export default function ChatPage() {
                                                 ✓ Applied
                                             </span>
                                         )}
+                                    </div>
+                                )}
+
+                            {msg.role === "assistant" &&
+                                msg.intentApplied &&
+                                msg.intentType &&
+                                planEditIntentTypes.has(msg.intentType) && (
+                                    <div className="mt-3 rounded-lg border border-green-500/30 bg-green-500/10 px-3 py-2">
+                                        <p className="text-[11px] text-green-200">
+                                            Change applied to your plan.
+                                        </p>
+                                        <button
+                                            onClick={() => router.push("/plan")}
+                                            className="mt-2 text-[11px] px-2 py-1 rounded bg-white/10 text-white/80 hover:bg-white/20 transition"
+                                        >
+                                            View updated plan
+                                        </button>
                                     </div>
                                 )}
                         </div>

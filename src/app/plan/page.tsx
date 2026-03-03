@@ -174,17 +174,8 @@ export default function PlanPage() {
     const todayIdx = (now.getDay() + 6) % 7;
 
     return (
-        <main className="min-h-screen bg-black text-white flex flex-col items-center px-6 py-10">
-            <div
-                className="fixed inset-0 pointer-events-none"
-                style={{
-                    backgroundImage:
-                        "linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)",
-                    backgroundSize: "40px 40px",
-                }}
-            />
-
-            <div className="relative z-10 w-full max-w-2xl flex flex-col gap-6">
+        <main className="text-white flex flex-col items-center px-2 py-2">
+            <div className="w-full max-w-6xl flex flex-col gap-6">
                 {/* Header */}
                 <div className="flex items-center justify-between">
                     <div>
@@ -215,7 +206,7 @@ export default function PlanPage() {
 
                 {/* No plans state */}
                 {plans.length === 0 && (
-                    <div className="border border-white/10 rounded-xl p-8 text-center flex flex-col items-center gap-4">
+                    <div className="glass-card p-8 text-center flex flex-col items-center gap-4">
                         <p className="text-white/40 text-sm">No training plans generated yet.</p>
                         <button
                             onClick={handleGenerateTwoWeeks}
@@ -234,7 +225,7 @@ export default function PlanPage() {
                 {twoWeekPlans.map(({ plan, label, isCurrentWeek }) => {
                     if (!plan) {
                         return (
-                            <div key={label} className="border border-white/10 rounded-xl p-5">
+                            <div key={label} className="glass-card p-5">
                                 <div className="flex items-center justify-between mb-2">
                                     <p className="text-sm font-medium">{label}</p>
                                     <span className="text-xs text-white/40">Not generated</span>
@@ -253,7 +244,7 @@ export default function PlanPage() {
                     }
 
                     return (
-                        <div key={plan.id} className="border border-white/10 rounded-xl p-5 flex flex-col gap-4">
+                        <div key={plan.id} className="glass-card p-5 flex flex-col gap-4">
                             <div className="text-center">
                                 <p className="text-sm font-medium">
                                     {label} · Week {plan.weekNumber}

@@ -18,6 +18,7 @@ export default function BootcampPage() {
     const [status, setStatus] = useState<BootcampStatus | null>(null);
     const [loading, setLoading] = useState(true);
     const [completing, setCompleting] = useState(false);
+    const [overriding, setOverriding] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
     function fetchStatus() {
@@ -60,30 +61,43 @@ export default function BootcampPage() {
         }
     }
 
+    async function handleOverride() {
+        const confirmed = window.confirm(
+            "Skip bootcamp and continue with conservative defaults? You can recalibrate later."
+        );
+        if (!confirmed) return;
+        setOverriding(true);
+        setError(null);
+        try {
+            const res = await fetch("/api/onboarding/bootcamp/override", { method: "POST" });
+            if (res.ok) {
+                router.push("/onboarding/goal");
+            } else {
+                const data = (await res.json()) as { error?: string };
+                setError(data.error ?? "Failed to override bootcamp.");
+            }
+        } catch {
+            setError("Failed to override bootcamp.");
+        } finally {
+            setOverriding(false);
+        }
+    }
+
     const progressPct = status ? Math.min((status.daysElapsed / status.daysTotal) * 100, 100) : 0;
 
     return (
-        <main className="min-h-screen bg-black text-white flex flex-col items-center justify-center px-6">
-            <div
-                className="fixed inset-0 pointer-events-none"
-                style={{
-                    backgroundImage:
-                        "linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)",
-                    backgroundSize: "40px 40px",
-                }}
-            />
-
-            <div className="relative z-10 w-full max-w-lg flex flex-col gap-6">
+        <main className="text-white flex flex-col items-center justify-center px-2 py-2">
+            <div className="relative z-10 w-full max-w-3xl flex flex-col gap-6">
                 <div>
-                    <p className="text-xs text-white/40 uppercase tracking-widest mb-1">Step 1 of 2</p>
+                    <p className="text-xs text-white/40 uppercase tracking-widest mb-1">Onboarding</p>
                     <h1 className="text-2xl font-black tracking-tight">Calibration Period</h1>
                     <p className="text-sm text-white/50 mt-1">
-                        Run normally for 7 days. We'll build your profile from real data.
+                        Bootcamp lives in your workspace now. Keep running normally while we calibrate.
                     </p>
                 </div>
 
                 {loading && (
-                    <div className="border border-white/10 rounded-xl p-6 flex items-center gap-3">
+                    <div className="glass-card p-6 flex items-center gap-3">
                         <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                         <span className="text-sm text-white/60">Loading status...</span>
                     </div>
@@ -92,7 +106,7 @@ export default function BootcampPage() {
                 {status && (
                     <>
                         {/* Progress */}
-                        <div className="border border-white/10 rounded-xl p-5 flex flex-col gap-4">
+                        <div className="glass-card p-5 flex flex-col gap-4">
                             <div className="flex items-center justify-between text-sm">
                                 <span className="text-white/60">Day {status.daysElapsed} of {status.daysTotal}</span>
                                 <span className="text-white/60">{status.runsLogged} run{status.runsLogged !== 1 ? "s" : ""} logged</span>
@@ -130,7 +144,7 @@ export default function BootcampPage() {
 
                         {/* Missing reasons (if not yet sufficient) */}
                         {!status.sufficient && status.missingReasons.length > 0 && (
-                            <div className="border border-white/10 rounded-xl p-4">
+                            <div className="glass-card p-4">
                                 <p className="text-xs text-white/40 uppercase tracking-widest mb-3">Still needed</p>
                                 <div className="flex flex-col gap-2">
                                     {status.missingReasons.map((r, i) => (
@@ -146,6 +160,7 @@ export default function BootcampPage() {
                         </p>
 
                         {/* Complete button */}
+                        <div className="flex flex-col gap-3">
                         {status.canComplete && (
                             <>
                                 <button
@@ -162,6 +177,17 @@ export default function BootcampPage() {
                                 )}
                             </>
                         )}
+                            <button
+                                onClick={handleOverride}
+                                disabled={overriding}
+                                className="w-full rounded-xl border border-white/20 bg-white/5 text-white font-semibold py-3 text-sm transition hover:bg-white/10 disabled:opacity-60 disabled:cursor-not-allowed"
+                            >
+                                {overriding ? "Overriding..." : "Skip bootcamp for now → Set goal"}
+                            </button>
+                            <p className="text-xs text-white/35 text-center">
+                                This applies conservative defaults and takes you to goal setup.
+                            </p>
+                        </div>
 
                         {error && (
                             <p className="text-xs text-red-400 text-center">{error}</p>

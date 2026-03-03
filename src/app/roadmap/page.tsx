@@ -93,24 +93,15 @@ export default function RoadmapPage() {
 
     if (loading) {
         return (
-            <main className="min-h-screen bg-black text-white flex items-center justify-center">
+            <main className="h-[70vh] text-white flex items-center justify-center">
                 <div className="animate-pulse text-white/40">Loading roadmap...</div>
             </main>
         );
     }
 
     return (
-        <main className="min-h-screen bg-black text-white flex flex-col items-center px-6 py-10">
-            <div
-                className="fixed inset-0 pointer-events-none"
-                style={{
-                    backgroundImage:
-                        "linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)",
-                    backgroundSize: "40px 40px",
-                }}
-            />
-
-            <div className="relative z-10 w-full max-w-lg flex flex-col gap-6">
+        <main className="text-white flex flex-col items-center px-2 py-2">
+            <div className="w-full max-w-6xl flex flex-col gap-6">
                 {/* Header */}
                 <div className="flex items-center justify-between">
                     <div>
@@ -129,7 +120,7 @@ export default function RoadmapPage() {
 
                 {/* Empty state */}
                 {goals.length === 0 && (
-                    <div className="border border-white/10 rounded-xl p-8 text-center">
+                    <div className="glass-card p-8 text-center">
                         <p className="text-white/40 text-sm mb-4">No goals or roadmap set yet.</p>
                         <p className="text-white/30 text-xs">
                             Set a goal during onboarding to generate your roadmap.
@@ -150,7 +141,7 @@ export default function RoadmapPage() {
                     return (
                         <div key={goal.id} className="flex flex-col gap-5">
                             {/* Goal card */}
-                            <div className="border border-white/10 rounded-xl p-5 flex flex-col gap-3">
+                            <div className="glass-card p-5 flex flex-col gap-3">
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center gap-3">
                                         <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center text-lg">
