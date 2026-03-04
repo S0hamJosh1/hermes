@@ -53,6 +53,39 @@ function dateOnlyKey(date: Date): string {
 }
 
 async function getCurrentPlan(userId: string) {
+    const today = startOfToday();
+
+    // Prefer the active week plan first so chat edits affect what the runner is seeing now.
+    const active = await prisma.weeklyPlan.findFirst({
+        where: {
+            userId,
+            weekStartDate: { lte: today },
+            weekEndDate: { gte: today },
+        },
+        orderBy: { weekStartDate: "desc" },
+        include: {
+            workouts: {
+                orderBy: [{ dayOfWeek: "asc" }, { orderInWeek: "asc" }],
+            },
+        },
+    });
+    if (active) return active;
+
+    // Fallback to nearest future plan, then latest historical.
+    const upcoming = await prisma.weeklyPlan.findFirst({
+        where: {
+            userId,
+            weekStartDate: { gt: today },
+        },
+        orderBy: { weekStartDate: "asc" },
+        include: {
+            workouts: {
+                orderBy: [{ dayOfWeek: "asc" }, { orderInWeek: "asc" }],
+            },
+        },
+    });
+    if (upcoming) return upcoming;
+
     return prisma.weeklyPlan.findFirst({
         where: { userId },
         orderBy: { weekStartDate: "desc" },

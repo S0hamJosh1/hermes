@@ -26,3 +26,16 @@ test("detectIntentFallback handles explicit base-plan switch wording", () => {
   assert.equal(parsed.params.changeType, "workout_difficulty");
   assert.equal(parsed.params.direction, "increase");
 });
+
+test("detectIntentFallback treats workload requests as volume_change", () => {
+  const parsed = detectIntentFallback("Can you increase my workload this week?");
+  assert.equal(parsed.type, "volume_change");
+  assert.equal(parsed.params.direction, "increase");
+});
+
+test("detectIntentFallback maps busy-day move requests to reschedule", () => {
+  const parsed = detectIntentFallback("I'm busy Thursday, can you move my run to Saturday?");
+  assert.equal(parsed.type, "reschedule");
+  assert.equal(parsed.params.fromDate, "thursday");
+  assert.equal(parsed.params.toDate, "saturday");
+});

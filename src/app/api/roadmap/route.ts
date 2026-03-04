@@ -70,7 +70,8 @@ async function ensureRoadmapForGoal(params: {
     const distanceKm = DISTANCE_KM[params.distance] ?? 10;
     const race = params.distance as RaceDistance;
     const pb = params.personalBests[race];
-    const baselineFromStrava = pb?.secondBest?.timeSeconds ?? pb?.best?.timeSeconds ?? null;
+    // Prefer true PB; fall back to second-best only if PB is missing.
+    const baselineFromStrava = pb?.best?.timeSeconds ?? pb?.secondBest?.timeSeconds ?? null;
     const baseline = baselineFromStrava ?? Math.round(params.basePaceSecondsPerKm * distanceKm * 1.08);
     const finalTarget = params.targetTimeSeconds && params.targetTimeSeconds > 0
         ? params.targetTimeSeconds

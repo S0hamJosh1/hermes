@@ -377,26 +377,23 @@ export default function Dashboard() {
                         <div className="grid grid-cols-1 gap-2">
                             {(["5K", "10K", "Half Marathon", "Marathon"] as const).map((d) => {
                                 const effort = performance[d];
+                                const displayEffort = effort.best ?? effort.secondBest;
                                 return (
                                     <div key={d} className="glass-card px-3 py-2">
                                         <div className="flex items-center justify-between text-sm">
                                             <span className="text-white/70">{d}</span>
-                                            {effort.secondBest ? (
+                                            {displayEffort ? (
                                                 <span className="text-white font-medium">
-                                                    {formatTime(effort.secondBest.timeSeconds)}
-                                                </span>
-                                            ) : effort.best ? (
-                                                <span className="text-white/80 font-medium">
-                                                    {formatTime(effort.best.timeSeconds)}
+                                                    {formatTime(displayEffort.timeSeconds)}
                                                 </span>
                                             ) : (
                                                 <span className="text-white/30">No effort yet</span>
                                             )}
                                         </div>
-                                        {(effort.secondBest || effort.best) && (
+                                        {displayEffort && (
                                             <p className="text-xs text-white/40 mt-1">
-                                                Using {effort.secondBest ? "2nd best" : "best"} from{" "}
-                                                {new Date((effort.secondBest ?? effort.best)!.date).toLocaleDateString()}
+                                                Using {displayEffort === effort.best ? "best" : "2nd best"} from{" "}
+                                                {new Date(displayEffort.date).toLocaleDateString()}
                                             </p>
                                         )}
                                     </div>

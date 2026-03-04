@@ -34,6 +34,45 @@ export type RunnerContext = {
     goalDate: string;
 };
 
+const WEEKDAY_MAP: Record<string, string> = {
+    monday: "monday",
+    mon: "monday",
+    tuesday: "tuesday",
+    tue: "tuesday",
+    tues: "tuesday",
+    wednesday: "wednesday",
+    wed: "wednesday",
+    thursday: "thursday",
+    thu: "thursday",
+    thur: "thursday",
+    thurs: "thursday",
+    friday: "friday",
+    fri: "friday",
+    saturday: "saturday",
+    sat: "saturday",
+    sunday: "sunday",
+    sun: "sunday",
+    today: "today",
+    tomorrow: "tomorrow",
+};
+
+function extractDateMentions(text: string): string[] {
+    const mentions: string[] = [];
+    const seen = new Set<string>();
+    const regex =
+        /\b(monday|mon|tuesday|tue|tues|wednesday|wed|thursday|thu|thur|thurs|friday|fri|saturday|sat|sunday|sun|today|tomorrow)\b/gi;
+    let match: RegExpExecArray | null;
+    while ((match = regex.exec(text)) !== null) {
+        const raw = match[1]?.toLowerCase();
+        if (!raw) continue;
+        const normalized = WEEKDAY_MAP[raw] ?? raw;
+        if (seen.has(normalized)) continue;
+        seen.add(normalized);
+        mentions.push(normalized);
+    }
+    return mentions;
+}
+
 function isActionableIntent(type: IntentType): boolean {
     return (
         type === "volume_change" ||
@@ -150,10 +189,12 @@ export async function parseIntent(
  */
 export function detectIntentFallback(message: string): ParsedIntent {
     const lower = message.toLowerCase();
+    const dateMentions = extractDateMentions(lower);
     const referencesPlanLevel = /(?:base plan|plan level|difficulty level|novice|intermediate|advanced)/i.test(lower);
     const requestsPlanSwitch = /(?:switch|change|move|upgrade|downgrade|set).*(?:base plan|plan level|difficulty)/i.test(lower);
     const wantsHarder = /(?:harder|upgrade|higher|intermediate|advanced|too easy|challenge me|push me)/i.test(lower);
     const wantsEasier = /(?:easier|downgrade|lower|novice|too hard)/i.test(lower);
+    const talksAboutTrainingPlan = /(?:run|workout|session|plan|schedule)/i.test(lower);
 
     if (
         /(?:more tempo|more intervals|harder workouts|harder sessions|higher difficulty|harder plan|easier plan|easier workouts|too easy|too hard|make.*harder|make.*easier|challenge me|push me)/i.test(lower) ||
@@ -177,11 +218,18 @@ export function detectIntentFallback(message: string): ParsedIntent {
         };
     }
 
-    if (/(?:move|reschedule|shift).*(?:run|workout|session)/i.test(lower)) {
+    const asksReschedule = /(?:move|reschedule|shift|swap|postpone|rearrange|push\s+back|pull\s+forward)/i.test(lower);
+    const hasScheduleConflict = /(?:busy|unavailable|conflict|double-booked|travel|trip|meeting|work|can't|cannot|cant)/i.test(lower);
+    if (
+        (asksReschedule && (talksAboutTrainingPlan || dateMentions.length > 0)) ||
+        (hasScheduleConflict && talksAboutTrainingPlan && dateMentions.length > 0)
+    ) {
+        const fromDate = dateMentions[0] ?? "today";
+        const toDate = dateMentions[1] ?? "tomorrow";
         return {
             type: "reschedule",
-            params: { fromDate: "today", toDate: "tomorrow" },
-            confidence: 0.65,
+            params: { fromDate, toDate },
+            confidence: 0.72,
         };
     }
 
@@ -193,18 +241,18 @@ export function detectIntentFallback(message: string): ParsedIntent {
         };
     }
 
-    if (/(?:more|increase|bump|add).*(?:run|volume|mileage|km|miles)/i.test(lower)) {
+    if (/(?:more|increase|bump|add|raise|up).*(?:run|volume|mileage|km|miles|workload|training load|load)/i.test(lower)) {
         return {
             type: "volume_change",
             params: { direction: "increase", amount: 0.1 },
-            confidence: 0.6,
+            confidence: 0.68,
         };
     }
-    if (/(?:less|reduce|decrease|cut).*(?:run|volume|mileage|km|miles)/i.test(lower)) {
+    if (/(?:less|reduce|decrease|cut|lower).*(?:run|volume|mileage|km|miles|workload|training load|load)/i.test(lower)) {
         return {
             type: "volume_change",
             params: { direction: "decrease", amount: 0.1 },
-            confidence: 0.6,
+            confidence: 0.68,
         };
     }
     if (/(?:skip|cancel|drop).*(?:run|workout|session|today|tomorrow)/i.test(lower)) {

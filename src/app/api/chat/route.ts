@@ -6,9 +6,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionFromRequest } from "@/lib/auth/session";
 import { prisma } from "@/lib/db/client";
-import { parseIntent, type RunnerContext } from "@/lib/slm/intent-parser";
+import { parseIntent, type ParsedIntent, type RunnerContext } from "@/lib/slm/intent-parser";
 import { conversationalPrompt } from "@/lib/slm/prompts";
 import { applyPlanEdit } from "@/lib/plans/edit";
+import { extractDeterministicEdit } from "@/lib/chat/deterministic-edit";
 import {
     shouldTriggerCheckIn,
     generateCheckInQuestion,
@@ -93,10 +94,22 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         .map((i) => i.bodyPart)
         .filter(Boolean) as string[];
 
-    // Parse intent (single Gemini call)
-    console.log("[chat] Parsing intent for:", userMessage.slice(0, 80));
-    const intent = await parseIntent(userMessage, context);
-    console.log("[chat] Intent:", intent.type, "confidence:", intent.confidence);
+    let intent: ParsedIntent;
+    const deterministicEdit = extractDeterministicEdit(userMessage);
+    if (deterministicEdit) {
+        // Deterministic path for direct edit commands: no LLM ambiguity and no intent-model latency.
+        intent = {
+            type: deterministicEdit.intentType,
+            params: deterministicEdit.params,
+            confidence: deterministicEdit.confidence,
+        };
+        console.log("[chat] Deterministic intent:", intent.type, "confidence:", intent.confidence);
+    } else {
+        // Parse intent (single Gemini call)
+        console.log("[chat] Parsing intent for:", userMessage.slice(0, 80));
+        intent = await parseIntent(userMessage, context);
+        console.log("[chat] Intent:", intent.type, "confidence:", intent.confidence);
+    }
 
     let assistantMessage: string;
     let intentApplied = false;
@@ -117,14 +130,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         const normalizedDirection = direction === "decrease" ? "decrease" : "increase";
         const changeType = String(intent.params?.changeType ?? "unspecified").toLowerCase();
 
-        if (
-            changeType !== "load" &&
-            changeType !== "workout_difficulty" &&
-            changeType !== "both"
-        ) {
-            assistantMessage =
-                "Do you want more training load (volume), harder workout types (base plan difficulty), or both?";
-        } else if (changeType === "load") {
+        if (changeType === "load") {
             const edit = await applyPlanEdit({
                 userId,
                 action: "volume_change",
@@ -150,6 +156,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
                 : `I couldn't change base-plan difficulty yet: ${edit.message}`;
             intentApplied = edit.ok;
         } else {
+            // Default ambiguous "make it harder/easier" requests to both:
+            // immediate weekly load tweak + future base-plan difficulty shift.
             const levelEdit = await applyPlanEdit({
                 userId,
                 action: "base_plan_level_change",

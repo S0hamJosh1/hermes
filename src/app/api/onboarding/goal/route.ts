@@ -127,7 +127,8 @@ async function regenerateRoadmapForGoal(params: {
     const distanceKm = DISTANCE_KM[distance] ?? 10;
     const race = distance as RaceDistance;
     const pb = params.personalBests[race];
-    const baselineFromStrava = pb?.secondBest?.timeSeconds ?? pb?.best?.timeSeconds ?? null;
+    // Prefer true PB; fall back to second-best only if PB is missing.
+    const baselineFromStrava = pb?.best?.timeSeconds ?? pb?.secondBest?.timeSeconds ?? null;
     const baselineRaceTimeSeconds = baselineFromStrava ?? Math.round(basePaceSecondsPerKm * distanceKm * 1.08);
     const finalTargetSeconds = targetTimeSeconds && targetTimeSeconds > 0
         ? targetTimeSeconds

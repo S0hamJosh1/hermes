@@ -68,16 +68,16 @@ export default function MobileDrawer({
         onClick={onClose}
         aria-label="Close menu"
       />
-      <div className="absolute left-0 top-0 h-full w-72 border-r border-blue-400/15 bg-[#030e24]/80 backdrop-blur-2xl p-4 flex flex-col">
-        <p className="text-xs tracking-[0.2em] uppercase text-blue-300/60">Hermes</p>
+      <div className="absolute left-0 top-0 h-full w-72 border-r border-white/15 bg-[#030712]/85 backdrop-blur-2xl p-4 flex flex-col">
+        <p className="text-xs tracking-[0.2em] uppercase text-white/50">Hermes</p>
         <p className="text-xl font-semibold text-white mt-1 mb-4">Menu</p>
 
         {!bootcampCompleted && (
-          <div className="mb-4 rounded-xl border border-blue-400/15 bg-blue-500/5 p-3">
-            <p className="text-xs uppercase tracking-widest text-blue-300/50">Bootcamp</p>
+          <div className="mb-4 rounded-xl border border-white/15 bg-white/5 p-3">
+            <p className="text-xs uppercase tracking-widest text-white/45">Bootcamp</p>
             <div className="mt-2 h-1.5 rounded-full bg-white/10 overflow-hidden">
               <div
-                className="h-full rounded-full bg-gradient-to-r from-blue-400 to-cyan-300 transition-all"
+                className="h-full rounded-full bg-gradient-to-r from-white/50 to-white/30 transition-all"
                 style={{ width: `${Math.max(0, Math.min(100, bootcampProgressPct ?? 0))}%` }}
               />
             </div>
@@ -97,11 +97,11 @@ export default function MobileDrawer({
                 onClick={onClose}
                 className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition ${
                   active
-                    ? "bg-blue-500/15 text-white border border-blue-400/25"
-                    : "text-white/70 hover:text-white hover:bg-blue-500/10 border border-transparent"
+                    ? "bg-white/10 text-white border border-white/20"
+                    : "text-white/70 hover:text-white hover:bg-white/5 border border-transparent"
                 }`}
               >
-                <span className={active ? "text-blue-300" : "text-white/50"}>
+                <span className={active ? "text-white/80" : "text-white/50"}>
                   {ICON_MAP[item.iconKey]}
                 </span>
                 <span>{item.label}</span>
@@ -132,7 +132,7 @@ export default function MobileDrawer({
         <button
           onClick={() => void onLogout()}
           disabled={loggingOut}
-          className="mt-5 flex items-center justify-center gap-2 rounded-xl border border-blue-400/15 bg-blue-500/5 px-3 py-2 text-sm text-white/60 hover:text-white hover:bg-blue-500/10 transition disabled:opacity-50"
+          className="mt-5 flex items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/5 px-3 py-2 text-sm text-white/60 hover:text-white hover:bg-white/10 transition disabled:opacity-50"
         >
           <ExitIcon className="w-3.5 h-3.5" />
           {loggingOut ? "Logging out..." : "Logout"}
