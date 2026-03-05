@@ -1,138 +1,92 @@
-<p align="center">
-  <h1 align="center">⚡ Hermes — Training OS</h1>
-  <p align="center">
-    An intelligent, adaptive running coach powered by AI and real-time Strava data.
-  </p>
-</p>
+# Hermes
 
----
+Adaptive running coach that turns Strava history into safe, personalized weekly training plans, then adjusts those plans with coaching logic and AI-assisted edits.
 
-## Overview
+## Why Hermes
 
-Hermes is a full-stack training platform that generates personalized running plans, adapts in real time based on performance data, and provides an AI-powered coaching assistant. Built with Next.js 16, Prisma, PostgreSQL, and the Google Gemini API.
+Most running plans are static. Hermes is designed to adapt:
 
-### Key Features
+- Syncs real Strava activity data
+- Calibrates pace and capacity from your running history
+- Builds weekly plans from proven templates
+- Enforces safety constraints before publishing
+- Adjusts recommendations using compliance, health, and training state
+- Supports natural-language plan edits through Hermes Chat
 
-- **Strava OAuth & Sync** — Connect your Strava account and auto-import run activities
-- **Auto-Calibration** — Analyze historical data to calibrate pace, capacity, and fitness level
-- **7-Day Bootcamp** — Guided onboarding flow for runners without sufficient Strava history
-- **Adaptive Plan Generation** — Weekly training plans based on Hal Higdon templates, personalized to your fitness
-- **State Machine** — Tracks your training state (Stable, Slump, Probe, Rebuild, Overreach, Taper, etc.)
-- **Safety Validator & Auto-Repair** — Enforces ramp-rate limits, injury constraints, and auto-fixes violations
-- **Health Tracking** — Report injuries/pain with a 3-strike progressive protection system
-- **Compliance Monitoring** — Tracks plan adherence with context-aware check-ins
-- **AI Chat (Hermes Chat)** — Conversational assistant powered by Gemini with intent parsing for plan modifications
-- **Roadmap Visualization** — Winding-road SVG roadmap showing training phases and milestone checkpoints
-- **Goal Setting** — Set race distance, date, and target time with multi-goal support
+## Core Features
 
----
+- Strava OAuth sign-in and activity sync
+- Auto-calibration and onboarding bootcamp for low-history runners
+- Goal-driven roadmap generation with milestones
+- Weekly plan generation with validation and auto-repair
+- Health and injury reporting with progressive protection logic
+- Compliance tracking and adaptive state transitions
+- AI chat intents for plan edits (volume change, reschedule, skip, health report)
 
 ## Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| **Framework** | Next.js 16 (App Router) |
-| **Language** | TypeScript |
-| **Database** | PostgreSQL via Prisma ORM |
-| **AI** | Google Gemini API |
-| **Auth** | Strava OAuth 2.0 (custom session cookies) |
-| **Styling** | Tailwind CSS v4 + Glassmorphism design system |
-| **Icons** | Radix UI Icons |
-| **Deployment** | Vercel-ready |
+- Next.js 16 (App Router)
+- TypeScript
+- PostgreSQL + Prisma
+- Google Gemini API (for chat and intent support)
+- Tailwind CSS v4
+- Radix UI icons
 
----
+## Screenshots
+
+Add your product screenshots here (dashboard, plan view, roadmap, chat, onboarding).
+
+```md
+![Dashboard](docs/screenshots/dashboard.png)
+![Weekly Plan](docs/screenshots/weekly-plan.png)
+![Roadmap](docs/screenshots/roadmap.png)
+![Chat](docs/screenshots/chat.png)
+```
+
+If you want, I can wire these directly once you share image files.
+
+## Branding
+
+If you want to include your Strava-style icon snippet in the README, add it to `docs/branding/icon-snippet.png` and use:
+
+```md
+![Hermes Icon](docs/branding/icon-snippet.png)
+```
+
+Note: Hermes is not affiliated with or endorsed by Strava.
+
+## Architecture (High Level)
+
+```text
+Strava Sync -> Auto Calibration -> Runner Profile
+Goal Setup  -> Roadmap          -> Weekly Plan Generation
+                                 -> Safety Validation + Auto-Repair
+                                 -> Published Weekly Plan
+Compliance + Health Signals      -> State Machine -> Next Plan Cycle
+```
 
 ## Project Structure
 
+```text
+src/
+  app/
+    api/              # auth, sync, plans, roadmap, chat, health, onboarding
+    dashboard/        # dashboard UI
+    plan/             # weekly plan UI
+    roadmap/          # roadmap UI
+    chat/             # Hermes chat UI
+    onboarding/       # onboarding and bootcamp flow
+  lib/
+    algorithm/        # planner, validator, repair pipeline
+    slm/              # Gemini client + intent parsing
+    strava/           # Strava integrations and performance analysis
+    state-machine/    # adaptation states and transitions
+prisma/
+  schema.prisma       # data model
+  seed.ts             # workout template seeding
+data/
+  hal-higdon/         # parsed training plan source data
 ```
-hermes/
-├── prisma/                    # Database schema & migrations
-│   └── schema.prisma          # 17 models (User, RunnerProfile, WeeklyPlan, etc.)
-├── data/
-│   └── hal-higdon/            # Training plan templates (5K–Marathon, Novice–Advanced)
-├── src/
-│   ├── app/
-│   │   ├── api/               # API routes
-│   │   │   ├── auth/          # OAuth, session, logout
-│   │   │   ├── chat/          # AI chat + intent handling
-│   │   │   ├── dashboard/     # Dashboard data aggregation
-│   │   │   ├── plans/         # Plan generation, editing, retrieval
-│   │   │   ├── roadmap/       # Roadmap phases & milestones
-│   │   │   ├── sync/          # Strava activity sync
-│   │   │   └── ...            # Health, compliance, onboarding, etc.
-│   │   ├── dashboard/         # Main dashboard page
-│   │   ├── plan/              # Weekly plan view
-│   │   ├── roadmap/           # Training roadmap visualization
-│   │   ├── chat/              # AI chat interface
-│   │   ├── onboarding/        # Goal setting & bootcamp
-│   │   └── health/            # Injury reporting
-│   ├── lib/
-│   │   ├── algorithm/         # Core training algorithm
-│   │   │   ├── planner.ts     # Weekly plan generation
-│   │   │   ├── validator.ts   # Safety rule enforcement
-│   │   │   ├── repair.ts      # Auto-repair for violations
-│   │   │   └── types.ts       # Algorithm type definitions
-│   │   ├── slm/               # AI/LLM integration
-│   │   │   ├── client.ts      # Gemini API client
-│   │   │   ├── intent-parser.ts  # Natural language → training actions
-│   │   │   ├── prompts.ts     # System prompts
-│   │   │   └── context-checkin.ts # Smart check-in triggers
-│   │   ├── auth/              # Session & cookie management
-│   │   ├── strava/            # Strava API & performance analysis
-│   │   ├── plans/             # Plan editing logic
-│   │   └── db/                # Prisma client
-│   └── components/
-│       ├── navigation/        # Sidebar, mobile drawer, app shell
-│       └── ui/                # Glass panels, reusable UI
-└── scripts/                   # Data processing & verification scripts
-```
-
----
-
-## Architecture
-
-### Training Algorithm Pipeline
-
-```
-Strava Data → Auto-Calibration → Runner Profile
-                                       ↓
-Goal Setting → Roadmap Phases → Weekly Plan Generation
-                                       ↓
-                              Safety Validator → Auto-Repair
-                                       ↓
-                              Published Weekly Plan
-                                       ↓
-                    Compliance Tracking → State Machine → Next Week
-```
-
-### State Machine
-
-The runner state machine tracks training status and adapts accordingly:
-
-| State | Description |
-|-------|------------|
-| **Stable** | Normal training, progressing as planned |
-| **Slump** | Declining compliance, may reduce volume |
-| **Probe** | Testing higher capacity after consistent training |
-| **Rebuild** | Recovering from injury or extended break |
-| **Overreach** | Pushing limits with extra monitoring |
-| **Injury Watch** | Active injury with modified training |
-| **Injury Protection** | Severe injury, forced recovery |
-| **Taper** | Race preparation, reduced volume |
-
-### AI Chat Intent System
-
-Hermes Chat parses natural language into actionable intents:
-
-- `volume_change` — Adjust weekly mileage up/down
-- `plan_level_change` — Switch base plan difficulty
-- `skip_workout` — Mark a workout as skipped
-- `reschedule` — Move a workout to a different day
-- `modify_workout` — Change workout parameters
-- `report_health` — Log injury or pain
-- `ask_question` — General training Q&A
-
----
 
 ## Getting Started
 
@@ -140,73 +94,64 @@ Hermes Chat parses natural language into actionable intents:
 
 - Node.js 18+
 - PostgreSQL database
-- Strava API app (for OAuth)
-- Google Gemini API key
+- Strava API app credentials
+- Gemini API key
 
-### Environment Variables
-
-Create a `.env.local` file:
-
-```env
-# Database
-DATABASE_URL="postgresql://user:password@host:5432/hermes"
-DIRECT_DATABASE_URL="postgresql://user:password@host:5432/hermes"
-
-# Strava OAuth
-STRAVA_CLIENT_ID="your_client_id"
-STRAVA_CLIENT_SECRET="your_client_secret"
-STRAVA_REDIRECT_URI="http://localhost:3000/api/auth/strava/callback"
-
-# AI
-GEMINI_API_KEY="your_gemini_api_key"
-
-# App
-NEXT_PUBLIC_APP_URL="http://localhost:3000"
-SESSION_SECRET="your_session_secret"
-```
-
-### Installation
+### 1) Install dependencies
 
 ```bash
-# Install dependencies
 npm install
+```
 
-# Set up database
-npx prisma db push
+### 2) Configure environment
 
-# Seed training plan templates
+Copy `.env.example` to `.env.local`, then set values:
+
+```env
+DATABASE_URL=""
+DIRECT_DATABASE_URL=""
+STRAVA_CLIENT_ID=""
+STRAVA_CLIENT_SECRET=""
+STRAVA_REDIRECT_URI="http://localhost:3000/api/auth/strava/callback"
+SESSION_SECRET=""
+NEXT_PUBLIC_APP_URL="http://localhost:3000"
+GEMINI_API_KEY=""
+GEMINI_MODEL="gemini-2.5-flash"
+```
+
+### 3) Initialize database
+
+```bash
+npm run db:push
 npm run db:seed
+```
 
-# Start development server
+### 4) Run locally
+
+```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to get started.
+Open `http://localhost:3000`.
 
-### Available Scripts
+## Available Scripts
 
-| Command | Description |
-|---------|------------|
-| `npm run dev` | Start development server |
-| `npm run build` | Production build (includes Prisma generate) |
-| `npm run test` | Run test suite |
-| `npm run db:studio` | Open Prisma Studio (database GUI) |
-| `npm run db:migrate` | Run database migrations |
-| `npm run db:seed` | Seed workout templates |
+- `npm run dev` - start local dev server
+- `npm run build` - production build
+- `npm run start` - run production server
+- `npm run test` - run test suite
+- `npm run lint` - run ESLint
+- `npm run db:generate` - Prisma client generation
+- `npm run db:push` - push schema to database
+- `npm run db:migrate` - run Prisma migrations
+- `npm run db:studio` - open Prisma Studio
+- `npm run db:seed` - seed workout templates
+- `npm run parse-plans` - parse Hal Higdon source plans
+- `npm run verify-hal-truths` - validate parsed plan data
 
----
+## Current Status
 
-## Design
-
-Hermes uses a **dark glassmorphism** design system with:
-
-- Frosted glass panels with subtle white borders
-- Dark layered background
-- Neutral white/gray color palette (no accent colors)
-- Radix UI icons throughout
-- Responsive layout with sidebar (desktop) and drawer (mobile)
-
----
+Hermes is an active work in progress. Core plan generation, sync, and chat workflows are in place, with ongoing polish and fixes across UX and edge cases.
 
 ## License
 
