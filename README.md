@@ -1,11 +1,5 @@
 <div align="center">
-  <table>
-    <tr>
-      <td align="center" bgcolor="#ffffff" width="56" height="56">
-        <img src="screenshots/hermes.png" alt="Hermes logo" width="36" />
-      </td>
-    </tr>
-  </table>
+  <img src="screenshots/hermes.png" alt="Hermes logo" width="52" />
 </div>
 
 # Hermes
@@ -178,6 +172,8 @@ Hermes is an active work in progress. Core plan generation, sync, and chat workf
 ## License
 
 MIT
+
+
 
 
 
