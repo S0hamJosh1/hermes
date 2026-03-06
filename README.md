@@ -31,42 +31,43 @@ Most running plans are static. Hermes is designed to adapt:
 - Tailwind CSS v4
 - Radix UI icons
 
-## Featured Screens
+## Product Walkthrough
 
-Use the files below (already selected) and place them in `docs/screenshots/`:
+This section is intentionally visual: each screen is paired with what it does in the product.
 
-```text
-landing-connect.png
-dashboard-overview.png
-weekly-plan.png
-roadmap.png
-goal-setup.png
-hermes-chat.png
-```
+### 1) Login and Strava Integration
+![Login and Strava Integration](screenshots/login%20page.png)
 
-### Landing
-![Landing - Connect with Strava](docs/screenshots/landing-connect.png)
+The landing flow focuses on one action: connect with Strava. Once connected, Hermes can ingest activity history and initialize runner calibration.
 
-### Dashboard
-![Dashboard Overview](docs/screenshots/dashboard-overview.png)
+### 2) Dashboard Overview
+![Dashboard Overview](screenshots/dashboard.png)
 
-### Weekly Plan
-![Weekly Plan](docs/screenshots/weekly-plan.png)
+The dashboard surfaces the operational state of training in one place: runner state, key pace metrics, weekly capacity, consistency, health status, and sync actions.
 
-### Roadmap
-![Roadmap Phases](docs/screenshots/roadmap.png)
+### 3) Goal Settings
+![Goal Settings](screenshots/goal%20settings.png)
 
-### Goal Setup
-![Goal Setup](docs/screenshots/goal-setup.png)
+Goal configuration drives the plan horizon and progression logic. Users can set race distance and training direction without leaving the main app shell.
 
-### Hermes Chat
-![Hermes Chat](docs/screenshots/hermes-chat.png)
+### 4) Weekly Plan Generator
+![Weekly Plan Generator](screenshots/weekly%20plan%20generator.png)
+
+Weekly planning provides structured day-by-day workouts with effort context, while regeneration controls support adapting future weeks as performance changes.
+
+### 5) Roadmap Feature
+![Roadmap Feature](screenshots/roadmap%20feature.png)
+
+The roadmap view translates long-term training into phases and milestones, making progression visible and easier to follow over time.
+
+### 6) Hermes Chat
+![Hermes Chat](screenshots/hermes%20chat.png)
+
+Hermes Chat enables conversational plan interaction: runners can ask training questions, report issues, and request plan changes through a guided assistant.
 
 ## Branding
 
-Include your icon asset at `docs/branding/icon-snippet.png`:
-
-![Hermes Icon](docs/branding/icon-snippet.png)
+![Hermes Brand Mark](screenshots/hermes.png)
 
 Note: Hermes is not affiliated with or endorsed by Strava.
 
