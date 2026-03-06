@@ -1,3 +1,13 @@
+<div align="center">
+  <table>
+    <tr>
+      <td align="center" bgcolor="#ffffff" width="56" height="56">
+        <img src="screenshots/hermes.png" alt="Hermes logo" width="36" />
+      </td>
+    </tr>
+  </table>
+</div>
+
 # Hermes
 
 Adaptive running coach that turns Strava history into safe, personalized weekly training plans, then adjusts those plans with coaching logic and AI-assisted edits.
@@ -24,12 +34,15 @@ Most running plans are static. Hermes is designed to adapt:
 
 ## Tech Stack
 
-- Next.js 16 (App Router)
-- TypeScript
-- PostgreSQL + Prisma
-- Google Gemini API (for chat and intent support)
-- Tailwind CSS v4
-- Radix UI icons
+<div align="left">
+  <a href="https://nextjs.org/"><img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white" alt="Next.js"/></a>
+  <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript"/></a>
+  <a href="https://www.postgresql.org/"><img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL"/></a>
+  <a href="https://www.prisma.io/"><img src="https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white" alt="Prisma"/></a>
+  <a href="https://ai.google.dev/"><img src="https://img.shields.io/badge/Google%20Gemini-4285F4?style=for-the-badge&logo=googlegemini&logoColor=white" alt="Google Gemini"/></a>
+  <a href="https://tailwindcss.com/"><img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS"/></a>
+  <a href="https://www.radix-ui.com/icons"><img src="https://img.shields.io/badge/Radix%20Icons-111111?style=for-the-badge&logo=radixui&logoColor=white" alt="Radix Icons"/></a>
+</div>
 
 ## Product Walkthrough
 
@@ -64,10 +77,6 @@ The roadmap view translates long-term training into phases and milestones, makin
 ![Hermes Chat](screenshots/hermes%20chat.png)
 
 Hermes Chat enables conversational plan interaction: runners can ask training questions, report issues, and request plan changes through a guided assistant.
-
-## Branding
-
-![Hermes Brand Mark](screenshots/hermes.png)
 
 Note: Hermes is not affiliated with or endorsed by Strava.
 
@@ -172,3 +181,10 @@ Hermes is an active work in progress. Core plan generation, sync, and chat workf
 ## License
 
 MIT
+
+
+
+
+
+
+
