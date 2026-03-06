@@ -41,12 +41,9 @@ Most running plans are static. Hermes is designed to adapt:
   <a href="https://www.prisma.io/"><img src="https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white" alt="Prisma"/></a>
   <a href="https://ai.google.dev/"><img src="https://img.shields.io/badge/Google%20Gemini-4285F4?style=for-the-badge&logo=googlegemini&logoColor=white" alt="Google Gemini"/></a>
   <a href="https://tailwindcss.com/"><img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS"/></a>
-  <a href="https://www.radix-ui.com/icons"><img src="https://img.shields.io/badge/Radix%20Icons-111111?style=for-the-badge&logo=radixui&logoColor=white" alt="Radix Icons"/></a>
 </div>
 
 ## Product Walkthrough
-
-This section is intentionally visual: each screen is paired with what it does in the product.
 
 ### 1) Login and Strava Integration
 ![Login and Strava Integration](screenshots/login%20page.png)
