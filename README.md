@@ -16,12 +16,11 @@ Most running plans are static. Hermes is designed to adapt:
 ## Core Features
 
 - Strava OAuth sign-in and activity sync
-- Auto-calibration and onboarding bootcamp for low-history runners
-- Goal-driven roadmap generation with milestones
-- Weekly plan generation with validation and auto-repair
-- Health and injury reporting with progressive protection logic
-- Compliance tracking and adaptive state transitions
-- AI chat intents for plan edits (volume change, reschedule, skip, health report)
+- Goal setup and onboarding flow
+- Adaptive weekly plan generation and regeneration
+- Roadmap phases with milestone checkpoints
+- AI chat assistant for training edits and questions
+- Health status and injury-reporting workflow
 
 ## Tech Stack
 
@@ -32,26 +31,42 @@ Most running plans are static. Hermes is designed to adapt:
 - Tailwind CSS v4
 - Radix UI icons
 
-## Screenshots
+## Featured Screens
 
-Add your product screenshots here (dashboard, plan view, roadmap, chat, onboarding).
+Use the files below (already selected) and place them in `docs/screenshots/`:
 
-```md
-![Dashboard](docs/screenshots/dashboard.png)
-![Weekly Plan](docs/screenshots/weekly-plan.png)
-![Roadmap](docs/screenshots/roadmap.png)
-![Chat](docs/screenshots/chat.png)
+```text
+landing-connect.png
+dashboard-overview.png
+weekly-plan.png
+roadmap.png
+goal-setup.png
+hermes-chat.png
 ```
 
-If you want, I can wire these directly once you share image files.
+### Landing
+![Landing - Connect with Strava](docs/screenshots/landing-connect.png)
+
+### Dashboard
+![Dashboard Overview](docs/screenshots/dashboard-overview.png)
+
+### Weekly Plan
+![Weekly Plan](docs/screenshots/weekly-plan.png)
+
+### Roadmap
+![Roadmap Phases](docs/screenshots/roadmap.png)
+
+### Goal Setup
+![Goal Setup](docs/screenshots/goal-setup.png)
+
+### Hermes Chat
+![Hermes Chat](docs/screenshots/hermes-chat.png)
 
 ## Branding
 
-If you want to include your Strava-style icon snippet in the README, add it to `docs/branding/icon-snippet.png` and use:
+Include your icon asset at `docs/branding/icon-snippet.png`:
 
-```md
 ![Hermes Icon](docs/branding/icon-snippet.png)
-```
 
 Note: Hermes is not affiliated with or endorsed by Strava.
 
