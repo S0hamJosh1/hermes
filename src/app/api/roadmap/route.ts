@@ -188,7 +188,40 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
         orderBy: { weekStartDate: "asc" },
     });
 
-    const serialized = goals.map((goal) => ({
+    const PHASE_VOLUME_MUL: Record<number, number> = { 1: 0.8, 2: 0.95, 3: 1.05, 4: 0.7 };
+
+    const serialized = goals.map((goal) => {
+        // First pass: compute actual volumes per phase to find the best baseline
+        const phaseActuals: { phaseNumber: number; actualAvg: number | null }[] = [];
+        for (const roadmap of goal.roadmaps) {
+            const startMs = new Date(roadmap.startDate).getTime();
+            const endMs = new Date(roadmap.endDate).getTime();
+            const overlapping = weeklyPlans.filter((p) => {
+                const pStart = new Date(p.weekStartDate).getTime();
+                const pEnd = new Date(p.weekEndDate).getTime();
+                return pStart < endMs && pEnd > startMs;
+            });
+            const avg = overlapping.length > 0
+                ? overlapping.reduce((sum, p) => sum + Number(p.totalVolumeKm), 0) / overlapping.length
+                : null;
+            phaseActuals.push({ phaseNumber: roadmap.phaseNumber, actualAvg: avg });
+        }
+
+        // Derive a live baseline from actual plan data. Use the highest actual
+        // phase average (normalized by its multiplier) so future phase targets
+        // are consistent with what the algorithm is really producing.
+        let liveBaselineKm: number | null = null;
+        for (const pa of phaseActuals) {
+            if (pa.actualAvg != null && pa.actualAvg > 0) {
+                const mul = PHASE_VOLUME_MUL[pa.phaseNumber] ?? 1;
+                const inferred = pa.actualAvg / mul;
+                if (liveBaselineKm == null || inferred > liveBaselineKm) {
+                    liveBaselineKm = inferred;
+                }
+            }
+        }
+
+        return {
         id: goal.id,
         distance: goal.distance,
         targetDate: goal.targetDate,
@@ -207,7 +240,6 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
             const isCurrent = nowMs >= startMs && nowMs <= endMs;
             const isPast = nowMs > endMs;
 
-            // Compute actual average weekly volume from plans overlapping this phase
             const overlapping = weeklyPlans.filter((p) => {
                 const pStart = new Date(p.weekStartDate).getTime();
                 const pEnd = new Date(p.weekEndDate).getTime();
@@ -222,15 +254,23 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
                     ) / 10
                     : null;
 
+            // Use live baseline to recompute target if actual plans exist
+            const storedTarget = roadmap.targetVolumeKm ? Number(roadmap.targetVolumeKm) : null;
+            const mul = PHASE_VOLUME_MUL[roadmap.phaseNumber] ?? 1;
+            const liveTarget = liveBaselineKm != null
+                ? Math.round(liveBaselineKm * mul * 10) / 10
+                : null;
+            const targetVolumeKm = liveTarget != null && storedTarget != null
+                ? Math.max(liveTarget, storedTarget)
+                : storedTarget;
+
             return {
                 id: roadmap.id,
                 phaseNumber: roadmap.phaseNumber,
                 phaseName: roadmap.phaseName,
                 startDate: roadmap.startDate,
                 endDate: roadmap.endDate,
-                targetVolumeKm: roadmap.targetVolumeKm
-                    ? Number(roadmap.targetVolumeKm)
-                    : null,
+                targetVolumeKm,
                 actualVolumeKm,
                 focus: roadmap.focus,
                 progress,
@@ -249,7 +289,8 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
                 })),
             };
         }),
-    }));
+    };
+    });
 
     return NextResponse.json({ goals: serialized });
 }
