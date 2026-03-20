@@ -1,16 +1,5 @@
 # Marathon Training : Advanced 1
 
-- Summary
-- Program Details
-- Training Schedule
-- Additional Programs
-- Reviews
-
-- Summary
-- Program Details
-- Training Schedule
-- Additional Programs
-- Reviews
 
 ### About the Advanced 1 Program
 
@@ -30,11 +19,6 @@ For runners who want personalized year-round training, using the Higdon method.
 
 **Longest Workout:** 20 miles
 
-5.0
-
-Based on 13 reviews.
-
-Leave a review See all reviews
 
 #### Hal on his Advanced 1 Program
 
@@ -112,116 +96,6 @@ And now, lace up your running shoes. It is time to begin!
 | 17 | 6.4 km run | 9.7 km run | 6.4 km run | 30 tempo | Rest | 6.4 km run | 12.9 |
 | 18 | 4.8 km run | 4 x 400 | 3.2 km run | Rest | Rest | 3.2 km run | **Marathon** |
 
-## Marathon Training
+---
 
-## Programs
-
-## Books
-
-## Additional Marathon Training Programs
-
-#### Reviews
-
-#### An excellent plan
-
-March 21, 2025
-
-I ran four marathons in my 20s. I stopped all running for the next 30+ years and took it up again during the pandemic. I got up to 4-5 miles every other day and I decided to try to qualify for Boston. After searching around, I chose Hal’s Advanced 1 plan. From my experience in my 20s I knew I needed to improve both my endurance and speed and this plan has both. I stuck with his plan pretty rigorously and it worked out amazingly great: I ran a 3:52 needing a 4:05 to apply to Boston. Hal, thank you!Show more
-
-Eric
-
-#### Thank you so much
-
-October 21, 2024
-
-I have run 10K races for 15 years and last year I just decided to start running half and full marathons. I followed all your training and succesfully finished my first marathon with no problems, 4h 10min. This year my goal is to do it under 4h. Thank you very much for all your info!Show more
-
-Vitto V8
-
-#### Thank You
-
-April 18, 2022
-
-Hal, I just want to say thank you for your huge help. As a beginner, I used your plans to train for marathons and ultramarathons with great success. I chose your plans because they’re simple and easy to follow. Everything was explained. For the last 5 years, all I had to do was follow your directions and run! And now, after using your Boston plan, I’m on my way to my first Boston Marathon. Thank you very much for your help!Show more
-
-Hal
-
-#### The training works.
-
-January 11, 2021
-
-I did my first Marathon after 3 half marathons at the age of 65, with a time of. 5 hrs and 45 minutes. The following year and after another half marathon under my belt my second marathon time was 5 hrs and 33 mins. Last year with another half marathon completed I did my third marathon with a time of 4 hrs and 10 mins, almost qualifying for the Boston marathon. The difference was I used Hal’s Advanced 1 training. Thank you Hal.Show more
-
-Bruce Fowler
-
-#### Marathon Training
-
-November 16, 2020
-
-The training is the best way for me to get better at.,
-
-SAMUDRA TEAR
-
-#### Leave a Review
-
-Your review
-
-Your overall ratingSelect a Rating5 Stars4 Stars3 Stars2 Stars1 Star
-
-Title of your review
-
-Your review
-
-Your name
-
-Your email
-
-This review is based on my own experience and is my genuine opinion. ​
-
-Submit Review
-
-## STAY IN TOUCH
-
-Subscribe to our mailing list for advice from Hal, training tips, and updates on our programs and apps. By submitting your email address, you are consenting to receive communications from halhigdon.com. You may opt out at any time.
-
-### Run Like Hal
-
-Whether pursuing general fitness, training for your first race, or trying to hit your next personal best, HalHigdon.com connects millions of runners to Hal’s books, training programs, and apps each year.
-
-### Training Programs
-
-### Useful Links
-
-### Contact Info
-
-All contents © Hal Higdon, LLC 2026. All rights reserved.
-
-Digital Momentum
-
-Website powered by Digital Momentum
-
-This website uses cookies to improve your experience. We'll assume you're ok with this, but you can opt-out if you wish. Cookie settingsACCEPT
-
-Privacy & Cookies Policy
-
-Close
-
-#### Privacy Overview
-
-This website uses cookies to improve your experience while you navigate through the website. Out of these cookies, the cookies that are categorized as necessary are stored on your browser as they are essential for the working of basic functionalities...
-
-Necessary
-
-Necessary
-
-Always Enabled
-
-Necessary cookies are absolutely essential for the website to function properly. This category only includes cookies that ensures basic functionalities and security features of the website. These cookies do not store any personal information.
-
-Non-necessary
-
-Non-necessary
-
-Any cookies that may not be particularly necessary for the website to function and is used specifically to collect user personal data via analytics, ads, other embedded contents are termed as non-necessary cookies. It is mandatory to procure user consent prior to running these cookies on your website.
-
-SAVE & ACCEPT
+*All training programs by Hal Higdon. All contents © Hal Higdon, LLC. All rights reserved.*

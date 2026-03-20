@@ -1,16 +1,5 @@
 # 10K Training : Advanced
 
-- Summary
-- Program Details
-- Training Schedule
-- Additional Programs
-- Reviews
-
-- Summary
-- Program Details
-- Training Schedule
-- Additional Programs
-- Reviews
 
 ### About the Advanced Program
 
@@ -30,11 +19,6 @@ For runners who want personalized year-round training, using the Higdon method.
 
 **Longest Workout:** 10 miles
 
-4.6
-
-Based on 7 reviews.
-
-Leave a review See all reviews
 
 #### Hal on his Advanced Program
 
@@ -82,124 +66,6 @@ The program utilizes a countdown from Week 1 to Week 8 (race week) for a 10K rac
 | 7 | 4.8 km run | 60 min tempo run | 12 x 400 km pace | 9.7 km run | Rest or 4.8 km run | 9.7 km total, 4.8 km pace | 16.1 km run (3/1) |
 | 8 | 4.8 km run | 30 min tempo run | 6 x 400 km pace | 4.8 km run | Rest or 1.6-4.8 km run | Rest | **10K Race** |
 
-## 10K Training
+---
 
-## Programs
-
-## Books
-
-## Additional 10K Training Programs
-
-#### Reviews
-
-#### Free to run!
-
-March 16, 2025
-
-I heard about Hal from a coworker/friend years ago and continue to use Hal’s training programs to this day. I follow Hal’s Advanced 5K and 10K training programs. I recommend this program to all my family and friends. Hal gives you his training program for free, I believe working out shouldn’t cost you money, so thank you Hal.Show more
-
-Sidney Siv
-
-**Response from Hal Higdon**
-
-Thank you for using the plan and recommending it to others. I am glad it has worked for you! Stride on!
-
-#### Love the plan
-
-September 13, 2021
-
-I love the various plans that the Hal Higdon program offers and have one question. Is there a concern about having tempo and speed work on back to back days?
-
-Sonni
-
-#### Excellent training program
-
-June 13, 2021
-
-I have used these training programs for several years now. It has helped me as a runner tremendously. I do have one question that I always wanted to ask: Once the 8-week training program is over and you’ve ran the big race, what do you do after that? I always have rested a week, then start the same training over again, although that may not be the best thing to do. If you have any feedback on this, that would be great!Show more
-
-Gary Rice
-
-#### Great positive app
-
-March 28, 2021
-
-I prd in a 5k after using hal’s app. It’s engaging and super helpful. Good workouts and a strong ability to customize
-
-Ed smith
-
-#### It’s definitely not for everyone.
-
-September 15, 2020
-
-You can try,but 99% of people will quit this training in a second week. For me that’s insane to do tempo run and the next day repeats.I’am done in the past training sessions like 1) 2k -5:52 6min rest 2)2k- 5:47 6min rest 3) 2k -5.48 6min rest 4) 2k-5.40 9min rest and 5) 1k-2.40 About two weeks later 1) 1k -2.31 9min rest 2) 1k-2.30Show more
-
-and to be honest I couldn’t manage to do this training that Hal Higdon suggesting so its a bit too hard for me
-
-But everyone is different so maybe it works for someone
-
-Dziugas
-
-#### Leave a Review
-
-Your review
-
-Your overall ratingSelect a Rating5 Stars4 Stars3 Stars2 Stars1 Star
-
-Title of your review
-
-Your review
-
-Your name
-
-Your email
-
-This review is based on my own experience and is my genuine opinion. ​
-
-Submit Review
-
-## STAY IN TOUCH
-
-Subscribe to our mailing list for advice from Hal, training tips, and updates on our programs and apps. By submitting your email address, you are consenting to receive communications from halhigdon.com. You may opt out at any time.
-
-### Run Like Hal
-
-Whether pursuing general fitness, training for your first race, or trying to hit your next personal best, HalHigdon.com connects millions of runners to Hal’s books, training programs, and apps each year.
-
-### Training Programs
-
-### Useful Links
-
-### Contact Info
-
-All contents © Hal Higdon, LLC 2026. All rights reserved.
-
-Digital Momentum
-
-Website powered by Digital Momentum
-
-This website uses cookies to improve your experience. We'll assume you're ok with this, but you can opt-out if you wish. Cookie settingsACCEPT
-
-Privacy & Cookies Policy
-
-Close
-
-#### Privacy Overview
-
-This website uses cookies to improve your experience while you navigate through the website. Out of these cookies, the cookies that are categorized as necessary are stored on your browser as they are essential for the working of basic functionalities...
-
-Necessary
-
-Necessary
-
-Always Enabled
-
-Necessary cookies are absolutely essential for the website to function properly. This category only includes cookies that ensures basic functionalities and security features of the website. These cookies do not store any personal information.
-
-Non-necessary
-
-Non-necessary
-
-Any cookies that may not be particularly necessary for the website to function and is used specifically to collect user personal data via analytics, ads, other embedded contents are termed as non-necessary cookies. It is mandatory to procure user consent prior to running these cookies on your website.
-
-SAVE & ACCEPT
+*All training programs by Hal Higdon. All contents © Hal Higdon, LLC. All rights reserved.*

@@ -264,8 +264,8 @@ function repairTaperIntensity(
 function repairOverreach(plan: GeneratedWeeklyPlan, profile: RunnerProfile): RepairAction {
   const REPAIR_FLOOR_KM = Math.max(5, profile.weeklyCapacityKm * 0.4);
   const rawTarget = plan.previousWeekVolumeKm > 0
-    ? plan.previousWeekVolumeKm * 0.6
-    : plan.totalVolumeKm * 0.6;
+    ? plan.previousWeekVolumeKm * 0.8
+    : plan.totalVolumeKm * 0.8;
   const targetVolume = Math.max(rawTarget, REPAIR_FLOOR_KM);
   const scaleFactor = plan.totalVolumeKm > 0
     ? Math.min(1, targetVolume / plan.totalVolumeKm)
@@ -280,7 +280,7 @@ function repairOverreach(plan: GeneratedWeeklyPlan, profile: RunnerProfile): Rep
 
   return {
     ruleId: "OVERREACH_DETECTION",
-    description: "Applied 40% volume reduction due to overreach.",
+    description: "Applied 20% volume reduction due to overreach.",
     originalValue: `${originalVolume}km`,
     repairedValue: `${Math.round(targetVolume * 10) / 10}km`,
     affectedDays: plan.workouts.filter((w) => w.distanceKm > 0).map((w) => w.dayOfWeek),

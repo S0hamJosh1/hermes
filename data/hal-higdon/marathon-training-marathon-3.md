@@ -1,16 +1,5 @@
 # Marathon Training : Marathon 3
 
-- Summary
-- Program Details
-- Training Schedule
-- Additional Programs
-- Reviews
-
-- Summary
-- Program Details
-- Training Schedule
-- Additional Programs
-- Reviews
 
 ### About the Marathon 3 Program
 
@@ -28,11 +17,6 @@ This plan is not available in the RunWithHal app, but you can still get the inte
 
 **Longest Workout:** 20 miles
 
-5.0
-
-Based on 9 reviews.
-
-Leave a review See all reviews
 
 #### Hal on his Marathon 3 Program
 
@@ -130,134 +114,6 @@ Those signing up for one of my interactive programs available from TrainingPeaks
 | 23 | Rest | 6.4 km run | Bike: 40 min | 6.4 km run | Rest | 12.9 km run | Cross 60 min |
 | 24 | Rest | 8.1 km run | Bike: 30 min | Rest | Rest | 1-3.2 km run | **Marathon** |
 
-## Marathon Training
+---
 
-## Programs
-
-## Books
-
-## Additional Marathon Training Programs
-
-#### Reviews
-
-#### A great, balanced program for busy people
-
-March 24, 2021
-
-I like this program because it sets aside three days of predictable running a week. The mileage increases every week and I feel great about my progress and capability for completing the marathon. I know that every Tuesday I’ll have a medium-ish run, every Thursday a short-ish run, and every Sunday a wonderful long run. I enjoy strength training and fitness classes, and this program is perfect because I can do three days of running and then spend the other four days doing cross-training or other workouts as I wish. It is also quite flexible; the formulas for each week make sense so I can repeat a week or add an extra workout (e.g. I did an extra 15M before the plan’s Week 13) as necessary. The medium and long runs feel especially luxurious — I prefer the long mid-week run to multiple shorter runs some of the other plans have. There is a fun feeling of accomplishment that comes from running nine miles before work on a weekday.Show more
-
-I nearly completed the program in 2020 before my marathon was cancelled, and I’m looking forward to completing it this year. I have suffered from shin splints in the past based on doing “too much too fast”, so I highly recommend this program for novices who want to limit the number of running days and maximize enjoyment from those runs.
-
-Carlota
-
-#### Marathon 3 training programme
-
-February 3, 2020
-
-Hi,
-
-Used this programme for my first marathon after doing a few half marathons. Fitted in perfectly with my work schedule and followed it religiously. Pleased to say not one injury or set back and did the marathon in Murcia Spain (where I live)yesterday. Really enjoyed it and a time of 4:41 didnt think was too bad for first marathon for female age 54.Show more
-
-My next marathon will be in December and shall definitely use your training programme again. Thank you so much in helping me achieve my goal!
-
-Sharon Morris
-
-**Response from Hal Higdon**
-
-Congrats, Sharon! And thanks for sharing your story.
-
-#### Loved it
-
-November 18, 2019
-
-Second marathon after using Novice 2 last year for the same course. Really pleased with this plan! 3 runs per week fitted well with shift work (frequent night shift and evening work) and left time for other activities while not feeling I was compromising running. I also like the longer duration of the plan with 3 runs over 30km. Finished 13 minutes faster than a year ago, just sneaking in under 4 hours. No injuries and had a smile (almost) the whole way. Am recommending Hal to everyone!Show more
-
-Lizzie
-
-#### Planning on more marathons with this awesome plan
-
-November 11, 2019
-
-I was injured at some point during my first 3 marathons. I love the marathon, but was doubting that my body could handle them. Tried this plan for my 4th marathon and not only was I injury free, but I had a nearly 10 minute PR. Highly recommend. I am planning on trying to qualify for Boston with this, as I am fairly close. Would also love to train for at least 1 marathon a year. So excited that marathoning is still part of my life!Show more
-
-Katie Trembecky
-
-#### Never felt better on a race
-
-September 8, 2019
-
-After a first painful marathon a few years ago, I decided to take my revenge on this infamous race. I started following this program at week 10, just after training for a half marathon on which I beat my PR.
-
-The 3 runs per week were perfect for me, as it gave me time to practice other sports as well. The marathon went amazingly well, I beat my PR by 18 minutes with a negative split (3:26!). I’ve rarely felt so good during a race.Show more
-
-Thanks Hal for this great program!
-
-Audric Jeanne
-
-**Response from Hal Higdon**
-
-Glad to hear it, Audric. Thanks for using the plan.
-
-#### Leave a Review
-
-Your review
-
-Your overall ratingSelect a Rating5 Stars4 Stars3 Stars2 Stars1 Star
-
-Title of your review
-
-Your review
-
-Your name
-
-Your email
-
-This review is based on my own experience and is my genuine opinion. ​
-
-Submit Review
-
-## STAY IN TOUCH
-
-Subscribe to our mailing list for advice from Hal, training tips, and updates on our programs and apps. By submitting your email address, you are consenting to receive communications from halhigdon.com. You may opt out at any time.
-
-### Run Like Hal
-
-Whether pursuing general fitness, training for your first race, or trying to hit your next personal best, HalHigdon.com connects millions of runners to Hal’s books, training programs, and apps each year.
-
-### Training Programs
-
-### Useful Links
-
-### Contact Info
-
-All contents © Hal Higdon, LLC 2026. All rights reserved.
-
-Digital Momentum
-
-Website powered by Digital Momentum
-
-This website uses cookies to improve your experience. We'll assume you're ok with this, but you can opt-out if you wish. Cookie settingsACCEPT
-
-Privacy & Cookies Policy
-
-Close
-
-#### Privacy Overview
-
-This website uses cookies to improve your experience while you navigate through the website. Out of these cookies, the cookies that are categorized as necessary are stored on your browser as they are essential for the working of basic functionalities...
-
-Necessary
-
-Necessary
-
-Always Enabled
-
-Necessary cookies are absolutely essential for the website to function properly. This category only includes cookies that ensures basic functionalities and security features of the website. These cookies do not store any personal information.
-
-Non-necessary
-
-Non-necessary
-
-Any cookies that may not be particularly necessary for the website to function and is used specifically to collect user personal data via analytics, ads, other embedded contents are termed as non-necessary cookies. It is mandatory to procure user consent prior to running these cookies on your website.
-
-SAVE & ACCEPT
+*All training programs by Hal Higdon. All contents © Hal Higdon, LLC. All rights reserved.*

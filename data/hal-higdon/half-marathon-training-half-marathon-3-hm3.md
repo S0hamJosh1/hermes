@@ -1,16 +1,5 @@
 # Half Marathon Training : Half Marathon 3 (HM3)
 
-- Summary
-- Program Details
-- Training Schedule
-- Additional Programs
-- Reviews
-
-- Summary
-- Program Details
-- Training Schedule
-- Additional Programs
-- Reviews
 
 ### About the Half Marathon 3 (HM3) Program
 
@@ -30,11 +19,6 @@ This plan is not available in the RunWithHal app, but you can still get the inte
 
 **Longest Workout:** 10 miles
 
-4.9
-
-Based on 7 reviews.
-
-Leave a review See all reviews
 
 #### Hal on his Half Marathon 3 (HM3) Program
 
@@ -96,116 +80,6 @@ Good luck using HM3 to train for your next half marathon.
 | 11 | Rest | 9.7 km run | 60 min cross | 60 min tempo | Rest | 16.1 km run | 60 min cross |
 | 12 | Rest | 6.4 km run | 30 min cross | 4.8 km pace | Rest | Rest | **Half Marathon** |
 
-## Half Marathon Training
+---
 
-## Programs
-
-## Books
-
-## Additional Half Marathon Training Programs
-
-#### Reviews
-
-#### Substituting long runs for the 5k and 10k races
-
-June 27, 2020
-
-Great article and look for forward to starting this. I’ve done 3 day per week programs and wanted to give this one a try. If not doing 5k or 10 k races, what distance would I substitute those with on my Saturday long runs?
-
-Jack Powitz
-
-#### 11 or 12 mile long runs?
-
-June 27, 2020
-
-I’m hoping to run my own ‘virtual’ half on the day of the Chicago marathon (or on the Saturday before). If I wanted to include 11 and 12 mile long Saturday runs, when would be the best week(s) to do that?
-
-Jack Powitz
-
-#### It just works!
-
-December 2, 2019
-
-I have not been running regularly. I have done body weight exercises consistently for the past 3 years and decided to restart running once my knees feel better. The HM3 fits my schedule perfectly and I want to continue my strength training. 4 weeks into the program, I am looking forward to the runs more than the strength training. I have kept up with the program and made it for the half at a pace which I thought was better than expected. One of the more surprising takeaway of this program is that my legs have become stronger and the knees no longer hurt at all. The flexibility of the program makes adherence easy.Show more
-
-Ivan
-
-#### Perfect for Tender Knees
-
-August 27, 2019
-
-I’ve suffered from some knee problems in the past, mostly due to a tight IT band. It took me years to gain enough strength to run again, but only a few times a week. I knew I could run a half marathon again (it’s been 9 years), but I was worried my knees couldn’t handle the training involved. My sister who runs marathons told me I couldn’t train for a 1/2 with only 3 runs a week so I went on a search for a program. I am so so so thankful I found this program! I jumped in at about week 6 since I was already signed up for my half. Before this program I was running 6-7 miles 3 times a week and strength training 6 days. I followed this program with the strength training, days off and running days. I loved the variety of the tempo and pace runs as I’ve never done those before. I ran my half on Saturday and took off 22 minutes from my time 9 years ago running the same half. I was so thrilled! Thank you Thank you Hal! You proved that it really can be done!Show more
-
-Nicole
-
-#### I am so impressed!
-
-May 19, 2019
-
-I never thought I would be able to complete a half marathon! But with this program I was able too stay motivated and truly felt stronger and ready each time I took on a new distance. Thank you so much for this! It was incredible to see what I could train for!
-
-Liz
-
-#### Leave a Review
-
-Your review
-
-Your overall ratingSelect a Rating5 Stars4 Stars3 Stars2 Stars1 Star
-
-Title of your review
-
-Your review
-
-Your name
-
-Your email
-
-This review is based on my own experience and is my genuine opinion. ​
-
-Submit Review
-
-## STAY IN TOUCH
-
-Subscribe to our mailing list for advice from Hal, training tips, and updates on our programs and apps. By submitting your email address, you are consenting to receive communications from halhigdon.com. You may opt out at any time.
-
-### Run Like Hal
-
-Whether pursuing general fitness, training for your first race, or trying to hit your next personal best, HalHigdon.com connects millions of runners to Hal’s books, training programs, and apps each year.
-
-### Training Programs
-
-### Useful Links
-
-### Contact Info
-
-All contents © Hal Higdon, LLC 2026. All rights reserved.
-
-Digital Momentum
-
-Website powered by Digital Momentum
-
-This website uses cookies to improve your experience. We'll assume you're ok with this, but you can opt-out if you wish. Cookie settingsACCEPT
-
-Privacy & Cookies Policy
-
-Close
-
-#### Privacy Overview
-
-This website uses cookies to improve your experience while you navigate through the website. Out of these cookies, the cookies that are categorized as necessary are stored on your browser as they are essential for the working of basic functionalities...
-
-Necessary
-
-Necessary
-
-Always Enabled
-
-Necessary cookies are absolutely essential for the website to function properly. This category only includes cookies that ensures basic functionalities and security features of the website. These cookies do not store any personal information.
-
-Non-necessary
-
-Non-necessary
-
-Any cookies that may not be particularly necessary for the website to function and is used specifically to collect user personal data via analytics, ads, other embedded contents are termed as non-necessary cookies. It is mandatory to procure user consent prior to running these cookies on your website.
-
-SAVE & ACCEPT
+*All training programs by Hal Higdon. All contents © Hal Higdon, LLC. All rights reserved.*

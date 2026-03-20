@@ -1,16 +1,5 @@
 # Half Marathon Training : Advanced
 
-- Summary
-- Program Details
-- Training Schedule
-- Additional Programs
-- Reviews
-
-- Summary
-- Program Details
-- Training Schedule
-- Additional Programs
-- Reviews
 
 ### About the Advanced Program
 
@@ -30,11 +19,6 @@ For runners who want personalized year-round training, using the Higdon method.
 
 **Longest Workout:** 2 hours
 
-4.6
-
-Based on 24 reviews.
-
-Leave a review See all reviews
 
 #### Hal on his Advanced Program
 
@@ -98,116 +82,6 @@ Here is your half marathon training program. It is only a guide. Feel free to ma
 | 11 | 4.8 km run | 6 x 800 10-K pace | 4.8 km run | 60 min tempo | Rest | 4.8 km pace | 2:00 run |
 | 12 | 4.8 km run | 6 x 400 5-K pace | 3.2 km run | 30 min tempo | Rest | Rest | **Half Marathon** |
 
-## Half Marathon Training
+---
 
-## Programs
-
-## Books
-
-## Additional Half Marathon Training Programs
-
-#### Reviews
-
-#### Great guideline
-
-April 18, 2022
-
-As a new runner this was the first plan I followed for a HM and was pleasantly surprised by the result. I believe there is so much knowledge behind the plan and how to approach each training day. Highly recommended.
-
-Tim
-
-#### It made me an experienced runner
-
-May 17, 2021
-
-I went from being able to complete a half marathon without stopping to not only knowing I’ll finish but trying to beat my time every race. Thanks Hal Higdon for this, I’ve had so much enjoyment doing races and training with a group because of this program.
-
-Gene
-
-#### Obviously, it helps on good fitness and achieve a good result at the end
-
-March 31, 2020
-
-Very effective and useful 👍
-
-Sheriff Bah
-
-#### The advanced half and marathon programs really work!!!
-
-March 7, 2020
-
-I have been a distance runner for the last 20 years. I have used the advanced programs for the half and marathon over the last several years. In summary they are very effective if you truly follow them having PR in both race events and qualifying for the Boston Marathon three times. Thanks Hal!!
-
-Kevin D
-
-#### Qualified for Boston Three (3) Ti.mes With The Advanced Program
-
-January 8, 2020
-
-I have been a serious runner for the last 15 years having utilized various training programs. Using Hals advanced marathon training program I qualified for Boston in 15, 16 and 17 actually running Boston in 2017 and 2019. Great program and would highly recommend it. For the easy days I would recommend cycling class instead.Show more
-
-Kevin
-
-#### Leave a Review
-
-Your review
-
-Your overall ratingSelect a Rating5 Stars4 Stars3 Stars2 Stars1 Star
-
-Title of your review
-
-Your review
-
-Your name
-
-Your email
-
-This review is based on my own experience and is my genuine opinion. ​
-
-Submit Review
-
-## STAY IN TOUCH
-
-Subscribe to our mailing list for advice from Hal, training tips, and updates on our programs and apps. By submitting your email address, you are consenting to receive communications from halhigdon.com. You may opt out at any time.
-
-### Run Like Hal
-
-Whether pursuing general fitness, training for your first race, or trying to hit your next personal best, HalHigdon.com connects millions of runners to Hal’s books, training programs, and apps each year.
-
-### Training Programs
-
-### Useful Links
-
-### Contact Info
-
-All contents © Hal Higdon, LLC 2026. All rights reserved.
-
-Digital Momentum
-
-Website powered by Digital Momentum
-
-This website uses cookies to improve your experience. We'll assume you're ok with this, but you can opt-out if you wish. Cookie settingsACCEPT
-
-Privacy & Cookies Policy
-
-Close
-
-#### Privacy Overview
-
-This website uses cookies to improve your experience while you navigate through the website. Out of these cookies, the cookies that are categorized as necessary are stored on your browser as they are essential for the working of basic functionalities...
-
-Necessary
-
-Necessary
-
-Always Enabled
-
-Necessary cookies are absolutely essential for the website to function properly. This category only includes cookies that ensures basic functionalities and security features of the website. These cookies do not store any personal information.
-
-Non-necessary
-
-Non-necessary
-
-Any cookies that may not be particularly necessary for the website to function and is used specifically to collect user personal data via analytics, ads, other embedded contents are termed as non-necessary cookies. It is mandatory to procure user consent prior to running these cookies on your website.
-
-SAVE & ACCEPT
+*All training programs by Hal Higdon. All contents © Hal Higdon, LLC. All rights reserved.*

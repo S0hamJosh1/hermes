@@ -1,16 +1,5 @@
 # Marathon Training : Intermediate 2
 
-- Summary
-- Program Details
-- Training Schedule
-- Additional Programs
-- Reviews
-
-- Summary
-- Program Details
-- Training Schedule
-- Additional Programs
-- Reviews
 
 ### About the Intermediate 2 Program
 
@@ -30,11 +19,6 @@ For runners who want personalized year-round training, using the Higdon method.
 
 **Longest Workout:** 20 miles
 
-4.9
-
-Based on 9 reviews.
-
-Leave a review See all reviews
 
 #### Hal on his Intermediate 2 Program
 
@@ -110,126 +94,6 @@ Marathon Training Schedule: Intermediate 2
 | 17 | Cross | 6.4 km run | 9.7 km run | 6.4 km run | Rest | 6.4 km run | 12.9 |
 | 18 | Cross | 4.8 km run | 6.4 km run | Rest | Rest | 3.2 km run | **Marathon** |
 
-## Marathon Training
+---
 
-## Programs
-
-## Books
-
-## Additional Marathon Training Programs
-
-#### Reviews
-
-#### My 1st Marathon in 3h28 !
-
-November 27, 2019
-
-Hi Hal ! I am from Belgium, but living in Philly now. I used to run before but the longest race i did was a 27km trail which was already a huge accomplishment for me. In August 2019 i decided to challenge myself with the Philadelphia Marathon. I did not know that runners were training months before the race! Personally, I never have trained more than 2 weeks before a race, but well 26 miles is something to take seriously so I checked on the internet for some programs and I saw this one. It is recommended to start the training 4 months before the race so I texted Hal which answered me right away telling me it was ok depending on my current fitness. I decided to take the challenge. I also decided to take the Intermediate 2 training program. When i registered my first personal challenge was to finish the marathon in less than 4h but then i started to run, follow Hal advice and i quickly see my fitness improving. What i particularly liked in this program is the daily messages and advice, We can feel the passion and enthusiasm from Hal and its very communicative. There are also a lots of things that, as a first marathoner, I was not aware: taking fluids during race, eating more carbohydrates to feed your muscles with glycogen, cross trainings, etc. I tried to follow the program exactly as it says but even though i have missed some runs i always tried to do the long ones (the most important ones!). So last Sunday i finish my first marathon in 3h28 (and with a 2 min 13 sec stop at the bathroom lol)Show more
-
-Thank you Hal! I will run another one and will recommend and use you program without hesitation!
-
-Baris
-
-Baris Sari
-
-#### PR by over 17 minutes
-
-November 14, 2019
-
-I ran my third marathon in Indianapolis last weekend and PRed by over 17 minutes in going a 3:52:24. I had never done anything more than Hal’s Novice 1 Program, but enjoyed this one. This only adjustment I made was taking a day off instead of cross training. May try Advanced 1 next summer just for the heck of it. Thanks Hal for posting all these programs!!Show more
-
-Mathew Wade
-
-#### Well paced!
-
-July 25, 2019
-
-I’m 55 and have used Hal’s programs for 10+ years. Last year I finished 3:39 at the Austin Marathon. Stick firm to Saturday/Sunday plan. It really works.
-
-Thank you Hal!!!
-
-Jorge Ruiz
-
-#### Worked well
-
-July 18, 2019
-
-I didn’t stick 100% to the plan, but nevertheless achieved my marathon goal. Fine for a busy person and there’s some flex in the plan if you need to swap days. Very clear explanation of what every workout is for.
-
-Laura Walton
-
-**Response from Hal Higdon**
-
-Thanks, Laura. Congrats on hitting your goal!
-
-#### Great plan for Intermediate runners
-
-December 29, 2018
-
-I’m the kind of person that if there is a plan, I’l; stick to it. That’s why I love Hal’s training plans. I know that if I follow them each day, I’ll get to the start line , fit and ready for the challenge. Used this for my third marathon and pleased with the progress. Great that the plans now have a kilometre measure as well! Thanks again Hal, have crossed heaps of half marathon finish lines and three marathons, all under your programs.Show more
-
-Mark Fergus
-
-#### Leave a Review
-
-Your review
-
-Your overall ratingSelect a Rating5 Stars4 Stars3 Stars2 Stars1 Star
-
-Title of your review
-
-Your review
-
-Your name
-
-Your email
-
-This review is based on my own experience and is my genuine opinion. ​
-
-Submit Review
-
-## STAY IN TOUCH
-
-Subscribe to our mailing list for advice from Hal, training tips, and updates on our programs and apps. By submitting your email address, you are consenting to receive communications from halhigdon.com. You may opt out at any time.
-
-### Run Like Hal
-
-Whether pursuing general fitness, training for your first race, or trying to hit your next personal best, HalHigdon.com connects millions of runners to Hal’s books, training programs, and apps each year.
-
-### Training Programs
-
-### Useful Links
-
-### Contact Info
-
-All contents © Hal Higdon, LLC 2026. All rights reserved.
-
-Digital Momentum
-
-Website powered by Digital Momentum
-
-This website uses cookies to improve your experience. We'll assume you're ok with this, but you can opt-out if you wish. Cookie settingsACCEPT
-
-Privacy & Cookies Policy
-
-Close
-
-#### Privacy Overview
-
-This website uses cookies to improve your experience while you navigate through the website. Out of these cookies, the cookies that are categorized as necessary are stored on your browser as they are essential for the working of basic functionalities...
-
-Necessary
-
-Necessary
-
-Always Enabled
-
-Necessary cookies are absolutely essential for the website to function properly. This category only includes cookies that ensures basic functionalities and security features of the website. These cookies do not store any personal information.
-
-Non-necessary
-
-Non-necessary
-
-Any cookies that may not be particularly necessary for the website to function and is used specifically to collect user personal data via analytics, ads, other embedded contents are termed as non-necessary cookies. It is mandatory to procure user consent prior to running these cookies on your website.
-
-SAVE & ACCEPT
+*All training programs by Hal Higdon. All contents © Hal Higdon, LLC. All rights reserved.*

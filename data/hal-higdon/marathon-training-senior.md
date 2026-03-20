@@ -1,16 +1,5 @@
 # Marathon Training : Senior
 
-- Summary
-- Program Details
-- Training Schedule
-- Additional Programs
-- Reviews
-
-- Summary
-- Program Details
-- Training Schedule
-- Additional Programs
-- Reviews
 
 ### About the Senior Program
 
@@ -28,11 +17,6 @@ This plan is not available in the RunWithHal app, but you can still get the inte
 
 **Longest Workout:** 20 miles
 
-4.8
-
-Based on 5 reviews.
-
-Leave a review See all reviews
 
 #### Hal on his Senior Program
 
@@ -100,132 +84,6 @@ Be aware, also, that I have two other programs that feature three days of runnin
 | 2 | Rest | 6.4 km pace | Stretch & strengthen | 12.9 km easy | Stretch & strengthen | Rest | 19.3 km easy |
 | 1 | Rest | 9.7 km easy pace | Stretch & strengthen | Rest | Rest | Rest | **Marathon** |
 
-## Marathon Training
+---
 
-## Programs
-
-## Books
-
-## Additional Marathon Training Programs
-
-#### Reviews
-
-#### Worked very well to me
-
-April 21, 2025
-
-I had a marathon at 13 April 2025.
-
-As I had one unexpected situation, I only had 8 weeks to train.
-
-So, I found Hal’s plan for seniors (I am 59, almost 60), then I have decided to apply it.
-
-It worked well, I did not have any injury.
-
-I need to say that I followed it without any “deviation”.Show more
-
-I also need to say that I did not start from zero, I do sports regularly, but I was not training for a marathon ( I was training for 10 km).
-
-One important advice: please listen your body.
-
-And test your equipment before the race (clothes, shoes, socks, gel, pace, etc.).
-
-To me it was also important to avoid same course during the long training each week.
-
-Luis Paulo
-
-#### It Works
-
-April 9, 2019
-
-I’m 72 and have been running for 50 years with at least 25 marathons. I tried this program and found the lower weekly miles with more rest worked better than the 5 to 6 day weeks I usually did
-
-John
-
-#### Amazing training program
-
-October 9, 2018
-
-Used this to get in 10 weeks of training between the San Francisco Marathon and the Twin Cities Marathon. Time went from 4:56 for San Francisco to 4:23 for Minneapolis. Will no doubt use it again between Napa Valley and the marathon I run next June. Highly recommended! Hal is an amazing online coach.Show more
-
-Adam L Winkles
-
-#### Great help
-
-October 1, 2018
-
-I’m a 75 year old female who just completed a half-marathon. I used this schedule and reduced most of the running times by half. It work great and I did better than I had hoped.
-
-Christy
-
-#### Senior Marathon
-
-September 25, 2018
-
-This training made it easy for me to juggle work, training and family.
-
-Jackie Hawley
-
-#### Leave a Review
-
-Your review
-
-Your overall ratingSelect a Rating5 Stars4 Stars3 Stars2 Stars1 Star
-
-Title of your review
-
-Your review
-
-Your name
-
-Your email
-
-This review is based on my own experience and is my genuine opinion. ​
-
-Submit Review
-
-## STAY IN TOUCH
-
-Subscribe to our mailing list for advice from Hal, training tips, and updates on our programs and apps. By submitting your email address, you are consenting to receive communications from halhigdon.com. You may opt out at any time.
-
-### Run Like Hal
-
-Whether pursuing general fitness, training for your first race, or trying to hit your next personal best, HalHigdon.com connects millions of runners to Hal’s books, training programs, and apps each year.
-
-### Training Programs
-
-### Useful Links
-
-### Contact Info
-
-All contents © Hal Higdon, LLC 2026. All rights reserved.
-
-Digital Momentum
-
-Website powered by Digital Momentum
-
-This website uses cookies to improve your experience. We'll assume you're ok with this, but you can opt-out if you wish. Cookie settingsACCEPT
-
-Privacy & Cookies Policy
-
-Close
-
-#### Privacy Overview
-
-This website uses cookies to improve your experience while you navigate through the website. Out of these cookies, the cookies that are categorized as necessary are stored on your browser as they are essential for the working of basic functionalities...
-
-Necessary
-
-Necessary
-
-Always Enabled
-
-Necessary cookies are absolutely essential for the website to function properly. This category only includes cookies that ensures basic functionalities and security features of the website. These cookies do not store any personal information.
-
-Non-necessary
-
-Non-necessary
-
-Any cookies that may not be particularly necessary for the website to function and is used specifically to collect user personal data via analytics, ads, other embedded contents are termed as non-necessary cookies. It is mandatory to procure user consent prior to running these cookies on your website.
-
-SAVE & ACCEPT
+*All training programs by Hal Higdon. All contents © Hal Higdon, LLC. All rights reserved.*

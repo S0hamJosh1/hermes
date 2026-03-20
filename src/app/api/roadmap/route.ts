@@ -16,6 +16,14 @@ const DISTANCE_KM: Record<string, number> = {
     "Marathon": 42.195,
 };
 
+const GOAL_FLOOR_KM: Record<string, number> = {
+    "4K": 8,
+    "5K": 8,
+    "10K": 16,
+    "Half Marathon": 24,
+    "Marathon": 32,
+};
+
 function addDays(date: Date, days: number): Date {
     const next = new Date(date);
     next.setDate(next.getDate() + days);
@@ -43,6 +51,8 @@ async function ensureRoadmapForGoal(params: {
     now.setHours(0, 0, 0, 0);
     const end = params.targetDate > now ? params.targetDate : addDays(now, 28);
 
+    const baseVolumeKm = Math.max(params.weeklyCapacityKm, GOAL_FLOOR_KM[params.distance] ?? 8);
+
     const phases = [
         { n: 1, name: "Foundation", a: 0, b: 0.35, v: 0.8, focus: "Base aerobic volume" },
         { n: 2, name: "Build", a: 0.35, b: 0.7, v: 0.95, focus: "Strength + durability" },
@@ -60,7 +70,7 @@ async function ensureRoadmapForGoal(params: {
                 phaseName: p.name,
                 startDate: atProgress(now, end, p.a),
                 endDate: atProgress(now, end, p.b),
-                targetVolumeKm: Math.round(params.weeklyCapacityKm * p.v * 10) / 10,
+                targetVolumeKm: Math.round(baseVolumeKm * p.v * 10) / 10,
                 focus: p.focus,
             },
         });

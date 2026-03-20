@@ -1,16 +1,5 @@
 # Marathon Training : Novice Supreme
 
-- Summary
-- Program Details
-- Training Schedule
-- Additional Programs
-- Reviews
-
-- Summary
-- Program Details
-- Training Schedule
-- Additional Programs
-- Reviews
 
 ### About the Novice Supreme Program
 
@@ -30,11 +19,6 @@ This plan is not available in the RunWithHal app, but you can still get the inte
 
 **Longest Workout:** 20 miles
 
-5.0
-
-Based on 4 reviews.
-
-Leave a review See all reviews
 
 #### Hal on his Novice Supreme Program
 
@@ -110,120 +94,6 @@ Training for the marathon, or any other running race, is not easy. It’s hard w
 | 29 | Rest | 6.4 km run | 9.7 km run | 4.8 km run | Rest | 12.9 km run | Cross |
 | 30 | Rest | 4.8 km run | 6.4 km run | 3.2 km run | Rest | Rest | **Marathon** |
 
-## Marathon Training
+---
 
-## Programs
-
-## Books
-
-## Additional Marathon Training Programs
-
-#### Reviews
-
-#### Just what I was looking for
-
-June 12, 2020
-
-Okay, so I did this program about 3 years ago when I made the decision to run a marathon. Let me put this into perspective: I had run a half marathon almost 4 years prior to that (I did the Novice 1) and that was the extent of my running background. However, I got the itch to run a marathon and really needed something that felt… attainable and doable. THIS was that program. I was never the person that someone would think would run a marathon and as long as you stick with the length of this program, it is everything you will need. If I ever decide to run a marathon again, this is absolutely the program I will use.Show more
-
-This program is quite literally “this is a marathon, not a sprint” and is in no way intimidating to train for it. I loved it and anyone I know who is ever interested in running a marathon and putting in the time, I will recommend this to them.
-
-Overall, Hal, thank you. Thank you for creating a program like this so people like me can achieve that once unattainable dream.
-
-Stephanie
-
-#### A Great Way To Ease Into Things
-
-January 14, 2020
-
-I used this program in 2015. It is a grind, but works great. I ran my first marathon to celebrate my 40th birthday. I’ll be using the program this year to help celebrate 45!!
-
-Don
-
-#### I did it!
-
-May 23, 2019
-
-I followed the plan above and I just finished my first Marathon.
-
-And my last Marathon.
-
-But I did it! Thank you for sharing this. Glad I found it ~40 weeks ago.
-
-Tim H
-
-#### Super Novice Success
-
-August 7, 2018
-
-My husband (in his 60’s) and I (in my 50’s) had never completed a race – ever! We followed the Super Novice Marathon plan and had a GREAT experience. I finished 15th out of 47 in my category!! My husband made it his 1st and last – but I went on to finish a second marathon 7 months later and now 3 months later will finish my 3rd marathon in 3 weeks. THANKS for the great training!!Show more
-
-Jo
-
-**Response from Hal Higdon**
-
-Thanks, Jo. Good luck with your 3rd marathon!
-
-#### Leave a Review
-
-Your review
-
-Your overall ratingSelect a Rating5 Stars4 Stars3 Stars2 Stars1 Star
-
-Title of your review
-
-Your review
-
-Your name
-
-Your email
-
-This review is based on my own experience and is my genuine opinion. ​
-
-Submit Review
-
-## STAY IN TOUCH
-
-Subscribe to our mailing list for advice from Hal, training tips, and updates on our programs and apps. By submitting your email address, you are consenting to receive communications from halhigdon.com. You may opt out at any time.
-
-### Run Like Hal
-
-Whether pursuing general fitness, training for your first race, or trying to hit your next personal best, HalHigdon.com connects millions of runners to Hal’s books, training programs, and apps each year.
-
-### Training Programs
-
-### Useful Links
-
-### Contact Info
-
-All contents © Hal Higdon, LLC 2026. All rights reserved.
-
-Digital Momentum
-
-Website powered by Digital Momentum
-
-This website uses cookies to improve your experience. We'll assume you're ok with this, but you can opt-out if you wish. Cookie settingsACCEPT
-
-Privacy & Cookies Policy
-
-Close
-
-#### Privacy Overview
-
-This website uses cookies to improve your experience while you navigate through the website. Out of these cookies, the cookies that are categorized as necessary are stored on your browser as they are essential for the working of basic functionalities...
-
-Necessary
-
-Necessary
-
-Always Enabled
-
-Necessary cookies are absolutely essential for the website to function properly. This category only includes cookies that ensures basic functionalities and security features of the website. These cookies do not store any personal information.
-
-Non-necessary
-
-Non-necessary
-
-Any cookies that may not be particularly necessary for the website to function and is used specifically to collect user personal data via analytics, ads, other embedded contents are termed as non-necessary cookies. It is mandatory to procure user consent prior to running these cookies on your website.
-
-SAVE & ACCEPT
+*All training programs by Hal Higdon. All contents © Hal Higdon, LLC. All rights reserved.*

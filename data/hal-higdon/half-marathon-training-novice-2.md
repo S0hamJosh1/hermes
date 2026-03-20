@@ -1,16 +1,5 @@
 # Half Marathon Training : Novice 2
 
-- Summary
-- Program Details
-- Training Schedule
-- Additional Programs
-- Reviews
-
-- Summary
-- Program Details
-- Training Schedule
-- Additional Programs
-- Reviews
 
 ### About the Novice 2 Program
 
@@ -34,11 +23,6 @@ For runners who want personalized year-round training, using the Higdon method.
 
 **Longest Workout:** 12 miles
 
-4.8
-
-Based on 11 reviews.
-
-Leave a review See all reviews
 
 #### Hal on his Novice 2 Program
 
@@ -92,124 +76,6 @@ Here is Half Marathon Novice 2. Below are directions on how the program works. (
 | 11 | Rest | 4.8 km run | 8.1 km run | 4.8 km run | Rest | 19.3 km run | 60 min cross |
 | 12 | Rest | 4.8 km run | 3.2 km pace | 3.2 km run | Rest | Rest | **Half Marathon** |
 
-## Half Marathon Training
+---
 
-## Programs
-
-## Books
-
-## Additional Half Marathon Training Programs
-
-#### Reviews
-
-#### Used for my second half-marathon
-
-February 17, 2025
-
-I used this training program for my second half, and was excited to PR on a course that was much more difficult (ex., a 1/2 half mile steep hill right at the end!) than my first.
-
-Hal has been my go-to for past couple of years, whether I’m training for an event or looking to base train.Show more
-
-If I ever decide to take the plunge for a marathon, Hal will be my faithful guide.
-
-M. De Bock
-
-**Response from Hal Higdon**
-
-Incredible! Congrats on the PR!
-
-#### I love to run with this great plan.
-
-August 18, 2021
-
-I found that I wanted to train above the novice (1) but below the intermediate level, so thanks for this plan that is helping me get to the next level. Without this map it would be more difficult for me to figure out what I’m doing.
-
-Matthew Warren
-
-#### Does exactly what it says on the tin
-
-March 23, 2020
-
-I used Hal’s Intermediate programme in 2016 and got my Half Marathon PB – sub 2-hours by just following the plan exactly. I’m back now doing the Novice 2 and find it great when coming from a lower fitness base. I would also suggest doing the 12-mile a fortnight before actual race day but that’s because I have had joint-soreness problems after the longer runs and body needs time to recover before the big day.Show more
-
-Kate L
-
-#### The programmes have got me through
-
-September 3, 2019
-
-I have used programmes for many half and 10 marathons and I have found them very helpful. I have recommended them to others. Thank you.
-
-Margaret
-
-#### Solid Plan
-
-June 11, 2019
-
-I’ve used this for three half marathons and plan to use it again for my fourth. I felt prepared for all three and was pleased with my times. Great plan!
-
-Kristen
-
-#### Leave a Review
-
-Your review
-
-Your overall ratingSelect a Rating5 Stars4 Stars3 Stars2 Stars1 Star
-
-Title of your review
-
-Your review
-
-Your name
-
-Your email
-
-This review is based on my own experience and is my genuine opinion. ​
-
-Submit Review
-
-## STAY IN TOUCH
-
-Subscribe to our mailing list for advice from Hal, training tips, and updates on our programs and apps. By submitting your email address, you are consenting to receive communications from halhigdon.com. You may opt out at any time.
-
-### Run Like Hal
-
-Whether pursuing general fitness, training for your first race, or trying to hit your next personal best, HalHigdon.com connects millions of runners to Hal’s books, training programs, and apps each year.
-
-### Training Programs
-
-### Useful Links
-
-### Contact Info
-
-All contents © Hal Higdon, LLC 2026. All rights reserved.
-
-Digital Momentum
-
-Website powered by Digital Momentum
-
-This website uses cookies to improve your experience. We'll assume you're ok with this, but you can opt-out if you wish. Cookie settingsACCEPT
-
-Privacy & Cookies Policy
-
-Close
-
-#### Privacy Overview
-
-This website uses cookies to improve your experience while you navigate through the website. Out of these cookies, the cookies that are categorized as necessary are stored on your browser as they are essential for the working of basic functionalities...
-
-Necessary
-
-Necessary
-
-Always Enabled
-
-Necessary cookies are absolutely essential for the website to function properly. This category only includes cookies that ensures basic functionalities and security features of the website. These cookies do not store any personal information.
-
-Non-necessary
-
-Non-necessary
-
-Any cookies that may not be particularly necessary for the website to function and is used specifically to collect user personal data via analytics, ads, other embedded contents are termed as non-necessary cookies. It is mandatory to procure user consent prior to running these cookies on your website.
-
-SAVE & ACCEPT
+*All training programs by Hal Higdon. All contents © Hal Higdon, LLC. All rights reserved.*

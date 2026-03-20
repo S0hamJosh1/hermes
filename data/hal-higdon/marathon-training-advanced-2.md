@@ -1,16 +1,5 @@
 # Marathon Training : Advanced 2
 
-- Summary
-- Program Details
-- Training Schedule
-- Additional Programs
-- Reviews
-
-- Summary
-- Program Details
-- Training Schedule
-- Additional Programs
-- Reviews
 
 ### About the Advanced 2 Program
 
@@ -30,11 +19,6 @@ For runners who want personalized year-round training, using the Higdon method.
 
 **Longest Workout:** 20 miles
 
-4.9
-
-Based on 7 reviews.
-
-Leave a review See all reviews
 
 #### Hal on his Advanced 2 Program
 
@@ -112,116 +96,6 @@ And now, lace up your running shoes. It is time to begin!
 | 17 | 6.4 km run | 30 tempo | 6.4 km run | 6.4 km pace | Rest | 6.4 km run | 12.9 |
 | 18 | 4.8 km run | 4 x 400 | 4.8 km run | Rest | Rest | 3.2 km run | **Marathon** |
 
-## Marathon Training
+---
 
-## Programs
-
-## Books
-
-## Additional Marathon Training Programs
-
-#### Reviews
-
-#### Excellent program!
-
-April 21, 2025
-
-This program let me run fewer miles due to my plantar fasciitis, and got me to the start (and finish) injury free.! I did not meet my target goal of a sub-3 hour, I think the tempo runs here should be longer. Thanks, Hal!
-
-David
-
-#### 13 Min PB
-
-October 31, 2023
-
-Followed Advance 2 Marathon Programme more or less to a tee and was able to bring my marathon time down 13 minutes with negative splits. Going to add more mileage to it next time and see where it gets me.
-
-M WALSHE
-
-#### Big improvement
-
-October 28, 2019
-
-Followed advanced 2 marathon programme and improved by 13 minutes on my 2nd marathon
-
-MARK WALSHE
-
-#### Great stuff
-
-July 29, 2019
-
-Been using a verity of these since I started. Great base and numbers.
-
-Teagan Kane
-
-#### Great plan
-
-May 26, 2019
-
-I used this plan to train for a fall marathon and went from an average finishing time of 3:35 to 3:17. It worked well for me unlike some other plans I’ve used that leave me feeling exhausted. Planning to use this for my next fall marathon.
-
-Beth
-
-#### Leave a Review
-
-Your review
-
-Your overall ratingSelect a Rating5 Stars4 Stars3 Stars2 Stars1 Star
-
-Title of your review
-
-Your review
-
-Your name
-
-Your email
-
-This review is based on my own experience and is my genuine opinion. ​
-
-Submit Review
-
-## STAY IN TOUCH
-
-Subscribe to our mailing list for advice from Hal, training tips, and updates on our programs and apps. By submitting your email address, you are consenting to receive communications from halhigdon.com. You may opt out at any time.
-
-### Run Like Hal
-
-Whether pursuing general fitness, training for your first race, or trying to hit your next personal best, HalHigdon.com connects millions of runners to Hal’s books, training programs, and apps each year.
-
-### Training Programs
-
-### Useful Links
-
-### Contact Info
-
-All contents © Hal Higdon, LLC 2026. All rights reserved.
-
-Digital Momentum
-
-Website powered by Digital Momentum
-
-This website uses cookies to improve your experience. We'll assume you're ok with this, but you can opt-out if you wish. Cookie settingsACCEPT
-
-Privacy & Cookies Policy
-
-Close
-
-#### Privacy Overview
-
-This website uses cookies to improve your experience while you navigate through the website. Out of these cookies, the cookies that are categorized as necessary are stored on your browser as they are essential for the working of basic functionalities...
-
-Necessary
-
-Necessary
-
-Always Enabled
-
-Necessary cookies are absolutely essential for the website to function properly. This category only includes cookies that ensures basic functionalities and security features of the website. These cookies do not store any personal information.
-
-Non-necessary
-
-Non-necessary
-
-Any cookies that may not be particularly necessary for the website to function and is used specifically to collect user personal data via analytics, ads, other embedded contents are termed as non-necessary cookies. It is mandatory to procure user consent prior to running these cookies on your website.
-
-SAVE & ACCEPT
+*All training programs by Hal Higdon. All contents © Hal Higdon, LLC. All rights reserved.*

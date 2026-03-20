@@ -250,8 +250,9 @@ export function generateWeeklyPlan(
     }
 
     const paceForCategory = assignPace(category, profile);
-    if (distanceKm <= 0 && day.durationMinutes && day.durationMinutes > 0 && paceForCategory > 0) {
-      const durationDist = Math.round(((day.durationMinutes * 60) / paceForCategory) * scaleFactor * stateMultiplier * 10) / 10;
+    const isDurationSourced = distanceKm <= 0 && day.durationMinutes != null && day.durationMinutes > 0;
+    if (isDurationSourced && paceForCategory > 0) {
+      const durationDist = Math.round(((day.durationMinutes! * 60) / paceForCategory) * scaleFactor * stateMultiplier * 10) / 10;
       distanceKm = durationDist;
     }
 
@@ -270,6 +271,7 @@ export function generateWeeklyPlan(
       templateSource: `${plan.meta.id}:week-${clampedWeek}:${dayName(day.dayOfWeek)}`,
       isKeyWorkout: isKeyWorkout(category),
       label: day.label,
+      templateDurationMinutes: isDurationSourced ? day.durationMinutes! : undefined,
     });
   }
 

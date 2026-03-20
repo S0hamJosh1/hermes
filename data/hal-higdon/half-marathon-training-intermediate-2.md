@@ -1,16 +1,5 @@
 # Half Marathon Training : Intermediate 2
 
-- Summary
-- Program Details
-- Training Schedule
-- Additional Programs
-- Reviews
-
-- Summary
-- Program Details
-- Training Schedule
-- Additional Programs
-- Reviews
 
 ### About the Intermediate 2 Program
 
@@ -34,11 +23,6 @@ For runners who want personalized year-round training, using the Higdon method.
 
 **Longest Workout:** 12 miles
 
-4.9
-
-Based on 7 reviews.
-
-Leave a review See all reviews
 
 #### Hal on his Intermediate 2 Program
 
@@ -108,116 +92,6 @@ Here is your Intermediate 2 half marathon training program. Also, consider signi
 | 11 | 60 min cross | 8.1 km run | 10 x 400 5K pace | 4.8 km run | Rest | 4.8 km pace | 19.3 km run |
 | 12 | Rest | 6.4 km run | 30 min tempo | 3.2 km run | Rest | Rest | **Half Marathon** |
 
-## Half Marathon Training
+---
 
-## Programs
-
-## Books
-
-## Additional Half Marathon Training Programs
-
-#### Reviews
-
-#### This plan led to me hitting PR's on both my half and 10k
-
-June 26, 2020
-
-Great plan, I used it to run a half marathon and dropped 7 minutes of my time. Also set a PR for my 10k by 4 minutes. Awesome plan to use if you plan on continuing other physical activities, as it gives you enough rest and recovery to maximize performance for speedwork.
-
-Mike M
-
-#### Swimmer to runner
-
-May 12, 2020
-
-Fantastic program! I used it a few years ago to run my first half and ending up winning my age group with a time of 1:37!
-
-Merissa
-
-#### Great progress
-
-January 2, 2020
-
-I started 2 years ago with Novice 2 my first half and finished in 1h 55m and moved last year to Intermediate 2 and finished in 1h 49m. I am 62 .
-
-Luciano
-
-#### Love this training schedule
-
-April 29, 2019
-
-Great training schedule for a half marathon!!
-
-jennifer Smith
-
-#### Awesome
-
-February 6, 2019
-
-I’ve used this training program several times with success. Hope to read one of his books soon.
-
-Katie Altizer
-
-#### Leave a Review
-
-Your review
-
-Your overall ratingSelect a Rating5 Stars4 Stars3 Stars2 Stars1 Star
-
-Title of your review
-
-Your review
-
-Your name
-
-Your email
-
-This review is based on my own experience and is my genuine opinion. ​
-
-Submit Review
-
-## STAY IN TOUCH
-
-Subscribe to our mailing list for advice from Hal, training tips, and updates on our programs and apps. By submitting your email address, you are consenting to receive communications from halhigdon.com. You may opt out at any time.
-
-### Run Like Hal
-
-Whether pursuing general fitness, training for your first race, or trying to hit your next personal best, HalHigdon.com connects millions of runners to Hal’s books, training programs, and apps each year.
-
-### Training Programs
-
-### Useful Links
-
-### Contact Info
-
-All contents © Hal Higdon, LLC 2026. All rights reserved.
-
-Digital Momentum
-
-Website powered by Digital Momentum
-
-This website uses cookies to improve your experience. We'll assume you're ok with this, but you can opt-out if you wish. Cookie settingsACCEPT
-
-Privacy & Cookies Policy
-
-Close
-
-#### Privacy Overview
-
-This website uses cookies to improve your experience while you navigate through the website. Out of these cookies, the cookies that are categorized as necessary are stored on your browser as they are essential for the working of basic functionalities...
-
-Necessary
-
-Necessary
-
-Always Enabled
-
-Necessary cookies are absolutely essential for the website to function properly. This category only includes cookies that ensures basic functionalities and security features of the website. These cookies do not store any personal information.
-
-Non-necessary
-
-Non-necessary
-
-Any cookies that may not be particularly necessary for the website to function and is used specifically to collect user personal data via analytics, ads, other embedded contents are termed as non-necessary cookies. It is mandatory to procure user consent prior to running these cookies on your website.
-
-SAVE & ACCEPT
+*All training programs by Hal Higdon. All contents © Hal Higdon, LLC. All rights reserved.*

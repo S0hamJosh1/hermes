@@ -1,16 +1,5 @@
 # Half Marathon Training : Intermediate 1
 
-- Summary
-- Program Details
-- Training Schedule
-- Additional Programs
-- Reviews
-
-- Summary
-- Program Details
-- Training Schedule
-- Additional Programs
-- Reviews
 
 ### About the Intermediate 1 Program
 
@@ -32,11 +21,6 @@ For runners who want personalized year-round training, using the Higdon method.
 
 **Longest Workout:** 12 miles
 
-5.0
-
-Based on 10 reviews.
-
-Leave a review See all reviews
 
 #### Hal on his Intermediate 1 Program
 
@@ -92,118 +76,6 @@ The terms used in the training chart are somewhat obvious, but let me explain wh
 | 11 | 60 min cross | 8.1 km run | 9.7 km run | 6.4 km run | Rest | 4.8 km pace | 19.3 km run |
 | 12 | Rest | 6.4 km run | 6.4 km pace | 3.2 km run | Rest | Rest | **Half Marathon** |
 
-## Half Marathon Training
+---
 
-## Programs
-
-## Books
-
-## Additional Half Marathon Training Programs
-
-#### Reviews
-
-#### Awesome Training Plan
-
-September 22, 2021
-
-This is a well-organized and well-thought-out plan. I highly recommend the app
-
-Ben
-
-#### Excellent
-
-April 12, 2021
-
-I’ve used Hal’s training for many years and it has always worked very well.
-
-Sally Schettino
-
-#### New PR!
-
-December 29, 2019
-
-I have ran 3 half marathons so far. The first two times I used training plans that were too aggressive. I ended up crashing and burnt out both times. This year I used your intermediate 1 plan and I had my first successful half! No crash late in the race. I actually had negative splits and dropped 6 minutes off my PR. I am currently using the plan a second time for a half next month. My running is stronger and faster than it has ever benn! Thank you!Show more
-
-Birdie
-
-#### Challenging yet very doable
-
-December 2, 2019
-
-I am 15. year-old boy. I only had time to do the last three weeks of the training plan, because that was all the time I had between the end of the cross country season and the race. I thought I was going to run around 1:50, but ran a 1:41. It was my first half marathon race. Thank you Hal Higdon.Show more
-
-Bryce
-
-#### Really Solid Plan
-
-October 3, 2019
-
-Great structure, totally do-able. Helped me get a sub 1’50” first half and looking for better on next one this week.
-
-Small niggle …. Being a Kilometer guy I would much prefer if the Kms were rounded up and down to achieve the same distances over the week …. I’m never going to go out and run a 6.2km … I’m guessing most runners are the same!!Show more
-
-Mike R
-
-#### Leave a Review
-
-Your review
-
-Your overall ratingSelect a Rating5 Stars4 Stars3 Stars2 Stars1 Star
-
-Title of your review
-
-Your review
-
-Your name
-
-Your email
-
-This review is based on my own experience and is my genuine opinion. ​
-
-Submit Review
-
-## STAY IN TOUCH
-
-Subscribe to our mailing list for advice from Hal, training tips, and updates on our programs and apps. By submitting your email address, you are consenting to receive communications from halhigdon.com. You may opt out at any time.
-
-### Run Like Hal
-
-Whether pursuing general fitness, training for your first race, or trying to hit your next personal best, HalHigdon.com connects millions of runners to Hal’s books, training programs, and apps each year.
-
-### Training Programs
-
-### Useful Links
-
-### Contact Info
-
-All contents © Hal Higdon, LLC 2026. All rights reserved.
-
-Digital Momentum
-
-Website powered by Digital Momentum
-
-This website uses cookies to improve your experience. We'll assume you're ok with this, but you can opt-out if you wish. Cookie settingsACCEPT
-
-Privacy & Cookies Policy
-
-Close
-
-#### Privacy Overview
-
-This website uses cookies to improve your experience while you navigate through the website. Out of these cookies, the cookies that are categorized as necessary are stored on your browser as they are essential for the working of basic functionalities...
-
-Necessary
-
-Necessary
-
-Always Enabled
-
-Necessary cookies are absolutely essential for the website to function properly. This category only includes cookies that ensures basic functionalities and security features of the website. These cookies do not store any personal information.
-
-Non-necessary
-
-Non-necessary
-
-Any cookies that may not be particularly necessary for the website to function and is used specifically to collect user personal data via analytics, ads, other embedded contents are termed as non-necessary cookies. It is mandatory to procure user consent prior to running these cookies on your website.
-
-SAVE & ACCEPT
+*All training programs by Hal Higdon. All contents © Hal Higdon, LLC. All rights reserved.*

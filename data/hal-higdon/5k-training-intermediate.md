@@ -1,16 +1,5 @@
 # 5K Training : Intermediate
 
-- Summary
-- Program Details
-- Training Schedule
-- Additional Programs
-- Reviews
-
-- Summary
-- Program Details
-- Training Schedule
-- Additional Programs
-- Reviews
 
 ### About the Intermediate Program
 
@@ -30,11 +19,6 @@ For runners who want personalized year-round training, using the Higdon method.
 
 **Longest Workout:** 7 miles
 
-5.0
-
-Based on 5 reviews.
-
-Leave a review See all reviews
 
 #### Hal on his Intermediate Program
 
@@ -84,120 +68,6 @@ The schedule below is only a guide. If you want to do long runs on Saturdays ra
 | 7 | Rest | 4.8 km run | 8 x 400 | 4.8 km run | Rest | 8.1 km fast | 11.3 km run |
 | 8 | Rest | 4.8 km run | 30 min tempo | 3.2 km run | Rest | Rest | **5K Race** |
 
-## 5K Training
+---
 
-## Programs
-
-## Books
-
-## Additional 5K Training Programs
-
-#### Reviews
-
-#### THE BEST
-
-February 7, 2021
-
-ABSOLUTELY THE BEST TRAINING I HAVE EVER COME ACROSS.
-
-SHOURASHISH BANERJEE
-
-#### This is Perfect
-
-January 28, 2021
-
-I have struggled to find a running plan that is congruent with where I am at in my running and the intermediate plan is exactly what I was looking for. Not too hard, not too easy, challenging enough while still enjoying to run.
-
-Benjamin Goudy
-
-#### How do you run the 5k?
-
-October 20, 2020
-
-Would you recommend running the actual 5k at a “fast” pace then entire time?
-
-Sam Diomede
-
-#### 5k Good plan
-
-March 18, 2019
-
-Great plan…I’m in my mid 40s and did a 5k race under 20mins using the intermediate plan.
-
-Although I did Wednesday’s intervals on a treadmill at a 15% incline; much
-
-slower than flat but less sore.C
-
-Curtis Thomson
-
-#### Loved this training plan
-
-December 29, 2018
-
-This plan was fantastic. I followed completely until the last week when I got an injury. I had to pull back in my training, but I shaved off around 3 minutes from my last 5K. Wish i could have continued it, but sadly I had to rest for recovery. Will be using this site for all my future race trainings.Show more
-
-Christina Davis
-
-#### Leave a Review
-
-Your review
-
-Your overall ratingSelect a Rating5 Stars4 Stars3 Stars2 Stars1 Star
-
-Title of your review
-
-Your review
-
-Your name
-
-Your email
-
-This review is based on my own experience and is my genuine opinion. ​
-
-Submit Review
-
-## STAY IN TOUCH
-
-Subscribe to our mailing list for advice from Hal, training tips, and updates on our programs and apps. By submitting your email address, you are consenting to receive communications from halhigdon.com. You may opt out at any time.
-
-### Run Like Hal
-
-Whether pursuing general fitness, training for your first race, or trying to hit your next personal best, HalHigdon.com connects millions of runners to Hal’s books, training programs, and apps each year.
-
-### Training Programs
-
-### Useful Links
-
-### Contact Info
-
-All contents © Hal Higdon, LLC 2026. All rights reserved.
-
-Digital Momentum
-
-Website powered by Digital Momentum
-
-This website uses cookies to improve your experience. We'll assume you're ok with this, but you can opt-out if you wish. Cookie settingsACCEPT
-
-Privacy & Cookies Policy
-
-Close
-
-#### Privacy Overview
-
-This website uses cookies to improve your experience while you navigate through the website. Out of these cookies, the cookies that are categorized as necessary are stored on your browser as they are essential for the working of basic functionalities...
-
-Necessary
-
-Necessary
-
-Always Enabled
-
-Necessary cookies are absolutely essential for the website to function properly. This category only includes cookies that ensures basic functionalities and security features of the website. These cookies do not store any personal information.
-
-Non-necessary
-
-Non-necessary
-
-Any cookies that may not be particularly necessary for the website to function and is used specifically to collect user personal data via analytics, ads, other embedded contents are termed as non-necessary cookies. It is mandatory to procure user consent prior to running these cookies on your website.
-
-SAVE & ACCEPT
+*All training programs by Hal Higdon. All contents © Hal Higdon, LLC. All rights reserved.*

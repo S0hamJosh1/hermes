@@ -396,9 +396,10 @@ export async function POST(req: NextRequest) {
               workoutDate: addDays(weekStartDate, w.dayOfWeek),
               workoutType: w.type,
               workoutLabel: w.label ?? null,
-              plannedDistanceKm: w.distanceKm,
-              plannedDurationMinutes:
-                w.distanceKm > 0 && w.paceSecondsPerKm > 0
+              plannedDistanceKm: w.templateDurationMinutes ? null : w.distanceKm,
+              plannedDurationMinutes: w.templateDurationMinutes
+                ? w.templateDurationMinutes
+                : w.distanceKm > 0 && w.paceSecondsPerKm > 0
                   ? Math.round((w.distanceKm * w.paceSecondsPerKm) / 60)
                   : null,
               plannedPaceSecondsPerKm:

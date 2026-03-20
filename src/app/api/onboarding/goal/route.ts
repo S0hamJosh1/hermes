@@ -69,6 +69,14 @@ function formatDateOnlyUTC(date: Date): string {
     return `${y}-${m}-${d}`;
 }
 
+const GOAL_FLOOR_KM: Record<string, number> = {
+    "4K": 8,
+    "5K": 8,
+    "10K": 16,
+    "Half Marathon": 24,
+    "Marathon": 32,
+};
+
 async function regenerateRoadmapForGoal(params: {
     userId: string;
     goalId: string;
@@ -100,6 +108,8 @@ async function regenerateRoadmapForGoal(params: {
 
     const endDate = raceDate > startDate ? raceDate : addDays(startDate, 28);
 
+    const baseVolumeKm = Math.max(weeklyCapacityKm, GOAL_FLOOR_KM[distance] ?? 8);
+
     const phases = [
         { number: 1, name: "Foundation", startPct: 0, endPct: 0.35, volumeMul: 0.8, focus: "Base aerobic volume" },
         { number: 2, name: "Build", startPct: 0.35, endPct: 0.7, volumeMul: 0.95, focus: "Strength + durability" },
@@ -117,7 +127,7 @@ async function regenerateRoadmapForGoal(params: {
                 phaseName: p.name,
                 startDate: atProgress(startDate, endDate, p.startPct),
                 endDate: atProgress(startDate, endDate, p.endPct),
-                targetVolumeKm: Math.round(weeklyCapacityKm * p.volumeMul * 10) / 10,
+                targetVolumeKm: Math.round(baseVolumeKm * p.volumeMul * 10) / 10,
                 focus: p.focus,
             },
         });
@@ -252,6 +262,12 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
             primaryGoalDate: targetDate,
             goalTimeSeconds: body.targetTimeSeconds ?? null,
         },
+    });
+
+    // Clear stale weekly plans so week numbers reset and old data
+    // doesn't poison new generations for the updated goal.
+    await prisma.weeklyPlan.deleteMany({
+        where: { userId: session.userId },
     });
 
     const activities = await prisma.stravaActivity.findMany({

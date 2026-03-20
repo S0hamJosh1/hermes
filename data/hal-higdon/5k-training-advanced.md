@@ -1,16 +1,5 @@
 # 5K Training : Advanced
 
-- Summary
-- Program Details
-- Training Schedule
-- Additional Programs
-- Reviews
-
-- Summary
-- Program Details
-- Training Schedule
-- Additional Programs
-- Reviews
 
 ### About the Advanced Program
 
@@ -32,11 +21,6 @@ For runners who want personalized year-round training, using the Higdon method.
 
 **Longest Workout:** 12 miles
 
-5.0
-
-Based on 7 reviews.
-
-Leave a review See all reviews
 
 #### Hal on his Advanced Program
 
@@ -88,118 +72,6 @@ The schedule below is only a guide. If you want to do your long runs on Saturda
 | 7 | 4.8 km run | 8 x 400 | Rest or easy run | 45 min tempo | Rest | 9.7 km fast | 90 min run |
 | 8 | 3.2 km run | 6 x 200 | 30 min tempo | Rest or easy run | Rest | Rest | **5K Race** |
 
-## 5K Training
+---
 
-## Programs
-
-## Books
-
-## Additional 5K Training Programs
-
-#### Reviews
-
-#### Great 5K Program
-
-March 1, 2025
-
-So far so good after 4 weeks I have managed my second faster 5K time. The instructions are very clear and easy to follow. I have already pass this link to other runners. The Tempo runs were a bit difficult to master specially the first time around, but things are only getting easier the second times. I am still stugling to keep my pace down during the Long Runs. 4 more weeks until my sub 17 mission is complered. Thanks for all the tips and advicesShow more
-
-Mario Rocchelli
-
-#### Mostly clear and to the point
-
-May 21, 2021
-
-At age 75 have taken up 5K & 10K races again. Very active from age 30 to 40, then lay off. Have placed and won several category 75 – 79 over past 6 months (gcrunner.org). From old days, tactics were fartlek and LSD, long slow distance. So for me each day I choose – a) sprints (fartlek now called HIIT) b) 3 up to 7 miles or c) slack day. My sprints due to the neighborhood are miles of .16, .32, .2, .4, .56 (cul-de-sac streets handy). This morning had an easy 5 miles and tacked on 2 sprints of .2. Next soon, maybe tomorrow, plan a set of .2, .2 and 1 mile, each at max speed. Repeat the set as many as can at decent sprint speed. So, what is this “review”? It is mainly self analysis and also maybe some comments from Hal or anyone else on my tactics. My strategy is, of course, run faster and win!!Show more
-
-Appreciate any response.
-
-Wade Keller
-
-#### Very good
-
-October 29, 2020
-
-I run ultras, I never focus on speed, just distance and vert. I wanted a new goal of running a sub 20m 5k which I haven’t done in over 6yrs as its never been a focus. 5ks are what you do when injured. The program is simple, the runs are quick so I can squeeze them in at lunch and I’m just enjoying the change of focus. So far I feel like its put me on the right path, as two weeks in and I’m back down to a 21m 5k. Thanks to Hal and the team for making these available.Show more
-
-Canada Ronnie
-
-#### Great for PFT/PRT for military/law enforcement or any athlete.
-
-September 28, 2020
-
-I am in the Marines and I not only personally utilize this repertoire to increase my score on our 3 mile Physical Fitness Test, i assign it to my subordinates all of whom are at different stages of progress. It’s extremely scalable and will result in better times while still providing ample rest to prevent injury. Remember to stretch though!Show more
-
-Ryan Guy
-
-#### wonderful program
-
-March 25, 2020
-
-I used to run a 20min 5km now I run a 17 min 5km race now thanks to Hal.
-
-Braeden Coomeren
-
-#### Leave a Review
-
-Your review
-
-Your overall ratingSelect a Rating5 Stars4 Stars3 Stars2 Stars1 Star
-
-Title of your review
-
-Your review
-
-Your name
-
-Your email
-
-This review is based on my own experience and is my genuine opinion. ​
-
-Submit Review
-
-## STAY IN TOUCH
-
-Subscribe to our mailing list for advice from Hal, training tips, and updates on our programs and apps. By submitting your email address, you are consenting to receive communications from halhigdon.com. You may opt out at any time.
-
-### Run Like Hal
-
-Whether pursuing general fitness, training for your first race, or trying to hit your next personal best, HalHigdon.com connects millions of runners to Hal’s books, training programs, and apps each year.
-
-### Training Programs
-
-### Useful Links
-
-### Contact Info
-
-All contents © Hal Higdon, LLC 2026. All rights reserved.
-
-Digital Momentum
-
-Website powered by Digital Momentum
-
-This website uses cookies to improve your experience. We'll assume you're ok with this, but you can opt-out if you wish. Cookie settingsACCEPT
-
-Privacy & Cookies Policy
-
-Close
-
-#### Privacy Overview
-
-This website uses cookies to improve your experience while you navigate through the website. Out of these cookies, the cookies that are categorized as necessary are stored on your browser as they are essential for the working of basic functionalities...
-
-Necessary
-
-Necessary
-
-Always Enabled
-
-Necessary cookies are absolutely essential for the website to function properly. This category only includes cookies that ensures basic functionalities and security features of the website. These cookies do not store any personal information.
-
-Non-necessary
-
-Non-necessary
-
-Any cookies that may not be particularly necessary for the website to function and is used specifically to collect user personal data via analytics, ads, other embedded contents are termed as non-necessary cookies. It is mandatory to procure user consent prior to running these cookies on your website.
-
-SAVE & ACCEPT
+*All training programs by Hal Higdon. All contents © Hal Higdon, LLC. All rights reserved.*

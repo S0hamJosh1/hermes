@@ -74,11 +74,15 @@ function prettifyType(type: string): string {
 
 /**
  * Returns true for structural labels like "6 x 400", "8 x 200" that describe
- * workout structure. Returns false for duration labels like "35 min tempo",
- * "70 min run" which conflict with scaled metrics.
+ * workout structure, and duration labels like "60 min run", "30 min tempo"
+ * that should be shown as authored by Hal Higdon.
  */
-function isStructuralLabel(label: string): boolean {
-    return /\d+\s*x\s*\d+/.test(label);
+function isDisplayLabel(label: string): boolean {
+    return /\d+\s*x\s*\d+/.test(label) || /\d+\s*min\b/.test(label);
+}
+
+function isDurationLabel(label: string): boolean {
+    return /\d+\s*min\b/.test(label);
 }
 
 function formatDate(dateStr: string): string {
@@ -391,13 +395,27 @@ export default function PlanPage() {
                                                     <p className={`text-sm font-medium ${style.text}`}>
                                                         {isOptionalRunDay
                                                             ? "Optional Easy Run"
-                                                            : workout.workoutLabel && isStructuralLabel(workout.workoutLabel)
+                                                            : workout.workoutLabel && isDisplayLabel(workout.workoutLabel)
                                                                 ? workout.workoutLabel
                                                                 : prettifyType(workout.workoutType)}
                                                     </p>
                                                     <div className="flex items-center gap-3 text-xs text-white/50 flex-wrap">
                                                         {isOptionalRunDay ? (
                                                             <span>Run by feel (20–30 min optional)</span>
+                                                        ) : workout.workoutLabel && isDurationLabel(workout.workoutLabel) ? (
+                                                            <>
+                                                                {workout.plannedPaceSecondsPerKm && (
+                                                                    <span>{formatPacePerMile(workout.plannedPaceSecondsPerKm)}</span>
+                                                                )}
+                                                                {workout.plannedDurationMinutes && (
+                                                                    <span>{workout.plannedDurationMinutes} min</span>
+                                                                )}
+                                                                {workout.intensityZone && (
+                                                                    <span className="px-1.5 py-0.5 rounded bg-white/5 text-white/40">
+                                                                        {workout.intensityZone}
+                                                                    </span>
+                                                                )}
+                                                            </>
                                                         ) : (
                                                             <>
                                                                 {workout.plannedDistanceKm ? (

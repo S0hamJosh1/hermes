@@ -1,16 +1,5 @@
 # Half Marathon Training : Novice 1
 
-- Summary
-- Program Details
-- Training Schedule
-- Additional Programs
-- Reviews
-
-- Summary
-- Program Details
-- Training Schedule
-- Additional Programs
-- Reviews
 
 ### About the Novice 1 Program
 
@@ -32,11 +21,6 @@ For runners who want personalized year-round training, using the Higdon method.
 
 **Longest Workout:** 10 miles
 
-4.8
-
-Based on 38 reviews.
-
-Leave a review See all reviews
 
 #### Hal on his Novice 1 Program
 
@@ -96,120 +80,6 @@ Running 13.1 miles is not easy. If it were easy, there would be little challenge
 | 11 | Rest | 8.1 km run | 4.8 km run or cross | 8.1 km run | Rest | 60 min cross | 16.1 km run |
 | 12 | Rest | 6.4 km run | 4.8 km run or cross | 3.2 km run | Rest | Rest | **Half Marathon** |
 
-## Half Marathon Training
+---
 
-## Programs
-
-## Books
-
-## Additional Half Marathon Training Programs
-
-#### Reviews
-
-#### So grateful for this training programme (and it actually works)
-
-October 5, 2022
-
-I was so pleased to come across this free training plan online – I have been following it religiously and am about half way through. I thought the increases on the long runs were going to be too much for me, but actually if you just stick to the plan, it’s totally manageable. I can’t believe I’m managing it!Show more
-
-Charlie
-
-#### Amazing!
-
-September 22, 2021
-
-Thank you, Hal!
-
-Your Half Marathon program helped me to run my first half and beat my goal time by 13 minutes! When I first started, I never would have imagined being able to run the whole race comfortably. My next goal is to tackle the full marathon, of course following your training plan!
-
-Theresa
-
-#### Half marathon experience
-
-September 11, 2021
-
-Following the program took me from a new 5k runner to completing my 1st half in 2:21.49. My goal was under 2:30. I read his daily tips on Facebook and use a lot of useful information also!! Only started running a year ago. I started this program about 14 wks ago, so had a few extra weeks to prepare.Show more
-
-Sheri Brackeen
-
-#### Gradual Progression Worked Flawlessly
-
-August 22, 2021
-
-I am a 46 year old male and not a runner. I have always wanted to check a half marathon off the list and this program turned me from “not being a runner” to loving running. I slowly worked through some knee and hip pain that just cured itself as I became more fit. I followed all of the distances in the 12 week plan and completed a flat half in one hour and 52 min.Show more
-
-I am such a believer as going into week 1 had not run even the “long run distance” before which I think was around 3.5 miles. But I pushed through and once I crossed the mid way point of the plan I felt strong and progressed quickly.
-
-Jon Martin
-
-#### Took a total newb to a half marathon runner!
-
-August 6, 2021
-
-When I started, running for a few minutes at a time was a real challenge for me. Following this plan, I was completely ready for race day and my body was prepared for the miles. What it wasn’t prepared for was stepping on a massive rock with the arch of my left foot in the dark. I ended up having to walk a lot more and visit the med tent a few times, but I still finished! How many programs prepare you to still battle it out when something goes wrong? I will be using this plan again to train for a new half marathon in the beginning of 2022.Show more
-
-Victoria
-
-#### Leave a Review
-
-Your review
-
-Your overall ratingSelect a Rating5 Stars4 Stars3 Stars2 Stars1 Star
-
-Title of your review
-
-Your review
-
-Your name
-
-Your email
-
-This review is based on my own experience and is my genuine opinion. ​
-
-Submit Review
-
-## STAY IN TOUCH
-
-Subscribe to our mailing list for advice from Hal, training tips, and updates on our programs and apps. By submitting your email address, you are consenting to receive communications from halhigdon.com. You may opt out at any time.
-
-### Run Like Hal
-
-Whether pursuing general fitness, training for your first race, or trying to hit your next personal best, HalHigdon.com connects millions of runners to Hal’s books, training programs, and apps each year.
-
-### Training Programs
-
-### Useful Links
-
-### Contact Info
-
-All contents © Hal Higdon, LLC 2026. All rights reserved.
-
-Digital Momentum
-
-Website powered by Digital Momentum
-
-This website uses cookies to improve your experience. We'll assume you're ok with this, but you can opt-out if you wish. Cookie settingsACCEPT
-
-Privacy & Cookies Policy
-
-Close
-
-#### Privacy Overview
-
-This website uses cookies to improve your experience while you navigate through the website. Out of these cookies, the cookies that are categorized as necessary are stored on your browser as they are essential for the working of basic functionalities...
-
-Necessary
-
-Necessary
-
-Always Enabled
-
-Necessary cookies are absolutely essential for the website to function properly. This category only includes cookies that ensures basic functionalities and security features of the website. These cookies do not store any personal information.
-
-Non-necessary
-
-Non-necessary
-
-Any cookies that may not be particularly necessary for the website to function and is used specifically to collect user personal data via analytics, ads, other embedded contents are termed as non-necessary cookies. It is mandatory to procure user consent prior to running these cookies on your website.
-
-SAVE & ACCEPT
+*All training programs by Hal Higdon. All contents © Hal Higdon, LLC. All rights reserved.*

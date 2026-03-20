@@ -206,8 +206,8 @@ function checkOverreach(
     // Overreach is historical (28-day window), so this week's plan cannot
     // "fix" history directly. We enforce a recovery-week target instead.
     const targetRecoveryVolume = plan.previousWeekVolumeKm > 0
-      ? Math.round(plan.previousWeekVolumeKm * 0.6 * 10) / 10
-      : Math.round(plan.totalVolumeKm * 0.6 * 10) / 10;
+      ? Math.round(plan.previousWeekVolumeKm * 0.8 * 10) / 10
+      : Math.round(plan.totalVolumeKm * 0.8 * 10) / 10;
 
     if (plan.totalVolumeKm <= targetRecoveryVolume) return [];
 
