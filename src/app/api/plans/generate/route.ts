@@ -362,12 +362,17 @@ export async function POST(req: NextRequest) {
       where: { userId: runner.user.id, weekStartDate },
     });
 
+    // Sequential display week: continues from last plan, independent of template week
+    const displayWeekNumber = previousPlan
+      ? (previousPlan.weekNumber ?? 0) + 1
+      : 1;
+
     const savedPlan = await prisma.weeklyPlan.create({
       data: {
         userId: runner.user.id,
         weekStartDate,
         weekEndDate,
-        weekNumber: result.weekNumber,
+        weekNumber: displayWeekNumber,
         stateAtGeneration: result.plan.state,
         sourcePlanId: result.selectedPlanId,
         totalVolumeKm: result.plan.totalVolumeKm,
@@ -445,6 +450,8 @@ export async function POST(req: NextRequest) {
         previousPlanVolumeKm: previousPlan ? toNumber(previousPlan.totalVolumeKm, 0) : null,
         window7DayVolumeKm: byActivity.window7Day.volumeKm,
         profileState: profile.currentState,
+        templateWeek: result.weekNumber,
+        displayWeek: displayWeekNumber,
       },
     });
   } catch (error) {
