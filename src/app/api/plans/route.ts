@@ -119,8 +119,9 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
                     const dayOfWeek = (d.getDay() + 6) % 7; // Mon=0
                     const km = Number(a.distanceMeters) / 1000;
                     if (km < 0.5) continue; // skip blips
-                    const paceSecPerKm = a.averageSpeedMs && a.averageSpeedMs > 0
-                        ? Math.round(1000 / Number(a.averageSpeedMs))
+                    const speedMs = Number(a.averageSpeedMs ?? 0);
+                    const paceSecPerKm = speedMs > 0
+                        ? Math.round(1000 / speedMs)
                         : null;
                     byDay[dayOfWeek].push({
                         distanceKm: Math.round(km * 100) / 100,
