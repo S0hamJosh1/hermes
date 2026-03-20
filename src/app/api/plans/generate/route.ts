@@ -242,13 +242,22 @@ export async function POST(req: NextRequest) {
       window90Day: summarizeActivities(recentActivities, 90),
     };
 
-    // Use previous plan volume, or recent activity, or capacity as floor
     const capacityKm = toNumber(runner.profile.weeklyCapacityKm, 35);
-    const previousWeekVolumeKm = previousPlan
-      ? toNumber(previousPlan.totalVolumeKm, capacityKm)
-      : byActivity.window7Day.volumeKm > 0
-        ? byActivity.window7Day.volumeKm
-        : capacityKm;
+    let previousWeekVolumeKm: number;
+    if (previousPlan) {
+      previousWeekVolumeKm = toNumber(previousPlan.totalVolumeKm, capacityKm);
+    } else {
+      const recent7 = byActivity.window7Day.volumeKm;
+      const recent28Avg = byActivity.window28Day.volumeKm > 0
+        ? byActivity.window28Day.volumeKm / 4
+        : 0;
+      previousWeekVolumeKm = Math.max(
+        recent7,
+        recent28Avg,
+        capacityKm * 0.6,
+      );
+      if (previousWeekVolumeKm <= 0) previousWeekVolumeKm = capacityKm;
+    }
 
     const windows = {
       window7Day: {

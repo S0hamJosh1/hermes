@@ -181,6 +181,35 @@ export async function fetchStravaActivities(
     return res.json() as Promise<StravaActivity[]>;
 }
 
+/**
+ * Fetch activities before a given timestamp (for pagination / older history).
+ *
+ * @param accessToken - Valid (non-expired) access token
+ * @param before - Unix timestamp; only return activities before this time
+ * @param perPage - Max activities to fetch (Strava max: 200)
+ */
+export async function fetchStravaActivitiesWithBefore(
+    accessToken: string,
+    before: number,
+    perPage = 200
+): Promise<StravaActivity[]> {
+    const params = new URLSearchParams({
+        per_page: String(Math.min(perPage, 200)),
+        before: String(before),
+    });
+
+    const res = await fetch(`${STRAVA_API_BASE}/athlete/activities?${params}`, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+    });
+
+    if (!res.ok) {
+        const body = await res.text();
+        throw new Error(`Strava activities fetch failed: ${res.status} ${body}`);
+    }
+
+    return res.json() as Promise<StravaActivity[]>;
+}
+
 // ─── Token freshness helper ───────────────────────────────────────────────────
 
 /**

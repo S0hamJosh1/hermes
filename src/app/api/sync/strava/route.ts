@@ -9,13 +9,15 @@
  * 3. Get a valid access token (refresh if expired)
  * 4. Fetch activities from Strava (since last sync)
  * 5. Upsert each run into strava_activities table
- * 6. Return { synced, skipped }
+ * 6. Recompute weekly capacity from all activities (fixes stale/low mileage)
+ * 7. Return { synced, skipped }
  */
 
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionFromRequest } from "@/lib/auth/session";
-import { fetchStravaActivities, getValidAccessToken } from "@/lib/auth/strava";
+import { fetchStravaActivities, fetchStravaActivitiesWithBefore, getValidAccessToken } from "@/lib/auth/strava";
 import { prisma } from "@/lib/db/client";
+import { autoCalibrate } from "@/lib/calibration/auto-calibrate";
 
 // Activity types we care about (all running variants)
 const RUN_TYPES = new Set([
@@ -74,10 +76,31 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         ? Math.floor(lastActivity.startDate.getTime() / 1000)
         : undefined;
 
-    // Fetch activities from Strava
-    let activities;
+    // Fetch activities from Strava (paginate on initial sync to get enough history)
+    let activities: Awaited<ReturnType<typeof fetchStravaActivities>> = [];
     try {
-        activities = await fetchStravaActivities(accessToken, after);
+        if (after !== undefined) {
+            activities = await fetchStravaActivities(accessToken, after, 200);
+        } else {
+            // Initial sync: paginate with "before" to fetch more history (elite runners can have years)
+            const perPage = 200;
+            const minWeeksForCalibration = 4;
+            const msPerWeek = 7 * 24 * 60 * 60 * 1000;
+            let batch = await fetchStravaActivities(accessToken, undefined, perPage);
+            activities = batch;
+            while (batch.length === perPage) {
+                const spanMs = activities.length >= 2
+                    ? new Date(activities[0].start_date).getTime() -
+                      new Date(activities[activities.length - 1].start_date).getTime()
+                    : 0;
+                if (spanMs >= minWeeksForCalibration * msPerWeek) break;
+                const oldest = activities[activities.length - 1];
+                const before = Math.floor(new Date(oldest.start_date).getTime() / 1000);
+                batch = await fetchStravaActivitiesWithBefore(accessToken, before, perPage);
+                if (batch.length === 0) break;
+                activities = activities.concat(batch);
+            }
+        }
     } catch (err) {
         console.error("[sync/strava] Fetch failed:", err);
         return NextResponse.json({ error: "Failed to fetch activities from Strava." }, { status: 502 });
@@ -133,6 +156,46 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         } catch (err) {
             console.error(`[sync/strava] Failed to upsert activity ${activity.id}:`, err);
             skipped++;
+        }
+    }
+
+    // Recompute weekly capacity from all activities (fixes disconnect between
+    // best efforts and low mileage — capacity was only set at onboarding)
+    const profile = await prisma.runnerProfile.findUnique({
+        where: { userId: user.id },
+    });
+    if (profile) {
+        const allActivities = await prisma.stravaActivity.findMany({
+            where: {
+                userId: user.id,
+                activityType: { in: ["Run", "TrailRun", "VirtualRun", "Treadmill"] },
+            },
+            select: {
+                distanceMeters: true,
+                movingTimeSeconds: true,
+                startDate: true,
+                startDateLocal: true,
+            },
+        });
+        const activityData = allActivities.map((a) => ({
+            distanceMeters: a.distanceMeters,
+            movingTimeSeconds: a.movingTimeSeconds,
+            startDate: a.startDate,
+            startDateLocal: a.startDateLocal,
+        }));
+        if (activityData.length > 0) {
+            const calibrated = autoCalibrate(activityData);
+            await prisma.runnerProfile.update({
+                where: { userId: user.id },
+                data: {
+                    weeklyCapacityKm: calibrated.weeklyCapacityKm,
+                    basePaceSecondsPerKm: calibrated.basePaceSecondsPerKm,
+                    thresholdPaceSecondsPerKm: calibrated.thresholdPaceSecondsPerKm,
+                    durabilityScore: calibrated.durabilityScore,
+                    consistencyScore: calibrated.consistencyScore,
+                    riskLevel: calibrated.riskLevel,
+                },
+            });
         }
     }
 

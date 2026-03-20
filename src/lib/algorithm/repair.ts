@@ -81,7 +81,7 @@ function applyRepair(
     case "INJURY_LOCK":
       return repairInjuryLock(plan);
     case "INJURY_REDUCED_VOLUME":
-      return repairInjuryReducedVolume(plan);
+      return repairInjuryReducedVolume(plan, profile);
     case "INJURY_REDUCED_INTENSITY":
       return repairInjuryReducedIntensity(plan, profile);
     case "TAPER_VOLUME_INCREASE":
@@ -89,7 +89,7 @@ function applyRepair(
     case "TAPER_HIGH_INTENSITY":
       return repairTaperIntensity(plan, profile);
     case "OVERREACH_DETECTION":
-      return repairOverreach(plan);
+      return repairOverreach(plan, profile);
     default:
       return null;
   }
@@ -174,9 +174,10 @@ function repairInjuryLock(plan: GeneratedWeeklyPlan): RepairAction {
   };
 }
 
-function repairInjuryReducedVolume(plan: GeneratedWeeklyPlan): RepairAction {
-  const maxVolume = plan.previousWeekVolumeKm * 0.5;
-  const scaleFactor = plan.totalVolumeKm > 0 ? maxVolume / plan.totalVolumeKm : 1;
+function repairInjuryReducedVolume(plan: GeneratedWeeklyPlan, profile: RunnerProfile): RepairAction {
+  const REPAIR_FLOOR_KM = Math.max(5, profile.weeklyCapacityKm * 0.3);
+  let maxVolume = Math.max(plan.previousWeekVolumeKm * 0.5, REPAIR_FLOOR_KM);
+  const scaleFactor = plan.totalVolumeKm > 0 ? Math.min(1, maxVolume / plan.totalVolumeKm) : 1;
   const originalVolume = plan.totalVolumeKm;
 
   for (const w of plan.workouts) {
@@ -260,10 +261,12 @@ function repairTaperIntensity(
   };
 }
 
-function repairOverreach(plan: GeneratedWeeklyPlan): RepairAction {
-  const targetVolume = plan.previousWeekVolumeKm > 0
+function repairOverreach(plan: GeneratedWeeklyPlan, profile: RunnerProfile): RepairAction {
+  const REPAIR_FLOOR_KM = Math.max(5, profile.weeklyCapacityKm * 0.4);
+  const rawTarget = plan.previousWeekVolumeKm > 0
     ? plan.previousWeekVolumeKm * 0.6
     : plan.totalVolumeKm * 0.6;
+  const targetVolume = Math.max(rawTarget, REPAIR_FLOOR_KM);
   const scaleFactor = plan.totalVolumeKm > 0
     ? Math.min(1, targetVolume / plan.totalVolumeKm)
     : 1;

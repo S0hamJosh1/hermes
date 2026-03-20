@@ -17,6 +17,8 @@ export type ActivityForCalibration = {
     distanceMeters: number | { toNumber(): number };
     movingTimeSeconds: number;
     startDate: Date;
+    /** Use for week grouping to avoid timezone bugs (UTC can assign runs to wrong week) */
+    startDateLocal?: Date;
 };
 
 export type CalibratedProfile = {
@@ -49,16 +51,17 @@ function median(values: number[]): number {
 }
 
 /**
- * Group activities into ISO week buckets (Mon–Sun).
- * Returns a Map<weekKey, activities[]> where weekKey = "YYYY-WW".
+ * Group activities into Monday-based week buckets.
+ * Uses startDateLocal when available to avoid timezone bugs (UTC can assign
+ * runs near midnight to the wrong week for users in other timezones).
+ * Returns a Map<weekKey, activities[]> where weekKey = "YYYY-MM-DD" (Monday).
  */
 function groupByWeek(
     activities: ActivityForCalibration[]
 ): Map<string, ActivityForCalibration[]> {
     const map = new Map<string, ActivityForCalibration[]>();
     for (const act of activities) {
-        const d = new Date(act.startDate);
-        // Shift to Monday-based week
+        const d = act.startDateLocal ?? act.startDate;
         const day = d.getDay(); // 0=Sun
         const monday = new Date(d);
         monday.setDate(d.getDate() - ((day + 6) % 7));

@@ -45,6 +45,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
             distanceMeters: true,
             movingTimeSeconds: true,
             startDate: true,
+            startDateLocal: true,
         },
     });
 
@@ -52,6 +53,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         distanceMeters: a.distanceMeters,
         movingTimeSeconds: a.movingTimeSeconds,
         startDate: a.startDate,
+        startDateLocal: a.startDateLocal,
     }));
 
     // Verify sufficiency again (safety check)

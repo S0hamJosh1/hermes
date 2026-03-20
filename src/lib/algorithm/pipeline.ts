@@ -26,7 +26,7 @@ import type {
   RepairedPlan,
 } from "./types";
 import { selectPlanWithDebug, calculateCurrentWeek } from "./plan-selector";
-import { generateWeeklyPlan } from "./planner";
+import { generateWeeklyPlan, getVolumeFloor } from "./planner";
 import { validatePlan, type ValidatorContext } from "./validator";
 import { repairPlan } from "./repair";
 import { evaluateTransition } from "../state-machine/transitions";
@@ -127,7 +127,9 @@ export function runWeeklyPipeline(input: PipelineInput): PipelineResult {
   // Step 3: Validate
   const isInTaper = weekNumber >= taperStartWeek;
   const w28Avg = input.windows.window28Day.volumeKm;
-  const overreachThreshold = (input.windows.window90Day.volumeKm / 13) * 4 * 1.3;
+  const rawOverreachThreshold = (input.windows.window90Day.volumeKm / 13) * 4 * 1.3;
+  const minOverreachThreshold = input.profile.weeklyCapacityKm * 4 * 0.8;
+  const overreachThreshold = Math.max(rawOverreachThreshold, minOverreachThreshold);
 
   const validatorContext: ValidatorContext = {
     activeInjuries: input.activeInjuries,
@@ -148,6 +150,24 @@ export function runWeeklyPipeline(input: PipelineInput): PipelineResult {
       repairs: [],
       remainingViolations: validationResult.violations.filter((v) => v.severity === "soft"),
     };
+  }
+
+  // Step 5: Re-enforce minimum volume floor after all repairs
+  const volumeFloor = getVolumeFloor(input.goal.distance);
+  const postRepairVolume = finalResult.plan.workouts.reduce((s, w) => s + w.distanceKm, 0);
+  if (postRepairVolume > 0 && postRepairVolume < volumeFloor) {
+    const boost = volumeFloor / postRepairVolume;
+    for (const w of finalResult.plan.workouts) {
+      if (w.distanceKm > 0) {
+        w.distanceKm = Math.round(w.distanceKm * boost * 10) / 10;
+      }
+    }
+    finalResult.plan.totalVolumeKm = Math.round(
+      finalResult.plan.workouts.reduce((s, w) => s + w.distanceKm, 0) * 10
+    ) / 10;
+    finalResult.plan.rampPercentage = input.previousWeekVolumeKm > 0
+      ? Math.round(((finalResult.plan.totalVolumeKm - input.previousWeekVolumeKm) / input.previousWeekVolumeKm) * 100)
+      : 0;
   }
 
   return {

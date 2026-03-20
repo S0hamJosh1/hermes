@@ -9,6 +9,7 @@ type SyncResult = {
     skipped?: number;
     total?: number;
     error?: string;
+    recalibrated?: boolean;
 };
 
 type ProfileData = {
@@ -146,6 +147,8 @@ export default function Dashboard() {
         fetchDashboard();
     }, [fetchDashboard]);
 
+    const [recalibrating, setRecalibrating] = useState(false);
+
     async function handleSync() {
         setSyncing(true);
         setSyncResult(null);
@@ -159,6 +162,25 @@ export default function Dashboard() {
             setSyncResult({ error: "Failed to reach sync endpoint." });
         } finally {
             setSyncing(false);
+        }
+    }
+
+    async function handleRecalibrate() {
+        setRecalibrating(true);
+        setSyncResult(null);
+        try {
+            const res = await fetch("/api/recalibrate", { method: "POST" });
+            const data = await res.json();
+            if (!res.ok) {
+                setSyncResult({ error: data.error ?? "Recalibration failed." });
+            } else {
+                setSyncResult({ recalibrated: true });
+                fetchDashboard();
+            }
+        } catch {
+            setSyncResult({ error: "Failed to reach recalibrate endpoint." });
+        } finally {
+            setRecalibrating(false);
         }
     }
 
@@ -340,13 +362,23 @@ export default function Dashboard() {
                         <span className="text-sm text-white/70">Connected to Strava</span>
                     </div>
 
-                    <button
-                        onClick={handleSync}
-                        disabled={syncing}
-                        className="w-full rounded-lg border border-white/15 bg-white/5 px-4 py-3 text-sm font-medium transition hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                        {syncing ? "Syncing from Strava..." : "Sync Activities"}
-                    </button>
+                    <div className="flex gap-2">
+                        <button
+                            onClick={handleSync}
+                            disabled={syncing || recalibrating}
+                            className="flex-1 rounded-lg border border-white/15 bg-white/5 px-4 py-3 text-sm font-medium transition hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                            {syncing ? "Syncing..." : "Sync Activities"}
+                        </button>
+                        <button
+                            onClick={handleRecalibrate}
+                            disabled={syncing || recalibrating}
+                            title="Fix weekly capacity if it looks wrong (e.g. best efforts correct but mileage low)"
+                            className="rounded-lg border border-white/15 bg-white/5 px-4 py-3 text-sm font-medium transition hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                            {recalibrating ? "Recalibrating..." : "Recalibrate"}
+                        </button>
+                    </div>
 
                     {syncResult && (
                         <div
@@ -357,6 +389,8 @@ export default function Dashboard() {
                         >
                             {syncResult.error ? (
                                 <span>{syncResult.error}</span>
+                            ) : syncResult.recalibrated ? (
+                                <span>✓ Weekly capacity updated from your activities</span>
                             ) : (
                                 <span>
                                     ✓ Synced <strong>{syncResult.synced}</strong> run

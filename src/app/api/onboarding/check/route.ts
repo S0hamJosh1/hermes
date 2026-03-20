@@ -30,18 +30,20 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
             distanceMeters: true,
             movingTimeSeconds: true,
             startDate: true,
+            startDateLocal: true,
         },
         orderBy: { startDate: "asc" },
     });
 
+    const activityData = activities.map((a) => ({
+        distanceMeters: a.distanceMeters,
+        movingTimeSeconds: a.movingTimeSeconds,
+        startDate: a.startDate,
+        startDateLocal: a.startDateLocal,
+    }));
+
     // Run sufficiency check
-    const sufficiency = checkDataSufficiency(
-        activities.map((a) => ({
-            distanceMeters: a.distanceMeters,
-            movingTimeSeconds: a.movingTimeSeconds,
-            startDate: a.startDate,
-        }))
-    );
+    const sufficiency = checkDataSufficiency(activityData);
 
     if (!sufficiency.sufficient) {
         return NextResponse.json({
@@ -53,13 +55,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     }
 
     // Auto-calibrate from the data
-    const calibrated = autoCalibrate(
-        activities.map((a) => ({
-            distanceMeters: a.distanceMeters,
-            movingTimeSeconds: a.movingTimeSeconds,
-            startDate: a.startDate,
-        }))
-    );
+    const calibrated = autoCalibrate(activityData);
 
     return NextResponse.json({
         sufficient: true,

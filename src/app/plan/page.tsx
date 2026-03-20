@@ -23,6 +23,12 @@ type Workout = {
     userModified: boolean;
 };
 
+type RunRecord = {
+    distanceKm: number;
+    paceSecPerKm: number | null;
+    durationSec: number;
+};
+
 type Plan = {
     id: string;
     weekStartDate: string;
@@ -37,6 +43,7 @@ type Plan = {
     publishedAt: string | null;
     userEdited: boolean;
     workouts: Workout[];
+    runsByDay?: Record<number, RunRecord[]>;
 };
 
 const DAY_LABELS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -422,9 +429,44 @@ export default function PlanPage() {
                                                             </div>
                                                         </div>
                                                     )}
+
+                                                    {/* Actual runs from Strava (any run, even if not matching template) */}
+                                                    {plan.runsByDay?.[idx]?.map((run, ri) => (
+                                                        <div
+                                                            key={ri}
+                                                            className="flex items-center gap-2 border-t border-white/10 pt-2 mt-1"
+                                                        >
+                                                            <span className="text-green-400 text-xs" title="Completed run">✓</span>
+                                                            <div className="flex items-center gap-3 text-xs text-white/50 flex-wrap">
+                                                                <span>{kmToMiles(run.distanceKm).toFixed(1)} mi</span>
+                                                                {run.paceSecPerKm != null && (
+                                                                    <span>{formatPacePerMile(run.paceSecPerKm)}</span>
+                                                                )}
+                                                                <span>{Math.round(run.durationSec / 60)} min</span>
+                                                            </div>
+                                                        </div>
+                                                    ))}
                                                 </>
                                             ) : (
-                                                <p className="text-sm text-white/30">Rest Day</p>
+                                                <>
+                                                    <p className="text-sm text-white/30">Rest Day</p>
+                                                    {/* Runs on rest days still show up */}
+                                                    {plan.runsByDay?.[idx]?.map((run, ri) => (
+                                                        <div
+                                                            key={ri}
+                                                            className="flex items-center gap-2 border-t border-white/10 pt-2 mt-1"
+                                                        >
+                                                            <span className="text-green-400 text-xs" title="Completed run">✓</span>
+                                                            <div className="flex items-center gap-3 text-xs text-white/50 flex-wrap">
+                                                                <span>{kmToMiles(run.distanceKm).toFixed(1)} mi</span>
+                                                                {run.paceSecPerKm != null && (
+                                                                    <span>{formatPacePerMile(run.paceSecPerKm)}</span>
+                                                                )}
+                                                                <span>{Math.round(run.durationSec / 60)} min</span>
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </>
                                             )}
                                         </div>
                                     );
