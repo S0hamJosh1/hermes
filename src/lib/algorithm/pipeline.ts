@@ -126,16 +126,25 @@ export function runWeeklyPipeline(input: PipelineInput): PipelineResult {
 
   // Step 3: Validate
   const isInTaper = weekNumber >= taperStartWeek;
-  const w28Avg = input.windows.window28Day.volumeKm;
-  const rawOverreachThreshold = (input.windows.window90Day.volumeKm / 13) * 4 * 1.3;
-  const minOverreachThreshold = input.profile.weeklyCapacityKm * 4 * 0.8;
-  const overreachThreshold = Math.max(rawOverreachThreshold, minOverreachThreshold);
+  const hasValidBaseline = input.previousWeekVolumeKm > 0;
+
+  let overreach28DayVolume: number | undefined;
+  let overreach28DayThreshold: number | undefined;
+
+  if (hasValidBaseline) {
+    const w28Avg = input.windows.window28Day.volumeKm;
+    const rawOverreachThreshold = (input.windows.window90Day.volumeKm / 13) * 4 * 1.3;
+    const minOverreachThreshold = input.profile.weeklyCapacityKm * 4 * 0.8;
+    const overreachThreshold = Math.max(rawOverreachThreshold, minOverreachThreshold);
+    overreach28DayVolume = w28Avg;
+    overreach28DayThreshold = overreachThreshold > 0 ? overreachThreshold : undefined;
+  }
 
   const validatorContext: ValidatorContext = {
     activeInjuries: input.activeInjuries,
     isInTaper,
-    overreach28DayVolume: w28Avg,
-    overreach28DayThreshold: overreachThreshold > 0 ? overreachThreshold : undefined,
+    overreach28DayVolume,
+    overreach28DayThreshold,
   };
 
   const validationResult = validatePlan(rawPlan, effectiveProfile, config, validatorContext);

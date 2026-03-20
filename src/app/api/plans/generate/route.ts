@@ -246,9 +246,19 @@ export async function POST(req: NextRequest) {
     let previousWeekVolumeKm: number;
     let windowFallbackKm: number;
 
+    const goalFloorKm = { "4K": 8, "5K": 8, "10K": 16, "Half Marathon": 24, "Marathon": 32 }[
+      goal.distance
+    ] ?? 8;
+
     if (previousPlan) {
-      previousWeekVolumeKm = toNumber(previousPlan.totalVolumeKm, capacityKm);
-      windowFallbackKm = previousWeekVolumeKm;
+      const prevVolume = toNumber(previousPlan.totalVolumeKm, 0);
+      if (prevVolume >= goalFloorKm) {
+        previousWeekVolumeKm = prevVolume;
+        windowFallbackKm = prevVolume;
+      } else {
+        previousWeekVolumeKm = 0;
+        windowFallbackKm = capacityKm;
+      }
     } else {
       previousWeekVolumeKm = 0;
       windowFallbackKm = capacityKm;
