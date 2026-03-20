@@ -244,19 +244,14 @@ export async function POST(req: NextRequest) {
 
     const capacityKm = toNumber(runner.profile.weeklyCapacityKm, 35);
     let previousWeekVolumeKm: number;
+    let windowFallbackKm: number;
+
     if (previousPlan) {
       previousWeekVolumeKm = toNumber(previousPlan.totalVolumeKm, capacityKm);
+      windowFallbackKm = previousWeekVolumeKm;
     } else {
-      const recent7 = byActivity.window7Day.volumeKm;
-      const recent28Avg = byActivity.window28Day.volumeKm > 0
-        ? byActivity.window28Day.volumeKm / 4
-        : 0;
-      previousWeekVolumeKm = Math.max(
-        recent7,
-        recent28Avg,
-        capacityKm * 0.6,
-      );
-      if (previousWeekVolumeKm <= 0) previousWeekVolumeKm = capacityKm;
+      previousWeekVolumeKm = 0;
+      windowFallbackKm = capacityKm;
     }
 
     const windows = {
@@ -272,7 +267,7 @@ export async function POST(req: NextRequest) {
         longRunsCount: byActivity.window7Day.longRunsCount,
       },
       window28Day: {
-        volumeKm: toNumber(runner.profile.last28DayVolume, byActivity.window28Day.volumeKm || previousWeekVolumeKm * 4),
+        volumeKm: toNumber(runner.profile.last28DayVolume, byActivity.window28Day.volumeKm || windowFallbackKm * 4),
         averagePaceSecondsPerKm: byActivity.window28Day.averagePaceSecondsPerKm || profile.basePaceSecondsPerKm,
         compliancePercentage: latestSummary ? toNumber(latestSummary.compliancePercentage, byActivity.window28Day.compliancePercentage) : byActivity.window28Day.compliancePercentage,
         healthIssuesCount: latestSummary?.healthIssuesCount ?? 0,
@@ -281,7 +276,7 @@ export async function POST(req: NextRequest) {
         longRunsCount: byActivity.window28Day.longRunsCount,
       },
       window90Day: {
-        volumeKm: toNumber(runner.profile.last90DayVolume, byActivity.window90Day.volumeKm || previousWeekVolumeKm * 13),
+        volumeKm: toNumber(runner.profile.last90DayVolume, byActivity.window90Day.volumeKm || windowFallbackKm * 13),
         averagePaceSecondsPerKm: byActivity.window90Day.averagePaceSecondsPerKm || profile.basePaceSecondsPerKm,
         compliancePercentage: latestSummary ? toNumber(latestSummary.compliancePercentage, byActivity.window90Day.compliancePercentage) : byActivity.window90Day.compliancePercentage,
         healthIssuesCount: latestSummary?.healthIssuesCount ?? 0,

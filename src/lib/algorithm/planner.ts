@@ -145,11 +145,11 @@ const STATE_VOLUME_MULTIPLIERS: Record<RunnerState, number> = {
  * The plan should never produce less than this, even after scaling/repair.
  */
 const MIN_VOLUME_FLOOR_KM: Record<string, number> = {
-  "4K": 5,
-  "5K": 5,
-  "10K": 10,
-  "Half Marathon": 15,
-  "Marathon": 20,
+  "4K": 8,
+  "5K": 8,
+  "10K": 16,
+  "Half Marathon": 24,
+  "Marathon": 32,
 };
 
 export function getVolumeFloor(goalDistance: string): number {
@@ -218,7 +218,16 @@ export function generateWeeklyPlan(
     return emptyWeek(weekNumber, weekStartDate, profile.currentState, plan.meta.id, previousWeekVolumeKm);
   }
 
-  const templateVolumeKm = templateWeek.days.reduce((sum, d) => sum + (d.distanceKm ?? 0), 0);
+  const easyPaceEstimate = profile.basePaceSecondsPerKm + 30;
+  let templateVolumeKm = 0;
+  for (const day of templateWeek.days) {
+    if (day.distanceKm) {
+      templateVolumeKm += day.distanceKm;
+    } else if (day.durationMinutes && day.durationMinutes > 0
+      && day.type !== "rest" && day.type !== "cross") {
+      templateVolumeKm += (day.durationMinutes * 60) / easyPaceEstimate;
+    }
+  }
   const scaleFactor = capacityScaleFactor(templateVolumeKm, profile.weeklyCapacityKm);
   const stateMultiplier = STATE_VOLUME_MULTIPLIERS[profile.currentState] ?? 1.0;
 
