@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="screenshots/hermes.png" alt="Hermes logo" width="52" />
+  <img src="screenshots/hermes_logo.png" alt="Hermes logo" width="85" />
 </div>
 
 # Hermes
