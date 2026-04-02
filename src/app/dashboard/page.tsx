@@ -373,37 +373,35 @@ export default function Dashboard() {
                     </div>
                 )}
 
-                {(weeklyTrend.length > 0 || activityHeatmap.length > 0) && (
-                    <div className="grid grid-cols-1 gap-6 xl:grid-cols-[1.15fr_0.85fr]">
-                        {weeklyTrend.length > 0 && (
-                            <div className="glass-card p-5 flex flex-col gap-4">
-                                <div>
-                                    <p className="text-xs text-blue-200/40 uppercase tracking-widest">
-                                        Volume Trend
-                                    </p>
-                                    <p className="mt-1 text-sm text-white/55">
-                                        Planned vs actual mileage over the last {weeklyTrend.length} weeks
-                                    </p>
-                                </div>
-                                <WeeklyVolumeChart points={weeklyTrend} />
-                            </div>
-                        )}
-
-                        {activityHeatmap.length > 0 && (
-                            <div className="glass-card p-5 flex flex-col gap-4">
-                                <div>
-                                    <p className="text-xs text-blue-200/40 uppercase tracking-widest">
-                                        Activity Heatmap
-                                    </p>
-                                    <p className="mt-1 text-sm text-white/55">
-                                        A quick read on how consistently you have been showing up lately
-                                    </p>
-                                </div>
-                                <ActivityHeatmap days={activityHeatmap} />
-                            </div>
-                        )}
+                <div className={`grid grid-cols-1 gap-6 ${activityHeatmap.length > 0 ? "xl:grid-cols-[1.15fr_0.85fr]" : ""}`}>
+                    <div className="glass-card p-5 flex flex-col gap-4">
+                        <div>
+                            <p className="text-xs text-blue-200/40 uppercase tracking-widest">
+                                Volume Trend
+                            </p>
+                            <p className="mt-1 text-sm text-white/55">
+                                {weeklyTrend.length > 0
+                                    ? `Planned vs actual mileage over the last ${weeklyTrend.length} weeks`
+                                    : "A standing chart shell that fills in once weekly compliance history exists"}
+                            </p>
+                        </div>
+                        <WeeklyVolumeChart points={weeklyTrend} />
                     </div>
-                )}
+
+                    {activityHeatmap.length > 0 && (
+                        <div className="glass-card p-5 flex flex-col gap-4">
+                            <div>
+                                <p className="text-xs text-blue-200/40 uppercase tracking-widest">
+                                    Activity Heatmap
+                                </p>
+                                <p className="mt-1 text-sm text-white/55">
+                                    A quick read on how consistently you have been showing up lately
+                                </p>
+                            </div>
+                            <ActivityHeatmap days={activityHeatmap} />
+                        </div>
+                    )}
+                </div>
 
                 {/* Strava Sync */}
                 <div className="glass-card p-5 flex flex-col gap-4">
