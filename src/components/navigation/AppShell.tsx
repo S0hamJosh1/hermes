@@ -148,14 +148,14 @@ export default function AppShell({ children }: AppShellProps) {
                 <HamburgerMenuIcon className="h-4 w-4" />
               </button>
 
-              <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-white/12 p-1.5">
+              <div className="relative h-11 w-11 shrink-0">
                 <Image
                   src="/hermes-mark.png"
                   alt="Hermes"
-                  width={24}
-                  height={24}
+                  fill
+                  sizes="44px"
                   priority
-                  className="h-full w-full object-contain opacity-95"
+                  className="object-contain object-center opacity-95"
                 />
               </div>
 
