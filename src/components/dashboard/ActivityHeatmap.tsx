@@ -26,7 +26,16 @@ function formatMonth(dateString: string): string {
 }
 
 export function ActivityHeatmap({ days }: { days: ActivityDay[] }) {
-    const displayDays = days.slice(-70);
+    const displayDays = days.slice(-84);
+
+    if (displayDays.length === 0) {
+        return (
+            <div className="rounded-[1.5rem] border border-dashed border-white/10 bg-white/[0.02] px-4 py-6 text-sm text-white/45">
+                No activity history yet.
+            </div>
+        );
+    }
+
     const byDate = new Map(displayDays.map((day) => [day.date, day]));
     const firstDate = new Date(`${displayDays[0].date}T00:00:00`);
     const lastDate = new Date(`${displayDays[displayDays.length - 1].date}T00:00:00`);
@@ -54,71 +63,74 @@ export function ActivityHeatmap({ days }: { days: ActivityDay[] }) {
     const activeDays = displayDays.filter((day) => day.runCount > 0).length;
 
     return (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-5">
             <div className="flex items-center justify-between text-xs text-white/45">
-                <span>{activeDays} active days in the last 10 weeks</span>
+                <span>{activeDays} active days in the last 12 weeks</span>
                 <span>{totalMiles.toFixed(0)} total miles</span>
             </div>
 
-            <div className="rounded-[1.5rem] border border-white/8 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015))] p-4">
-                <div className="overflow-x-auto pb-1">
-                    <div className="inline-flex min-w-full gap-3">
-                        <div className="flex flex-col justify-between pt-7 text-[10px] uppercase tracking-[0.18em] text-white/25">
-                            {DAY_LABELS.map((label) => (
-                                <span key={label} className="flex h-3 items-center">
-                                    {label}
-                                </span>
-                            ))}
-                        </div>
-
-                        <div className="flex flex-col gap-2">
-                            <div className="grid auto-cols-[12px] grid-flow-col gap-1 text-[10px] uppercase tracking-[0.18em] text-white/25">
-                                {weeks.map((week, index) => {
-                                    const monthLabel = week.find(Boolean)?.date;
-                                    const previousLabel = weeks[index - 1]?.find(Boolean)?.date;
-                                    const showLabel =
-                                        monthLabel &&
-                                        (!previousLabel || formatMonth(monthLabel) !== formatMonth(previousLabel));
-
-                                    return (
-                                        <span key={`month-${index}`} className="w-3 text-left">
-                                            {showLabel ? formatMonth(monthLabel) : ""}
-                                        </span>
-                                    );
-                                })}
+            <div className="flex justify-center">
+                <div className="w-fit max-w-full rounded-[1.6rem] border border-white/8 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015))] px-5 py-5">
+                    <div className="overflow-x-auto">
+                        <div className="flex w-max items-start gap-4">
+                            <div className="grid grid-rows-7 gap-1.5 pt-6">
+                                {DAY_LABELS.map((label) => (
+                                    <span
+                                        key={label}
+                                        className="flex h-3.5 items-center text-[10px] uppercase tracking-[0.18em] text-white/25"
+                                    >
+                                        {label}
+                                    </span>
+                                ))}
                             </div>
 
-                            <div className="grid grid-rows-7 auto-cols-[12px] grid-flow-col gap-1">
-                                {weeks.map((week, weekIndex) =>
-                                    week.map((day, dayIndex) => (
-                                        <div
-                                            key={`${weekIndex}-${dayIndex}`}
-                                            className={`h-3 w-3 rounded-[3px] border border-white/6 transition-colors ${day ? getColor(day.distanceKm) : "bg-transparent"}`}
-                                            title={
-                                                day
-                                                    ? `${day.date}: ${kmToMiles(day.distanceKm).toFixed(1)} mi across ${day.runCount} run${day.runCount === 1 ? "" : "s"}`
-                                                    : "No tracked activity"
-                                            }
-                                        />
-                                    )),
-                                )}
+                            <div className="flex flex-col gap-2">
+                                <div className="grid auto-cols-[14px] grid-flow-col gap-1.5 text-[10px] uppercase tracking-[0.18em] text-white/25">
+                                    {weeks.map((week, index) => {
+                                        const monthLabel = week.find(Boolean)?.date;
+                                        const previousLabel = weeks[index - 1]?.find(Boolean)?.date;
+                                        const showLabel =
+                                            monthLabel &&
+                                            (!previousLabel || formatMonth(monthLabel) !== formatMonth(previousLabel));
+
+                                        return (
+                                            <span key={`month-${index}`} className="w-3.5 text-left">
+                                                {showLabel ? formatMonth(monthLabel) : ""}
+                                            </span>
+                                        );
+                                    })}
+                                </div>
+
+                                <div className="grid grid-rows-7 auto-cols-[14px] grid-flow-col gap-1.5">
+                                    {weeks.map((week, weekIndex) =>
+                                        week.map((day, dayIndex) => (
+                                            <div
+                                                key={`${weekIndex}-${dayIndex}`}
+                                                className={`h-3.5 w-3.5 rounded-[4px] border border-white/6 transition-colors ${day ? getColor(day.distanceKm) : "bg-transparent"}`}
+                                                title={
+                                                    day
+                                                        ? `${day.date}: ${kmToMiles(day.distanceKm).toFixed(1)} mi across ${day.runCount} run${day.runCount === 1 ? "" : "s"}`
+                                                        : "No tracked activity"
+                                                }
+                                            />
+                                        )),
+                                    )}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.18em] text-white/30">
-                <span>Less</span>
-                <div className="flex items-center gap-1">
-                    <span className="h-3 w-3 rounded-[3px] border border-white/6 bg-white/5" />
-                    <span className="h-3 w-3 rounded-[3px] border border-white/6 bg-emerald-500/30" />
-                    <span className="h-3 w-3 rounded-[3px] border border-white/6 bg-emerald-400/45" />
-                    <span className="h-3 w-3 rounded-[3px] border border-white/6 bg-lime-300/60" />
-                    <span className="h-3 w-3 rounded-[3px] border border-white/6 bg-cyan-300/75" />
-                    <span className="h-3 w-3 rounded-[3px] border border-white/6 bg-sky-300/90" />
+            <div className="flex justify-center">
+                <div className="flex items-center gap-1.5 rounded-full border border-white/8 bg-white/[0.03] px-3 py-2">
+                    <span className="h-3.5 w-3.5 rounded-[4px] border border-white/6 bg-white/5" />
+                    <span className="h-3.5 w-3.5 rounded-[4px] border border-white/6 bg-emerald-500/30" />
+                    <span className="h-3.5 w-3.5 rounded-[4px] border border-white/6 bg-emerald-400/45" />
+                    <span className="h-3.5 w-3.5 rounded-[4px] border border-white/6 bg-lime-300/60" />
+                    <span className="h-3.5 w-3.5 rounded-[4px] border border-white/6 bg-cyan-300/75" />
+                    <span className="h-3.5 w-3.5 rounded-[4px] border border-white/6 bg-sky-300/90" />
                 </div>
-                <span>More</span>
             </div>
         </div>
     );

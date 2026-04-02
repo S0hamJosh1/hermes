@@ -8,11 +8,13 @@ import {
   DashboardIcon,
   CalendarIcon,
   RocketIcon,
+  GlobeIcon,
   ChatBubbleIcon,
   TargetIcon,
   LightningBoltIcon,
   CheckCircledIcon,
   ExitIcon,
+  HamburgerMenuIcon,
 } from "@radix-ui/react-icons";
 import type { ReactNode } from "react";
 
@@ -22,12 +24,15 @@ type AppSidebarProps = {
   bootcampProgressPct?: number | null;
   onLogout: () => Promise<void> | void;
   loggingOut?: boolean;
+  collapsed: boolean;
+  onToggleCollapse: () => void;
 };
 
 const ICON_MAP: Record<string, ReactNode> = {
   dashboard: <DashboardIcon className="w-4 h-4" />,
   calendar: <CalendarIcon className="w-4 h-4" />,
   rocket: <RocketIcon className="w-4 h-4" />,
+  globe: <GlobeIcon className="w-4 h-4" />,
   chat: <ChatBubbleIcon className="w-4 h-4" />,
   target: <TargetIcon className="w-4 h-4" />,
   lightning: <LightningBoltIcon className="w-4 h-4" />,
@@ -55,34 +60,64 @@ export default function AppSidebar({
   bootcampProgressPct,
   onLogout,
   loggingOut = false,
+  collapsed,
+  onToggleCollapse,
 }: AppSidebarProps) {
   const pathname = usePathname();
+  const progressPct = Math.round(Math.max(0, Math.min(100, bootcampProgressPct ?? 0)));
 
   return (
-    <GlassPanel className="hidden lg:flex lg:w-72 lg:shrink-0 lg:flex-col p-4">
-      <div className="mb-6 px-2">
-        <p className="text-xs tracking-[0.2em] uppercase text-white/50">Hermes</p>
-        <p className="text-2xl font-semibold text-white mt-1">Training OS</p>
-        {username ? <p className="text-xs text-white/40 mt-2">@{username}</p> : null}
+    <GlassPanel
+      className={`hidden lg:flex lg:shrink-0 lg:flex-col p-4 transition-[width] duration-300 ${collapsed ? "lg:w-24" : "lg:w-72"}`}
+    >
+      <div className={`mb-6 ${collapsed ? "px-0" : "px-2"}`}>
+        <div className="flex items-start justify-between gap-2">
+          <div className={collapsed ? "flex h-11 w-11 items-center justify-center rounded-2xl border border-white/12 bg-white/[0.03]" : ""}>
+            <div>
+              <p className="text-xs tracking-[0.2em] uppercase text-white/50">{collapsed ? "H" : "Hermes"}</p>
+              {!collapsed ? <p className="text-2xl font-semibold text-white mt-1">Training OS</p> : null}
+            </div>
+          </div>
+          <button
+            onClick={onToggleCollapse}
+            aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+            className="rounded-xl border border-white/15 bg-white/5 p-2 text-white/70 transition hover:bg-white/10 hover:text-white"
+          >
+            <HamburgerMenuIcon className="h-4 w-4" />
+          </button>
+        </div>
+
+        {!collapsed && username ? <p className="text-xs text-white/40 mt-2">@{username}</p> : null}
       </div>
 
-      {!bootcampCompleted && (
+      {!bootcampCompleted && collapsed && (
+        <div className="mb-4 flex justify-center">
+          <div
+            title={`Bootcamp ${progressPct}% complete`}
+            className="rounded-2xl border border-white/12 bg-white/[0.04] px-2.5 py-2 text-[10px] font-medium text-white/65"
+          >
+            {progressPct}%
+          </div>
+        </div>
+      )}
+
+      {!bootcampCompleted && !collapsed && (
         <div className="mb-5 rounded-xl border border-white/15 bg-white/5 p-3">
           <p className="text-xs uppercase tracking-widest text-white/45">Bootcamp</p>
           <p className="text-sm text-white/80 mt-1">Calibration in progress</p>
           <div className="mt-3 h-1.5 rounded-full bg-white/10 overflow-hidden">
             <div
               className="h-full rounded-full bg-gradient-to-r from-white/50 to-white/30 transition-all"
-              style={{ width: `${Math.max(0, Math.min(100, bootcampProgressPct ?? 0))}%` }}
+              style={{ width: `${progressPct}%` }}
             />
           </div>
           <p className="mt-2 text-[11px] text-white/40">
-            {Math.round(Math.max(0, Math.min(100, bootcampProgressPct ?? 0)))}% complete
+            {progressPct}% complete
           </p>
         </div>
       )}
 
-      <nav className="space-y-1">
+      <nav className={`space-y-1 ${collapsed ? "flex flex-col items-center" : ""}`}>
         {APP_NAV_ITEMS.filter((item) =>
           item.href !== "/onboarding/bootcamp" || !bootcampCompleted
         ).map((item) => {
@@ -92,16 +127,21 @@ export default function AppSidebar({
             <Link
               key={item.href}
               href={blocked ? "/onboarding/bootcamp" : item.href}
-              className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition ${active
-                  ? "bg-white/10 text-white border border-white/20"
-                  : "text-white/70 hover:text-white hover:bg-white/5 border border-transparent"
+              title={collapsed ? item.label : undefined}
+              className={`flex items-center rounded-xl text-sm transition ${collapsed
+                  ? `h-12 w-12 justify-center px-0 ${active
+                    ? "bg-white/10 text-white border border-white/20"
+                    : "text-white/70 hover:text-white hover:bg-white/5 border border-transparent"}`
+                  : `${active
+                    ? "bg-white/10 text-white border border-white/20"
+                    : "text-white/70 hover:text-white hover:bg-white/5 border border-transparent"} gap-3 px-3 py-2.5`
                 }`}
             >
               <span className={active ? "text-white/80" : "text-white/50"}>
                 {ICON_MAP[item.iconKey]}
               </span>
-              <span>{item.label}</span>
-              {item.href === "/onboarding/bootcamp" && !bootcampCompleted ? (
+              {!collapsed ? <span>{item.label}</span> : null}
+              {!collapsed && item.href === "/onboarding/bootcamp" && !bootcampCompleted ? (
                 <span className="ml-auto text-[10px] px-2 py-0.5 rounded-full bg-white/15 text-white/60">
                   Active
                 </span>
@@ -111,33 +151,55 @@ export default function AppSidebar({
         })}
       </nav>
 
-      {/* Systems status - always visible, fills remaining space */}
       <div className="mt-auto pt-5">
-        <div className="flex items-center gap-2.5 px-3 mb-3">
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-40 animate-ping" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-green-400" />
-          </span>
-          <span className="text-xs text-white/50 uppercase tracking-widest">Systems Online</span>
-        </div>
-        <div className="space-y-1 px-3">
-          {SYSTEMS.map((name) => (
-            <div key={name} className="flex items-center gap-2.5 text-[11px] text-white/35 py-0.5">
-              <CheckCircledIcon className="w-3 h-3 text-green-400/60 flex-shrink-0" />
-              {name}
+        {collapsed ? (
+          <div className="flex flex-col items-center gap-4">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/12 bg-white/[0.03]" title="Systems online">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-40 animate-ping" />
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-green-400" />
+              </span>
             </div>
-          ))}
-        </div>
+            <button
+              onClick={() => void onLogout()}
+              disabled={loggingOut}
+              title={loggingOut ? "Logging out..." : "Logout"}
+              className="flex h-12 w-12 items-center justify-center rounded-xl border border-white/15 bg-white/5 text-white/60 hover:text-white hover:bg-white/10 transition disabled:opacity-50"
+            >
+              <ExitIcon className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        ) : (
+          <>
+            <div className="flex items-center gap-2.5 px-3 mb-3">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-40 animate-ping" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-green-400" />
+              </span>
+              <span className="text-xs text-white/50 uppercase tracking-widest">Systems Online</span>
+            </div>
+            <div className="space-y-1 px-3">
+              {SYSTEMS.map((name) => (
+                <div key={name} className="flex items-center gap-2.5 text-[11px] text-white/35 py-0.5">
+                  <CheckCircledIcon className="w-3 h-3 text-green-400/60 flex-shrink-0" />
+                  {name}
+                </div>
+              ))}
+            </div>
+          </>
+        )}
       </div>
 
-      <button
-        onClick={() => void onLogout()}
-        disabled={loggingOut}
-        className="mt-5 flex items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/5 px-3 py-2 text-sm text-white/60 hover:text-white hover:bg-white/10 transition disabled:opacity-50"
-      >
-        <ExitIcon className="w-3.5 h-3.5" />
-        {loggingOut ? "Logging out..." : "Logout"}
-      </button>
+      {!collapsed ? (
+        <button
+          onClick={() => void onLogout()}
+          disabled={loggingOut}
+          className="mt-5 flex items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/5 px-3 py-2 text-sm text-white/60 hover:text-white hover:bg-white/10 transition disabled:opacity-50"
+        >
+          <ExitIcon className="w-3.5 h-3.5" />
+          {loggingOut ? "Logging out..." : "Logout"}
+        </button>
+      ) : null}
     </GlassPanel>
   );
 }

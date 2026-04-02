@@ -23,6 +23,7 @@ Most running plans are static. Hermes is designed to adapt:
 - Goal setup and onboarding flow
 - Adaptive weekly plan generation and regeneration
 - Roadmap phases with milestone checkpoints
+- Route map view for recent Strava activities
 - AI chat assistant for training edits and questions
 - Health status and injury-reporting workflow
 
@@ -131,6 +132,7 @@ STRAVA_CLIENT_SECRET=""
 STRAVA_REDIRECT_URI="http://localhost:3000/api/auth/strava/callback"
 SESSION_SECRET=""
 NEXT_PUBLIC_APP_URL="http://localhost:3000"
+NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN=""
 GEMINI_API_KEY=""
 GEMINI_MODEL="gemini-2.5-flash"
 ```

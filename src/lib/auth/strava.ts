@@ -55,6 +55,11 @@ export type StravaActivity = {
     weighted_average_watts?: number;
     external_id?: string;
     upload_id?: number;
+    map?: {
+        id?: string;
+        summary_polyline?: string | null;
+        polyline?: string | null;
+    };
 };
 
 // ─── OAuth URL builder ───────────────────────────────────────────────────────
@@ -167,6 +172,28 @@ export async function fetchStravaActivities(
     const params = new URLSearchParams({
         per_page: String(Math.min(perPage, 200)),
         ...(after ? { after: String(after) } : {}),
+    });
+
+    const res = await fetch(`${STRAVA_API_BASE}/athlete/activities?${params}`, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+    });
+
+    if (!res.ok) {
+        const body = await res.text();
+        throw new Error(`Strava activities fetch failed: ${res.status} ${body}`);
+    }
+
+    return res.json() as Promise<StravaActivity[]>;
+}
+
+export async function fetchStravaActivitiesPage(
+    accessToken: string,
+    page = 1,
+    perPage = 50
+): Promise<StravaActivity[]> {
+    const params = new URLSearchParams({
+        page: String(Math.max(page, 1)),
+        per_page: String(Math.min(Math.max(perPage, 1), 200)),
     });
 
     const res = await fetch(`${STRAVA_API_BASE}/athlete/activities?${params}`, {
