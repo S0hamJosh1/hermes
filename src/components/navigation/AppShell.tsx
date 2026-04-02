@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import GradientBackdrop from "@/components/ui/GradientBackdrop";
 import AppSidebar from "@/components/navigation/AppSidebar";
 import MobileDrawer from "@/components/navigation/MobileDrawer";
@@ -29,12 +30,14 @@ type BootcampStatus = {
   daysTotal: number;
 };
 
-const SHELL_PREFIXES = ["/dashboard", "/plan", "/roadmap", "/chat", "/health", "/onboarding"];
+const SHELL_PREFIXES = ["/dashboard", "/plan", "/roadmap", "/map", "/chat", "/health", "/onboarding"];
+const SIDEBAR_STORAGE_KEY = "hermes.sidebar.collapsed";
 
 export default function AppShell({ children }: AppShellProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [loggingOut, setLoggingOut] = useState(false);
   const [username, setUsername] = useState<string | undefined>(undefined);
   const [flow, setFlow] = useState<FlowStatus | null>(null);
@@ -56,6 +59,13 @@ export default function AppShell({ children }: AppShellProps) {
   useEffect(() => {
     setMenuOpen(false);
   }, [pathname]);
+
+  useEffect(() => {
+    const stored = window.localStorage.getItem(SIDEBAR_STORAGE_KEY);
+    if (stored === "1") {
+      setSidebarCollapsed(true);
+    }
+  }, []);
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -130,6 +140,14 @@ export default function AppShell({ children }: AppShellProps) {
     window.location.href = "/";
   }
 
+  function handleSidebarToggle() {
+    setSidebarCollapsed((current) => {
+      const next = !current;
+      window.localStorage.setItem(SIDEBAR_STORAGE_KEY, next ? "1" : "0");
+      return next;
+    });
+  }
+
   if (!inShell) {
     return <>{children}</>;
   }
@@ -154,9 +172,10 @@ export default function AppShell({ children }: AppShellProps) {
           </div>
           <button
             onClick={() => setMenuOpen(true)}
-            className="rounded-lg border border-white/20 px-2.5 py-1.5 text-sm text-white/80 hover:bg-white/10"
+            aria-label="Open menu"
+            className="rounded-lg border border-white/20 p-2 text-white/80 hover:bg-white/10"
           >
-            Menu
+            <HamburgerMenuIcon className="h-4 w-4" />
           </button>
         </div>
 
@@ -167,6 +186,8 @@ export default function AppShell({ children }: AppShellProps) {
             bootcampProgressPct={bootcampProgressPct}
             onLogout={handleLogout}
             loggingOut={loggingOut}
+            collapsed={sidebarCollapsed}
+            onToggleCollapse={handleSidebarToggle}
           />
 
           <main className="flex-1 min-w-0">
