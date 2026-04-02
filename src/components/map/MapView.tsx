@@ -432,10 +432,10 @@ export default function MapView() {
     }
 
     return (
-        <div className="grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,1fr)_340px]">
-            <div className="overflow-hidden rounded-[1.35rem] border border-white/8 bg-black/20">
-                <div className="relative">
-                    <div ref={mapContainerRef} className="h-[600px] w-full" />
+        <div className="grid grid-cols-1 gap-4 xl:grid-cols-[minmax(0,1fr)_320px]">
+            <div className="glass-card p-2">
+                <div className="relative overflow-hidden rounded-[1.45rem] border border-white/8 bg-black/20">
+                    <div ref={mapContainerRef} className="h-[620px] w-full" />
 
                     {headlineRoute ? (
                         <div className="pointer-events-none absolute left-4 top-4 rounded-2xl border border-white/12 bg-[#090d13]/85 px-4 py-3 backdrop-blur-xl">
@@ -464,7 +464,7 @@ export default function MapView() {
                 </div>
             </div>
 
-            <div className="glass-card p-5 flex flex-col gap-4">
+            <div className="glass-card flex flex-col gap-4 p-5">
                 <div className="flex items-start justify-between gap-3">
                     <div>
                         <p className="text-xs text-blue-200/40 uppercase tracking-widest">Route Controls</p>

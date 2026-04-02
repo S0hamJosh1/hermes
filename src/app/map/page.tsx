@@ -56,20 +56,16 @@ export default function MapPage() {
                     </button>
                 </div>
 
-                <div className="glass-card p-5">
-                    <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-                        <div>
-                            <p className="text-sm text-white/75">
-                                Recent Strava routes, layered on a dark map so you can see your training footprint at a glance.
-                            </p>
-                            <p className="mt-1 text-xs text-white/40">
-                                Hermes loads the latest 50 routes first and can pull in more on demand.
-                            </p>
-                        </div>
-                    </div>
-
-                    <MapView />
+                <div>
+                    <p className="text-sm text-white/75">
+                        Recent Strava routes, layered on a dark map so you can see your training footprint at a glance.
+                    </p>
+                    <p className="mt-1 text-xs text-white/40">
+                        Hermes loads the latest 50 routes first and can pull in more on demand.
+                    </p>
                 </div>
+
+                <MapView />
             </div>
         </main>
     );

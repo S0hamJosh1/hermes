@@ -8,7 +8,7 @@ import {
   CalendarIcon,
   RocketIcon,
   GlobeIcon,
-  ChatBubbleIcon,
+  PaperPlaneIcon,
   TargetIcon,
   LightningBoltIcon,
   CheckCircledIcon,
@@ -30,7 +30,7 @@ const ICON_MAP: Record<string, ReactNode> = {
   calendar: <CalendarIcon className="w-4 h-4" />,
   rocket: <RocketIcon className="w-4 h-4" />,
   globe: <GlobeIcon className="w-4 h-4" />,
-  chat: <ChatBubbleIcon className="w-4 h-4" />,
+  chat: <PaperPlaneIcon className="w-4 h-4" />,
   target: <TargetIcon className="w-4 h-4" />,
   lightning: <LightningBoltIcon className="w-4 h-4" />,
 };
