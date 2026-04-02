@@ -98,12 +98,14 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
             prisma.weeklySummary.findMany({
                 where: { userId },
                 orderBy: { weekStartDate: "desc" },
-                take: 4,
+                take: 8,
                 select: {
                     weekStartDate: true,
                     plannedVolumeKm: true,
                     actualVolumeKm: true,
                     compliancePercentage: true,
+                    healthIssuesCount: true,
+                    endingState: true,
                 },
             }),
             prisma.stravaActivity.findMany({
@@ -112,6 +114,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
                     distanceMeters: true,
                     movingTimeSeconds: true,
                     startDate: true,
+                    startDateLocal: true,
                 },
                 orderBy: { startDate: "desc" },
                 take: 2000,
@@ -128,13 +131,13 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
 
     if (weeklySummaries.length > 0) {
         const latest = weeklySummaries[0];
-        currentWeekCompliance = latest.compliancePercentage
+        currentWeekCompliance = latest.compliancePercentage !== null
             ? Number(latest.compliancePercentage)
             : null;
-        totalPlannedKm = latest.plannedVolumeKm
+        totalPlannedKm = latest.plannedVolumeKm !== null
             ? Number(latest.plannedVolumeKm)
             : null;
-        totalActualKm = latest.actualVolumeKm
+        totalActualKm = latest.actualVolumeKm !== null
             ? Number(latest.actualVolumeKm)
             : null;
 
@@ -161,6 +164,60 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
         }
     }
 
+    const weeklyTrend = [...weeklySummaries]
+        .reverse()
+        .map((summary) => ({
+            weekStartDate: formatDateOnlyUTC(summary.weekStartDate)!,
+            plannedKm: summary.plannedVolumeKm !== null ? Number(summary.plannedVolumeKm) : null,
+            actualKm: summary.actualVolumeKm !== null ? Number(summary.actualVolumeKm) : null,
+            compliance: summary.compliancePercentage !== null ? Number(summary.compliancePercentage) : null,
+            healthIssuesCount: summary.healthIssuesCount,
+            endingState: summary.endingState,
+        }));
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const heatmapStart = new Date(today);
+    heatmapStart.setDate(heatmapStart.getDate() - 83);
+
+    const activityByDate = new Map<
+        string,
+        { distanceKm: number; durationMinutes: number; runCount: number }
+    >();
+
+    for (const activity of activities) {
+        if (activity.startDate < heatmapStart) continue;
+
+        const dateKey = formatDateOnlyUTC(activity.startDateLocal) ?? formatDateOnlyUTC(activity.startDate);
+        if (!dateKey) continue;
+
+        const current = activityByDate.get(dateKey) ?? {
+            distanceKm: 0,
+            durationMinutes: 0,
+            runCount: 0,
+        };
+
+        current.distanceKm += Number(activity.distanceMeters) / 1000;
+        current.durationMinutes += activity.movingTimeSeconds / 60;
+        current.runCount += 1;
+        activityByDate.set(dateKey, current);
+    }
+
+    const activityHeatmap = Array.from({ length: 84 }, (_, index) => {
+        const date = new Date(heatmapStart);
+        date.setDate(heatmapStart.getDate() + index);
+        const dateKey = formatDateOnlyUTC(date)!;
+        const activity = activityByDate.get(dateKey);
+
+        return {
+            date: dateKey,
+            distanceKm: activity ? Math.round(activity.distanceKm * 10) / 10 : 0,
+            durationMinutes: activity ? Math.round(activity.durationMinutes) : 0,
+            runCount: activity?.runCount ?? 0,
+        };
+    });
+
     return NextResponse.json({
         profile: profile
             ? {
@@ -186,7 +243,9 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
             totalPlannedKm,
             totalActualKm,
             trend,
+            weeklyTrend,
         },
+        activityHeatmap,
         performance: personalBests,
     });
 }

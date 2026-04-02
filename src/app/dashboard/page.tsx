@@ -3,6 +3,8 @@
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { formatMiles, formatPacePerMile, kmToMiles } from "@/lib/units";
+import { WeeklyVolumeChart } from "@/components/dashboard/WeeklyVolumeChart";
+import { ActivityHeatmap } from "@/components/dashboard/ActivityHeatmap";
 
 type SyncResult = {
     synced?: number;
@@ -51,12 +53,26 @@ type ComplianceData = {
     totalPlannedKm: number | null;
     totalActualKm: number | null;
     trend: "improving" | "declining" | "stable" | "unknown";
+    weeklyTrend: {
+        weekStartDate: string;
+        plannedKm: number | null;
+        actualKm: number | null;
+        compliance: number | null;
+        healthIssuesCount: number;
+        endingState: string | null;
+    }[];
 };
 
 type DashboardData = {
     profile: ProfileData | null;
     health: HealthSummary;
     compliance: ComplianceData;
+    activityHeatmap: {
+        date: string;
+        distanceKm: number;
+        durationMinutes: number;
+        runCount: number;
+    }[];
     performance: {
         "5K": { best: Effort | null; secondBest: Effort | null };
         "10K": { best: Effort | null; secondBest: Effort | null };
@@ -195,6 +211,8 @@ export default function Dashboard() {
     const profile = dashData?.profile;
     const health = dashData?.health;
     const compliance = dashData?.compliance;
+    const weeklyTrend = compliance?.weeklyTrend ?? [];
+    const activityHeatmap = dashData?.activityHeatmap ?? [];
     const performance = dashData?.performance;
     const preference = profile ? planPreferenceBadge(profile) : null;
 
@@ -350,6 +368,38 @@ export default function Dashboard() {
                         {compliance.totalPlannedKm !== null && compliance.totalActualKm !== null && (
                             <div className="text-xs text-white/40">
                                 {kmToMiles(compliance.totalActualKm).toFixed(1)} mi actual / {kmToMiles(compliance.totalPlannedKm).toFixed(1)} mi planned this week
+                            </div>
+                        )}
+                    </div>
+                )}
+
+                {(weeklyTrend.length > 0 || activityHeatmap.length > 0) && (
+                    <div className="grid grid-cols-1 gap-6 xl:grid-cols-[1.15fr_0.85fr]">
+                        {weeklyTrend.length > 0 && (
+                            <div className="glass-card p-5 flex flex-col gap-4">
+                                <div>
+                                    <p className="text-xs text-blue-200/40 uppercase tracking-widest">
+                                        Volume Trend
+                                    </p>
+                                    <p className="mt-1 text-sm text-white/55">
+                                        Planned vs actual mileage over the last {weeklyTrend.length} weeks
+                                    </p>
+                                </div>
+                                <WeeklyVolumeChart points={weeklyTrend} />
+                            </div>
+                        )}
+
+                        {activityHeatmap.length > 0 && (
+                            <div className="glass-card p-5 flex flex-col gap-4">
+                                <div>
+                                    <p className="text-xs text-blue-200/40 uppercase tracking-widest">
+                                        Activity Heatmap
+                                    </p>
+                                    <p className="mt-1 text-sm text-white/55">
+                                        A quick read on how consistently you have been showing up lately
+                                    </p>
+                                </div>
+                                <ActivityHeatmap days={activityHeatmap} />
                             </div>
                         )}
                     </div>
