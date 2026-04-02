@@ -2,11 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import {
-  ExitIcon,
-  HamburgerMenuIcon,
-  PersonIcon,
-} from "@radix-ui/react-icons";
+import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import GradientBackdrop from "@/components/ui/GradientBackdrop";
 import AppSidebar from "@/components/navigation/AppSidebar";
 import MobileDrawer from "@/components/navigation/MobileDrawer";
@@ -19,7 +15,6 @@ type AppShellProps = {
 type MeResponse = {
   authenticated: boolean;
   stravaUsername?: string;
-  displayName?: string;
 };
 
 type FlowStatus = {
@@ -29,39 +24,48 @@ type FlowStatus = {
   shouldGoToGoal: boolean;
 };
 
+type BootcampStatus = {
+  alreadyCompleted?: boolean;
+  daysElapsed: number;
+  daysTotal: number;
+};
+
 const SHELL_PREFIXES = ["/dashboard", "/plan", "/roadmap", "/map", "/chat", "/health", "/onboarding"];
+const SIDEBAR_STORAGE_KEY = "hermes.sidebar.collapsed";
 
 export default function AppShell({ children }: AppShellProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [loggingOut, setLoggingOut] = useState(false);
-  const [runnerIdentity, setRunnerIdentity] = useState<Pick<MeResponse, "stravaUsername" | "displayName">>({});
+  const [username, setUsername] = useState<string | undefined>(undefined);
   const [flow, setFlow] = useState<FlowStatus | null>(null);
+  const [bootcampProgressPct, setBootcampProgressPct] = useState<number | null>(null);
   const [gateReady, setGateReady] = useState(false);
 
   const inShell = useMemo(
     () => SHELL_PREFIXES.some((prefix) => pathname?.startsWith(prefix)),
     [pathname]
   );
-
   const currentLabel = useMemo(() => {
-    const item = APP_NAV_ITEMS.find((navItem) => pathname === navItem.href || pathname?.startsWith(`${navItem.href}/`));
+    const item = APP_NAV_ITEMS.find((n) => pathname === n.href || pathname?.startsWith(`${n.href}/`));
     if (item) return item.label;
     if (pathname?.startsWith("/onboarding")) return "Onboarding";
     if (pathname?.startsWith("/health")) return "Health";
     return "Workspace";
   }, [pathname]);
 
-  const runnerName = useMemo(() => {
-    if (runnerIdentity.displayName?.trim()) return runnerIdentity.displayName.trim();
-    if (runnerIdentity.stravaUsername?.trim()) return `@${runnerIdentity.stravaUsername.trim()}`;
-    return "Runner";
-  }, [runnerIdentity.displayName, runnerIdentity.stravaUsername]);
-
   useEffect(() => {
     setMenuOpen(false);
   }, [pathname]);
+
+  useEffect(() => {
+    const stored = window.localStorage.getItem(SIDEBAR_STORAGE_KEY);
+    if (stored === "1") {
+      setSidebarCollapsed(true);
+    }
+  }, []);
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -78,24 +82,30 @@ export default function AppShell({ children }: AppShellProps) {
 
     async function loadShellData() {
       try {
-        const [meRes, flowRes] = await Promise.all([
+        const [meRes, flowRes, bootcampRes] = await Promise.all([
           fetch("/api/auth/me"),
           fetch("/api/onboarding/flow-status"),
+          fetch("/api/onboarding/bootcamp/status"),
         ]);
 
         if (meRes.ok) {
           const me = (await meRes.json()) as MeResponse;
-          if (!cancelled) {
-            setRunnerIdentity({
-              stravaUsername: me.stravaUsername,
-              displayName: me.displayName,
-            });
-          }
+          if (!cancelled) setUsername(me.stravaUsername);
         }
 
         if (flowRes.ok) {
           const flowData = (await flowRes.json()) as FlowStatus;
           if (!cancelled) setFlow(flowData);
+        }
+
+        if (bootcampRes.ok) {
+          const bootcamp = (await bootcampRes.json()) as BootcampStatus;
+          if (!cancelled && !bootcamp.alreadyCompleted && bootcamp.daysTotal > 0) {
+            const pct = (bootcamp.daysElapsed / bootcamp.daysTotal) * 100;
+            setBootcampProgressPct(pct);
+          } else if (!cancelled) {
+            setBootcampProgressPct(100);
+          }
         }
       } finally {
         if (!cancelled) setGateReady(true);
@@ -120,14 +130,22 @@ export default function AppShell({ children }: AppShellProps) {
 
     if (!flow.shouldGoToBootcamp && flow.shouldGoToGoal && !onGoal) {
       router.replace("/onboarding/goal");
+      return;
     }
-  }, [flow, inShell, pathname, router]);
+  }, [inShell, flow, pathname, router]);
 
   async function handleLogout() {
-    if (loggingOut) return;
     setLoggingOut(true);
     await fetch("/api/auth/logout", { method: "POST" });
     window.location.href = "/";
+  }
+
+  function handleSidebarToggle() {
+    setSidebarCollapsed((current) => {
+      const next = !current;
+      window.localStorage.setItem(SIDEBAR_STORAGE_KEY, next ? "1" : "0");
+      return next;
+    });
   }
 
   if (!inShell) {
@@ -135,74 +153,52 @@ export default function AppShell({ children }: AppShellProps) {
   }
 
   return (
-    <div className="relative isolate h-screen overflow-hidden text-white">
+    <div className="min-h-screen text-white">
       <GradientBackdrop />
-
       <MobileDrawer
         open={menuOpen}
         onClose={() => setMenuOpen(false)}
         bootcampCompleted={flow?.bootcampCompleted ?? false}
+        bootcampProgressPct={bootcampProgressPct}
+        onLogout={handleLogout}
+        loggingOut={loggingOut}
       />
 
-      <div className="relative z-10 flex h-full min-h-0 flex-col">
-        <header className="fixed inset-x-3 top-3 z-30 lg:inset-x-4">
-          <div className="glass-panel flex h-16 items-center justify-between px-3 sm:px-4 lg:px-5">
-            <div className="flex min-w-0 items-center gap-3">
-              <button
-                onClick={() => setMenuOpen(true)}
-                aria-label="Open menu"
-                className="rounded-xl border border-white/15 bg-white/5 p-2 text-white/75 transition hover:bg-white/10 hover:text-white lg:hidden"
-              >
-                <HamburgerMenuIcon className="h-4 w-4" />
-              </button>
-
-              <div className="min-w-0">
-                <p className="text-[10px] uppercase tracking-[0.24em] text-white/38">Hermes OS</p>
-                <p className="truncate text-sm font-semibold text-white sm:text-base">{currentLabel}</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <div className="flex items-center gap-3 rounded-2xl border border-white/15 bg-white/5 px-2.5 py-2">
-                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/[0.06] text-white/78">
-                  <PersonIcon className="h-4 w-4" />
-                </div>
-                <div className="hidden min-w-0 sm:block">
-                  <p className="truncate text-sm text-white/85">{runnerName}</p>
-                  <p className="truncate text-[10px] uppercase tracking-[0.18em] text-white/35">
-                    {runnerIdentity.stravaUsername ? "Connected to Strava" : "Runner profile"}
-                  </p>
-                </div>
-              </div>
-
-              <button
-                onClick={() => void handleLogout()}
-                disabled={loggingOut}
-                aria-label="Logout"
-                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-white/15 bg-white/5 text-white/70 transition hover:bg-white/10 hover:text-white disabled:opacity-50"
-              >
-                <ExitIcon className="h-4 w-4" />
-              </button>
-            </div>
+      <div className="relative z-10 px-3 py-3 lg:px-4 lg:py-4">
+        <div className="lg:hidden mb-3 glass-panel px-3 py-2 flex items-center justify-between">
+          <div>
+            <p className="text-xs uppercase tracking-widest text-white/50">Hermes</p>
+            <p className="text-sm text-white/85">{currentLabel}</p>
           </div>
-        </header>
+          <button
+            onClick={() => setMenuOpen(true)}
+            aria-label="Open menu"
+            className="rounded-lg border border-white/20 p-2 text-white/80 hover:bg-white/10"
+          >
+            <HamburgerMenuIcon className="h-4 w-4" />
+          </button>
+        </div>
 
-        <div className="min-h-0 flex-1 px-3 pb-3 pt-[5.5rem] lg:px-4">
-          <aside className="fixed bottom-4 left-4 top-[5.5rem] hidden w-72 lg:block">
-            <AppSidebar bootcampCompleted={flow?.bootcampCompleted ?? false} />
-          </aside>
+        <div className="mx-auto flex items-stretch w-full max-w-[1600px] gap-4 min-h-[calc(100vh-2rem)]">
+          <AppSidebar
+            username={username}
+            bootcampCompleted={flow?.bootcampCompleted ?? false}
+            bootcampProgressPct={bootcampProgressPct}
+            onLogout={handleLogout}
+            loggingOut={loggingOut}
+            collapsed={sidebarCollapsed}
+            onToggleCollapse={handleSidebarToggle}
+          />
 
-          <main className="h-full min-h-0 min-w-0 lg:pl-[19rem]">
-            <div className="glass-panel h-full">
-              <div className="h-full min-h-0 overflow-y-auto p-4 lg:p-6 animate-fade-in">
-                {!gateReady ? (
-                  <div className="flex h-[60vh] items-center justify-center text-sm text-white/60">
-                    Loading workspace...
-                  </div>
-                ) : (
-                  children
-                )}
-              </div>
+          <main className="flex-1 min-w-0">
+            <div className="glass-panel p-4 lg:p-6 h-full animate-fade-in">
+              {!gateReady ? (
+                <div className="h-[60vh] flex items-center justify-center text-white/60 text-sm">
+                  Loading workspace...
+                </div>
+              ) : (
+                children
+              )}
             </div>
           </main>
         </div>
