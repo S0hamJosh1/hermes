@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import {
+  ExitIcon,
   HamburgerMenuIcon,
   PersonIcon,
 } from "@radix-ui/react-icons";
@@ -35,6 +35,7 @@ export default function AppShell({ children }: AppShellProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [loggingOut, setLoggingOut] = useState(false);
   const [runnerIdentity, setRunnerIdentity] = useState<Pick<MeResponse, "stravaUsername" | "displayName">>({});
   const [flow, setFlow] = useState<FlowStatus | null>(null);
   const [gateReady, setGateReady] = useState(false);
@@ -122,6 +123,13 @@ export default function AppShell({ children }: AppShellProps) {
     }
   }, [flow, inShell, pathname, router]);
 
+  async function handleLogout() {
+    if (loggingOut) return;
+    setLoggingOut(true);
+    await fetch("/api/auth/logout", { method: "POST" });
+    window.location.href = "/";
+  }
+
   if (!inShell) {
     return <>{children}</>;
   }
@@ -148,33 +156,33 @@ export default function AppShell({ children }: AppShellProps) {
                 <HamburgerMenuIcon className="h-4 w-4" />
               </button>
 
-              <div className="relative h-11 w-11 shrink-0">
-                <Image
-                  src="/hermes-mark.png"
-                  alt="Hermes"
-                  fill
-                  sizes="44px"
-                  priority
-                  className="object-contain object-center opacity-95"
-                />
-              </div>
-
               <div className="min-w-0">
-                <p className="text-[10px] uppercase tracking-[0.24em] text-white/38">Hermes</p>
+                <p className="text-[10px] uppercase tracking-[0.24em] text-white/38">Hermes OS</p>
                 <p className="truncate text-sm font-semibold text-white sm:text-base">{currentLabel}</p>
               </div>
             </div>
 
-            <div className="flex items-center gap-3 rounded-2xl border border-white/15 bg-white/5 px-2.5 py-2">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/[0.06] text-white/78">
-                <PersonIcon className="h-4 w-4" />
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-3 rounded-2xl border border-white/15 bg-white/5 px-2.5 py-2">
+                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/[0.06] text-white/78">
+                  <PersonIcon className="h-4 w-4" />
+                </div>
+                <div className="hidden min-w-0 sm:block">
+                  <p className="truncate text-sm text-white/85">{runnerName}</p>
+                  <p className="truncate text-[10px] uppercase tracking-[0.18em] text-white/35">
+                    {runnerIdentity.stravaUsername ? "Connected to Strava" : "Runner profile"}
+                  </p>
+                </div>
               </div>
-              <div className="hidden min-w-0 sm:block">
-                <p className="truncate text-sm text-white/85">{runnerName}</p>
-                <p className="truncate text-[10px] uppercase tracking-[0.18em] text-white/35">
-                  {runnerIdentity.stravaUsername ? "Connected to Strava" : "Runner profile"}
-                </p>
-              </div>
+
+              <button
+                onClick={() => void handleLogout()}
+                disabled={loggingOut}
+                aria-label="Logout"
+                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-white/15 bg-white/5 text-white/70 transition hover:bg-white/10 hover:text-white disabled:opacity-50"
+              >
+                <ExitIcon className="h-4 w-4" />
+              </button>
             </div>
           </div>
         </header>

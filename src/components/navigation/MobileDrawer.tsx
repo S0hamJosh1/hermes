@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { APP_NAV_ITEMS } from "@/lib/navigation/app-nav";
 import {
@@ -59,21 +58,9 @@ export default function MobileDrawer({
         }`}
       >
         <div className="mb-5 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="relative h-11 w-11 shrink-0">
-              <Image
-                src="/hermes-mark.png"
-                alt="Hermes"
-                fill
-                sizes="44px"
-                priority
-                className="object-contain object-center opacity-95"
-              />
-            </div>
-            <div>
-              <p className="text-[10px] uppercase tracking-[0.24em] text-white/40">Hermes</p>
-              <p className="mt-1 text-base font-semibold text-white">Navigation</p>
-            </div>
+          <div>
+            <p className="text-[10px] uppercase tracking-[0.24em] text-white/40">Hermes OS</p>
+            <p className="mt-1 text-base font-semibold text-white">Navigation</p>
           </div>
           <button
             onClick={onClose}
