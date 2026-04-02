@@ -1,8 +1,14 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { HamburgerMenuIcon } from "@radix-ui/react-icons";
+import {
+  ChevronDownIcon,
+  ExitIcon,
+  HamburgerMenuIcon,
+  PersonIcon,
+  GearIcon,
+} from "@radix-ui/react-icons";
 import GradientBackdrop from "@/components/ui/GradientBackdrop";
 import AppSidebar from "@/components/navigation/AppSidebar";
 import MobileDrawer from "@/components/navigation/MobileDrawer";
@@ -24,32 +30,30 @@ type FlowStatus = {
   shouldGoToGoal: boolean;
 };
 
-type BootcampStatus = {
-  alreadyCompleted?: boolean;
-  daysElapsed: number;
-  daysTotal: number;
-};
-
 const SHELL_PREFIXES = ["/dashboard", "/plan", "/roadmap", "/map", "/chat", "/health", "/onboarding"];
-const SIDEBAR_STORAGE_KEY = "hermes.sidebar.collapsed";
+
+function getInitial(username?: string): string {
+  return username?.trim().charAt(0).toUpperCase() || "H";
+}
 
 export default function AppShell({ children }: AppShellProps) {
   const pathname = usePathname();
   const router = useRouter();
+  const profileMenuRef = useRef<HTMLDivElement | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const [loggingOut, setLoggingOut] = useState(false);
   const [username, setUsername] = useState<string | undefined>(undefined);
   const [flow, setFlow] = useState<FlowStatus | null>(null);
-  const [bootcampProgressPct, setBootcampProgressPct] = useState<number | null>(null);
   const [gateReady, setGateReady] = useState(false);
 
   const inShell = useMemo(
     () => SHELL_PREFIXES.some((prefix) => pathname?.startsWith(prefix)),
     [pathname]
   );
+
   const currentLabel = useMemo(() => {
-    const item = APP_NAV_ITEMS.find((n) => pathname === n.href || pathname?.startsWith(`${n.href}/`));
+    const item = APP_NAV_ITEMS.find((navItem) => pathname === navItem.href || pathname?.startsWith(`${navItem.href}/`));
     if (item) return item.label;
     if (pathname?.startsWith("/onboarding")) return "Onboarding";
     if (pathname?.startsWith("/health")) return "Health";
@@ -58,14 +62,8 @@ export default function AppShell({ children }: AppShellProps) {
 
   useEffect(() => {
     setMenuOpen(false);
+    setProfileMenuOpen(false);
   }, [pathname]);
-
-  useEffect(() => {
-    const stored = window.localStorage.getItem(SIDEBAR_STORAGE_KEY);
-    if (stored === "1") {
-      setSidebarCollapsed(true);
-    }
-  }, []);
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -77,15 +75,26 @@ export default function AppShell({ children }: AppShellProps) {
   }, [menuOpen]);
 
   useEffect(() => {
+    function handlePointerDown(event: MouseEvent) {
+      if (!profileMenuRef.current?.contains(event.target as Node)) {
+        setProfileMenuOpen(false);
+      }
+    }
+
+    if (!profileMenuOpen) return;
+    window.addEventListener("mousedown", handlePointerDown);
+    return () => window.removeEventListener("mousedown", handlePointerDown);
+  }, [profileMenuOpen]);
+
+  useEffect(() => {
     if (!inShell) return;
     let cancelled = false;
 
     async function loadShellData() {
       try {
-        const [meRes, flowRes, bootcampRes] = await Promise.all([
+        const [meRes, flowRes] = await Promise.all([
           fetch("/api/auth/me"),
           fetch("/api/onboarding/flow-status"),
-          fetch("/api/onboarding/bootcamp/status"),
         ]);
 
         if (meRes.ok) {
@@ -96,16 +105,6 @@ export default function AppShell({ children }: AppShellProps) {
         if (flowRes.ok) {
           const flowData = (await flowRes.json()) as FlowStatus;
           if (!cancelled) setFlow(flowData);
-        }
-
-        if (bootcampRes.ok) {
-          const bootcamp = (await bootcampRes.json()) as BootcampStatus;
-          if (!cancelled && !bootcamp.alreadyCompleted && bootcamp.daysTotal > 0) {
-            const pct = (bootcamp.daysElapsed / bootcamp.daysTotal) * 100;
-            setBootcampProgressPct(pct);
-          } else if (!cancelled) {
-            setBootcampProgressPct(100);
-          }
         }
       } finally {
         if (!cancelled) setGateReady(true);
@@ -130,9 +129,8 @@ export default function AppShell({ children }: AppShellProps) {
 
     if (!flow.shouldGoToBootcamp && flow.shouldGoToGoal && !onGoal) {
       router.replace("/onboarding/goal");
-      return;
     }
-  }, [inShell, flow, pathname, router]);
+  }, [flow, inShell, pathname, router]);
 
   async function handleLogout() {
     setLoggingOut(true);
@@ -140,60 +138,115 @@ export default function AppShell({ children }: AppShellProps) {
     window.location.href = "/";
   }
 
-  function handleSidebarToggle() {
-    setSidebarCollapsed((current) => {
-      const next = !current;
-      window.localStorage.setItem(SIDEBAR_STORAGE_KEY, next ? "1" : "0");
-      return next;
-    });
-  }
-
   if (!inShell) {
     return <>{children}</>;
   }
 
   return (
-    <div className="min-h-screen text-white">
+    <div className="h-screen overflow-hidden text-white">
       <GradientBackdrop />
+
       <MobileDrawer
         open={menuOpen}
         onClose={() => setMenuOpen(false)}
         bootcampCompleted={flow?.bootcampCompleted ?? false}
-        bootcampProgressPct={bootcampProgressPct}
-        onLogout={handleLogout}
-        loggingOut={loggingOut}
       />
 
-      <div className="relative z-10 px-3 py-3 lg:px-4 lg:py-4">
-        <div className="lg:hidden mb-3 glass-panel px-3 py-2 flex items-center justify-between">
-          <div>
-            <p className="text-xs uppercase tracking-widest text-white/50">Hermes</p>
-            <p className="text-sm text-white/85">{currentLabel}</p>
+      <div className="relative z-10 h-full">
+        <header className="fixed inset-x-3 top-3 z-30 lg:inset-x-4">
+          <div className="glass-panel flex h-16 items-center justify-between px-3 sm:px-4 lg:px-5">
+            <div className="flex min-w-0 items-center gap-3">
+              <button
+                onClick={() => setMenuOpen(true)}
+                aria-label="Open menu"
+                className="rounded-xl border border-white/15 bg-white/5 p-2 text-white/75 transition hover:bg-white/10 hover:text-white lg:hidden"
+              >
+                <HamburgerMenuIcon className="h-4 w-4" />
+              </button>
+
+              <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-white/12 bg-white/[0.03] text-sm font-semibold text-white/85">
+                {getInitial(username)}
+              </div>
+
+              <div className="min-w-0">
+                <p className="text-[10px] uppercase tracking-[0.24em] text-white/38">Hermes</p>
+                <p className="truncate text-sm font-semibold text-white sm:text-base">{currentLabel}</p>
+              </div>
+            </div>
+
+            <div className="relative" ref={profileMenuRef}>
+              <button
+                onClick={() => setProfileMenuOpen((current) => !current)}
+                className="flex items-center gap-3 rounded-2xl border border-white/15 bg-white/5 px-2.5 py-2 text-left transition hover:bg-white/10"
+              >
+                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/[0.08] text-sm font-semibold text-white/85">
+                  {getInitial(username)}
+                </div>
+                <div className="hidden min-w-0 sm:block">
+                  <p className="truncate text-sm text-white/85">{username ? `@${username}` : "Runner"}</p>
+                  <p className="text-[10px] uppercase tracking-[0.18em] text-white/35">Profile</p>
+                </div>
+                <ChevronDownIcon className={`h-4 w-4 text-white/55 transition-transform ${profileMenuOpen ? "rotate-180" : ""}`} />
+              </button>
+
+              <div
+                className={`absolute right-0 top-[calc(100%+0.75rem)] w-64 rounded-[1.35rem] border border-white/12 bg-[#090d14]/88 p-2 shadow-[0_24px_48px_rgba(0,0,0,0.38)] backdrop-blur-2xl transition-all ${
+                  profileMenuOpen ? "pointer-events-auto translate-y-0 opacity-100" : "pointer-events-none -translate-y-1 opacity-0"
+                }`}
+              >
+                <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-3 py-3">
+                  <p className="text-[10px] uppercase tracking-[0.18em] text-white/35">Profile</p>
+                  <p className="mt-1 text-sm font-medium text-white">{username ? `@${username}` : "Hermes runner"}</p>
+                  <p className="mt-1 text-xs text-white/45">Signed in and ready to train.</p>
+                </div>
+
+                <button
+                  onClick={() => {
+                    setProfileMenuOpen(false);
+                    router.push("/dashboard");
+                  }}
+                  className="mt-2 flex w-full items-center gap-3 rounded-2xl px-3 py-2.5 text-sm text-white/72 transition hover:bg-white/[0.05] hover:text-white"
+                >
+                  <PersonIcon className="h-4 w-4 text-white/45" />
+                  Profile
+                </button>
+
+                <button
+                  onClick={() => {
+                    setProfileMenuOpen(false);
+                    router.push("/onboarding/goal");
+                  }}
+                  className="flex w-full items-center gap-3 rounded-2xl px-3 py-2.5 text-sm text-white/72 transition hover:bg-white/[0.05] hover:text-white"
+                >
+                  <GearIcon className="h-4 w-4 text-white/45" />
+                  Settings
+                </button>
+
+                <button
+                  onClick={() => {
+                    setProfileMenuOpen(false);
+                    void handleLogout();
+                  }}
+                  disabled={loggingOut}
+                  className="flex w-full items-center gap-3 rounded-2xl px-3 py-2.5 text-sm text-white/72 transition hover:bg-white/[0.05] hover:text-white disabled:opacity-50"
+                >
+                  <ExitIcon className="h-4 w-4 text-white/45" />
+                  {loggingOut ? "Logging out..." : "Logout"}
+                </button>
+              </div>
+            </div>
           </div>
-          <button
-            onClick={() => setMenuOpen(true)}
-            aria-label="Open menu"
-            className="rounded-lg border border-white/20 p-2 text-white/80 hover:bg-white/10"
-          >
-            <HamburgerMenuIcon className="h-4 w-4" />
-          </button>
-        </div>
+        </header>
 
-        <div className="mx-auto flex items-stretch w-full max-w-[1600px] gap-4 min-h-[calc(100vh-2rem)]">
-          <AppSidebar
-            username={username}
-            bootcampCompleted={flow?.bootcampCompleted ?? false}
-            bootcampProgressPct={bootcampProgressPct}
-            onLogout={handleLogout}
-            loggingOut={loggingOut}
-            collapsed={sidebarCollapsed}
-            onToggleCollapse={handleSidebarToggle}
-          />
+        <div className="h-full px-3 pb-3 pt-[5.5rem] lg:px-4">
+          <aside className="fixed bottom-4 left-4 top-[5.5rem] hidden w-72 lg:block">
+            <AppSidebar bootcampCompleted={flow?.bootcampCompleted ?? false} />
+          </aside>
 
-          <main className="flex-1 min-w-0">
-            <div className="glass-panel p-4 lg:p-6 h-full animate-fade-in">
+          <main className="h-full lg:pl-[19rem]">
+            <div className="glass-panel h-full overflow-y-auto p-4 lg:p-6 animate-fade-in">
               {!gateReady ? (
-                <div className="h-[60vh] flex items-center justify-center text-white/60 text-sm">
+                <div className="flex h-[60vh] items-center justify-center text-sm text-white/60">
                   Loading workspace...
                 </div>
               ) : (
