@@ -16,7 +16,7 @@ export default function Loading() {
   );
 
   return (
-    <main className="relative min-h-screen overflow-hidden text-white">
+    <main className="relative isolate min-h-screen overflow-hidden text-white">
       {!inShell ? <GradientBackdrop /> : null}
 
       <div className="relative z-10 flex min-h-screen items-center justify-center px-5 py-10">

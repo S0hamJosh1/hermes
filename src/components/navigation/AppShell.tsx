@@ -135,7 +135,7 @@ export default function AppShell({ children }: AppShellProps) {
   }
 
   return (
-    <div className="h-screen overflow-hidden text-white">
+    <div className="relative isolate h-screen overflow-hidden text-white">
       <GradientBackdrop />
 
       <MobileDrawer

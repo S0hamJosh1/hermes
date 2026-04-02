@@ -26,7 +26,7 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="relative min-h-screen text-white">
+    <main className="relative isolate min-h-screen text-white">
       <GradientBackdrop />
 
       <div className="relative z-10 flex min-h-screen items-center justify-center px-5 py-10">
