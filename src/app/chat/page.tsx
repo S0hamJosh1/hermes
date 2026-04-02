@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import { PaperPlaneIcon } from "@radix-ui/react-icons";
 
 type Message = {
     id: string;
@@ -34,7 +35,6 @@ export default function ChatPage() {
     const [loading, setLoading] = useState(true);
     const bottomRef = useRef<HTMLDivElement>(null);
 
-    // Load status and history
     const fetchData = useCallback(async () => {
         try {
             const [histRes, statusRes] = await Promise.all([
@@ -49,12 +49,19 @@ export default function ChatPage() {
                 const data = (await statusRes.json()) as SlmStatus;
                 setStatus(data);
             }
-        } catch { /* ignore */ }
+        } catch {
+            // ignore
+        }
         setLoading(false);
     }, []);
 
-    useEffect(() => { fetchData(); }, [fetchData]);
-    useEffect(() => { bottomRef.current?.scrollIntoView({ behavior: "smooth" }); }, [messages]);
+    useEffect(() => {
+        fetchData();
+    }, [fetchData]);
+
+    useEffect(() => {
+        bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [messages]);
 
     async function handleSend() {
         const text = input.trim();
@@ -62,7 +69,6 @@ export default function ChatPage() {
         setInput("");
         setSending(true);
 
-        // Optimistically add user message
         const tempId = `temp-${Date.now()}`;
         setMessages((prev) => [
             ...prev,
@@ -125,14 +131,14 @@ export default function ChatPage() {
     }
 
     const intentLabel: Record<string, string> = {
-        volume_change: "📊 Volume Change",
-        plan_level_change: "🎚️ Plan Level Change",
-        skip_workout: "⏭️ Skip Workout",
-        reschedule: "📅 Reschedule",
-        modify_workout: "✏️ Modify Workout",
-        report_health: "🩺 Health Report",
-        ask_question: "❓ Question",
-        context_response: "💬 Check-In Response",
+        volume_change: "Volume Change",
+        plan_level_change: "Plan Level Change",
+        skip_workout: "Skip Workout",
+        reschedule: "Reschedule",
+        modify_workout: "Modify Workout",
+        report_health: "Health Report",
+        ask_question: "Question",
+        context_response: "Check-In Response",
     };
 
     const planEditIntentTypes = new Set([
@@ -145,55 +151,50 @@ export default function ChatPage() {
 
     if (loading) {
         return (
-            <main className="h-[70vh] text-white flex items-center justify-center">
-                <div className="animate-pulse text-white/40 text-sm">Loading chat...</div>
+            <main className="flex h-[70vh] items-center justify-center text-white">
+                <div className="animate-pulse text-sm text-white/40">Loading chat...</div>
             </main>
         );
     }
 
     return (
-        <main className="h-[calc(100vh-8rem)] text-white flex flex-col">
-            {/* Header */}
-            <header className="border-b border-white/10 px-6 py-4 flex items-center justify-between shrink-0">
-                <div className="flex items-center gap-3">
-                    <div className="text-lg font-bold tracking-tight">Hermes Chat</div>
-                    {/* SLM status indicator */}
-                    <div className="flex items-center gap-1.5">
-                        <div
-                            className={`w-2 h-2 rounded-full ${status?.online && status?.available
+        <main className="flex h-full min-h-[70vh] flex-col text-white">
+            <div className="mb-4 flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3">
+                <div className="flex items-center gap-2">
+                    <PaperPlaneIcon className="h-4 w-4 text-white/55" />
+                    <span className="text-xs uppercase tracking-[0.18em] text-white/42">Hermes Chat</span>
+                </div>
+                <div className="flex items-center gap-2">
+                    <div
+                        className={`h-2 w-2 rounded-full ${
+                            status?.online && status?.available
                                 ? "bg-green-400"
                                 : status?.online
                                     ? "bg-amber-400"
                                     : "bg-red-400"
-                                }`}
-                        />
-                        <span className="text-xs text-white/40">
-                            {status?.online && status?.available
-                                ? "Gemini connected"
-                                : status?.online
-                                    ? "API key issue"
-                                    : "AI offline"}
-                        </span>
-                    </div>
+                        }`}
+                    />
+                    <span className="text-xs text-white/45">
+                        {status?.online && status?.available
+                            ? "Gemini connected"
+                            : status?.online
+                                ? "API key issue"
+                                : "AI offline"}
+                    </span>
                 </div>
-                <button
-                    onClick={() => router.push("/dashboard")}
-                    className="text-xs text-white/40 hover:text-white/70 transition"
-                >
-                    ← Dashboard
-                </button>
-            </header>
+            </div>
 
-            {/* Messages */}
-            <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4">
+            <div className="flex-1 overflow-y-auto px-1 py-2 space-y-4">
                 {messages.length === 0 && (
-                    <div className="flex flex-col items-center justify-center h-full text-center gap-3 py-20">
-                        <div className="text-4xl">🏃‍♂️</div>
-                        <p className="text-white/60 text-sm max-w-sm">
-                            Talk to Hermes — your running assistant. Ask questions, report
-                            how you&apos;re feeling, or request changes to your plan.
+                    <div className="flex h-full flex-col items-center justify-center gap-4 py-20 text-center">
+                        <div className="flex h-16 w-16 items-center justify-center rounded-full border border-white/12 bg-white/[0.04]">
+                            <PaperPlaneIcon className="h-7 w-7 text-white/70" />
+                        </div>
+                        <p className="max-w-2xl text-sm leading-8 text-white/58 sm:text-[15px]">
+                            Talk to Hermes, your running assistant. Ask questions, report how you&apos;re feeling,
+                            or request changes to your plan.
                         </p>
-                        <div className="flex flex-wrap gap-2 justify-center mt-2">
+                        <div className="mt-1 flex flex-wrap justify-center gap-2">
                             {[
                                 "How's my training going?",
                                 "I want to run more this week",
@@ -203,7 +204,7 @@ export default function ChatPage() {
                                 <button
                                     key={q}
                                     onClick={() => setInput(q)}
-                                    className="text-xs px-3 py-1.5 rounded-lg border border-white/10 text-white/50 hover:border-white/30 hover:text-white/70 transition"
+                                    className="rounded-xl border border-white/10 px-3 py-2 text-xs text-white/52 transition hover:border-white/25 hover:text-white/75"
                                 >
                                     {q}
                                 </button>
@@ -218,15 +219,16 @@ export default function ChatPage() {
                         className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
                     >
                         <div
-                            className={`max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${msg.role === "user"
-                                ? "bg-white text-black rounded-br-md"
-                                : msg.role === "system"
-                                    ? "bg-amber-500/10 border border-amber-500/20 text-amber-200 rounded-bl-md"
-                                    : "bg-white/5 border border-white/10 text-white/80 rounded-bl-md"
-                                }`}
+                            className={`max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
+                                msg.role === "user"
+                                    ? "rounded-br-md bg-white text-black"
+                                    : msg.role === "system"
+                                        ? "rounded-bl-md border border-amber-500/20 bg-amber-500/10 text-amber-200"
+                                        : "rounded-bl-md border border-white/10 bg-white/5 text-white/80"
+                            }`}
                         >
                             {msg.role === "system" && (
-                                <p className="text-[10px] text-amber-400/60 uppercase tracking-wider mb-1 font-medium">
+                                <p className="mb-1 text-[10px] font-medium uppercase tracking-wider text-amber-400/60">
                                     Check-In
                                 </p>
                             )}
@@ -235,13 +237,11 @@ export default function ChatPage() {
                                 msg.intentType !== "unknown" &&
                                 msg.intentType !== "ask_question" && (
                                     <div className="mt-2 flex items-center gap-2">
-                                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/10 text-white/50">
+                                        <span className="rounded-full bg-white/10 px-2 py-0.5 text-[10px] text-white/50">
                                             {intentLabel[msg.intentType] ?? msg.intentType}
                                         </span>
                                         {msg.intentApplied && (
-                                            <span className="text-[10px] text-green-400">
-                                                ✓ Applied
-                                            </span>
+                                            <span className="text-[10px] text-green-400">Applied</span>
                                         )}
                                     </div>
                                 )}
@@ -256,7 +256,7 @@ export default function ChatPage() {
                                         </p>
                                         <button
                                             onClick={() => router.push("/plan")}
-                                            className="mt-2 text-[11px] px-2 py-1 rounded bg-white/10 text-white/80 hover:bg-white/20 transition"
+                                            className="mt-2 rounded bg-white/10 px-2 py-1 text-[11px] text-white/80 transition hover:bg-white/20"
                                         >
                                             View updated plan
                                         </button>
@@ -268,9 +268,8 @@ export default function ChatPage() {
                 <div ref={bottomRef} />
             </div>
 
-            {/* Input */}
-            <div className="border-t border-white/10 px-6 py-4 shrink-0">
-                <div className="flex items-center gap-3 max-w-3xl mx-auto">
+            <div className="mt-4 border-t border-white/10 px-1 pt-4 shrink-0">
+                <div className="mx-auto flex max-w-4xl items-center gap-3">
                     <input
                         type="text"
                         value={input}
@@ -279,18 +278,18 @@ export default function ChatPage() {
                         placeholder={
                             status?.available
                                 ? "Tell Hermes what's on your mind..."
-                                : "AI offline — basic mode only"
+                                : "AI offline - basic mode only"
                         }
                         disabled={sending}
-                        className="flex-1 bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-sm text-white placeholder-white/30 focus:outline-none focus:border-white/40 transition disabled:opacity-50"
+                        className="flex-1 rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder-white/30 transition focus:border-white/40 focus:outline-none disabled:opacity-50"
                     />
                     <button
                         onClick={handleSend}
                         disabled={!input.trim() || sending}
-                        className="px-5 py-3 rounded-xl bg-white text-black text-sm font-semibold hover:bg-white/90 transition disabled:opacity-30 disabled:cursor-not-allowed"
+                        className="rounded-xl bg-white px-5 py-3 text-sm font-semibold text-black transition hover:bg-white/90 disabled:cursor-not-allowed disabled:opacity-30"
                     >
                         {sending ? (
-                            <span className="inline-block w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
+                            <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-black/30 border-t-black" />
                         ) : (
                             "Send"
                         )}
