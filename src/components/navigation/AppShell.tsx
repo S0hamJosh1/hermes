@@ -1,15 +1,11 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import {
-  ChevronDownIcon,
-  DashboardIcon,
-  ExitIcon,
   HamburgerMenuIcon,
   PersonIcon,
-  GearIcon,
 } from "@radix-ui/react-icons";
 import GradientBackdrop from "@/components/ui/GradientBackdrop";
 import AppSidebar from "@/components/navigation/AppSidebar";
@@ -38,10 +34,7 @@ const SHELL_PREFIXES = ["/dashboard", "/plan", "/roadmap", "/map", "/chat", "/he
 export default function AppShell({ children }: AppShellProps) {
   const pathname = usePathname();
   const router = useRouter();
-  const profileMenuRef = useRef<HTMLDivElement | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
-  const [loggingOut, setLoggingOut] = useState(false);
   const [runnerIdentity, setRunnerIdentity] = useState<Pick<MeResponse, "stravaUsername" | "displayName">>({});
   const [flow, setFlow] = useState<FlowStatus | null>(null);
   const [gateReady, setGateReady] = useState(false);
@@ -65,13 +58,8 @@ export default function AppShell({ children }: AppShellProps) {
     return "Runner";
   }, [runnerIdentity.displayName, runnerIdentity.stravaUsername]);
 
-  const runnerMeta = runnerIdentity.stravaUsername?.trim()
-    ? `@${runnerIdentity.stravaUsername.trim()}`
-    : "Strava profile unavailable";
-
   useEffect(() => {
     setMenuOpen(false);
-    setProfileMenuOpen(false);
   }, [pathname]);
 
   useEffect(() => {
@@ -82,18 +70,6 @@ export default function AppShell({ children }: AppShellProps) {
       document.body.style.overflow = prevOverflow;
     };
   }, [menuOpen]);
-
-  useEffect(() => {
-    function handlePointerDown(event: MouseEvent) {
-      if (!profileMenuRef.current?.contains(event.target as Node)) {
-        setProfileMenuOpen(false);
-      }
-    }
-
-    if (!profileMenuOpen) return;
-    window.addEventListener("mousedown", handlePointerDown);
-    return () => window.removeEventListener("mousedown", handlePointerDown);
-  }, [profileMenuOpen]);
 
   useEffect(() => {
     if (!inShell) return;
@@ -146,12 +122,6 @@ export default function AppShell({ children }: AppShellProps) {
     }
   }, [flow, inShell, pathname, router]);
 
-  async function handleLogout() {
-    setLoggingOut(true);
-    await fetch("/api/auth/logout", { method: "POST" });
-    window.location.href = "/";
-  }
-
   if (!inShell) {
     return <>{children}</>;
   }
@@ -178,7 +148,7 @@ export default function AppShell({ children }: AppShellProps) {
                 <HamburgerMenuIcon className="h-4 w-4" />
               </button>
 
-              <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-white/12 bg-white/[0.03] p-2">
+              <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-white/12 p-1.5">
                 <Image
                   src="/hermes-mark.png"
                   alt="Hermes"
@@ -195,79 +165,15 @@ export default function AppShell({ children }: AppShellProps) {
               </div>
             </div>
 
-            <div className="relative" ref={profileMenuRef}>
-              <button
-                onClick={() => setProfileMenuOpen((current) => !current)}
-                className="flex items-center gap-3 rounded-2xl border border-white/15 bg-white/5 px-2.5 py-2 text-left transition hover:bg-white/10"
-              >
-                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/[0.08] text-white/78">
-                  <PersonIcon className="h-4 w-4" />
-                </div>
-                <div className="hidden min-w-0 sm:block">
-                  <p className="truncate text-sm text-white/85">{runnerName}</p>
-                  <p className="truncate text-[10px] uppercase tracking-[0.18em] text-white/35">
-                    {runnerIdentity.stravaUsername ? "Connected to Strava" : "Runner profile"}
-                  </p>
-                </div>
-                <ChevronDownIcon className={`h-4 w-4 text-white/55 transition-transform ${profileMenuOpen ? "rotate-180" : ""}`} />
-              </button>
-
-              <div
-                className={`absolute right-0 top-[calc(100%+0.75rem)] w-64 rounded-[1.35rem] border border-white/12 bg-[#090d14]/88 p-2 shadow-[0_24px_48px_rgba(0,0,0,0.38)] backdrop-blur-2xl transition-all ${
-                  profileMenuOpen ? "pointer-events-auto translate-y-0 opacity-100" : "pointer-events-none -translate-y-1 opacity-0"
-                }`}
-              >
-                <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-3 py-3">
-                  <div className="flex items-start gap-3">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/[0.08] text-white/78">
-                      <PersonIcon className="h-4 w-4" />
-                    </div>
-                    <div className="min-w-0">
-                      <p className="text-[10px] uppercase tracking-[0.18em] text-white/35">Runner profile</p>
-                      <p className="mt-1 truncate text-sm font-medium text-white">{runnerName}</p>
-                      <p className="mt-0.5 truncate text-xs text-white/45">{runnerMeta}</p>
-                      <p className="mt-2 text-xs text-white/45">
-                        {runnerIdentity.stravaUsername
-                          ? "Connected with Strava and ready to train."
-                          : "Signed in and ready to train."}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <button
-                  onClick={() => {
-                    setProfileMenuOpen(false);
-                    router.push("/dashboard");
-                  }}
-                  className="mt-2 flex w-full items-center gap-3 rounded-2xl px-3 py-2.5 text-sm text-white/72 transition hover:bg-white/[0.05] hover:text-white"
-                >
-                  <DashboardIcon className="h-4 w-4 text-white/45" />
-                  Dashboard
-                </button>
-
-                <button
-                  onClick={() => {
-                    setProfileMenuOpen(false);
-                    router.push("/onboarding/goal");
-                  }}
-                  className="flex w-full items-center gap-3 rounded-2xl px-3 py-2.5 text-sm text-white/72 transition hover:bg-white/[0.05] hover:text-white"
-                >
-                  <GearIcon className="h-4 w-4 text-white/45" />
-                  Settings
-                </button>
-
-                <button
-                  onClick={() => {
-                    setProfileMenuOpen(false);
-                    void handleLogout();
-                  }}
-                  disabled={loggingOut}
-                  className="flex w-full items-center gap-3 rounded-2xl px-3 py-2.5 text-sm text-white/72 transition hover:bg-white/[0.05] hover:text-white disabled:opacity-50"
-                >
-                  <ExitIcon className="h-4 w-4 text-white/45" />
-                  {loggingOut ? "Logging out..." : "Logout"}
-                </button>
+            <div className="flex items-center gap-3 rounded-2xl border border-white/15 bg-white/5 px-2.5 py-2">
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/[0.06] text-white/78">
+                <PersonIcon className="h-4 w-4" />
+              </div>
+              <div className="hidden min-w-0 sm:block">
+                <p className="truncate text-sm text-white/85">{runnerName}</p>
+                <p className="truncate text-[10px] uppercase tracking-[0.18em] text-white/35">
+                  {runnerIdentity.stravaUsername ? "Connected to Strava" : "Runner profile"}
+                </p>
               </div>
             </div>
           </div>

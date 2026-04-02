@@ -60,7 +60,7 @@ export default function MobileDrawer({
       >
         <div className="mb-5 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-white/12 bg-white/[0.03] p-2">
+            <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-white/12 p-1.5">
               <Image
                 src="/hermes-mark.png"
                 alt="Hermes"
