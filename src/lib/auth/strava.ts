@@ -208,6 +208,19 @@ export async function fetchStravaActivitiesPage(
     return res.json() as Promise<StravaActivity[]>;
 }
 
+export async function fetchCurrentAthlete(accessToken: string): Promise<StravaAthlete> {
+    const res = await fetch(`${STRAVA_API_BASE}/athlete`, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+    });
+
+    if (!res.ok) {
+        const body = await res.text();
+        throw new Error(`Strava athlete fetch failed: ${res.status} ${body}`);
+    }
+
+    return res.json() as Promise<StravaAthlete>;
+}
+
 /**
  * Fetch activities before a given timestamp (for pagination / older history).
  *
