@@ -12,17 +12,14 @@ import {
   PaperPlaneIcon,
   TargetIcon,
   LightningBoltIcon,
-  ExitIcon,
-  HamburgerMenuIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
 } from "@radix-ui/react-icons";
 import type { ReactNode } from "react";
 
 type AppSidebarProps = {
-  username?: string;
   bootcampCompleted: boolean;
   bootcampProgressPct?: number | null;
-  onLogout: () => Promise<void> | void;
-  loggingOut?: boolean;
   collapsed: boolean;
   onToggleCollapse: () => void;
 };
@@ -42,11 +39,8 @@ function isActive(pathname: string, href: string): boolean {
 }
 
 export default function AppSidebar({
-  username,
   bootcampCompleted,
   bootcampProgressPct,
-  onLogout,
-  loggingOut = false,
   collapsed,
   onToggleCollapse,
 }: AppSidebarProps) {
@@ -55,45 +49,37 @@ export default function AppSidebar({
 
   return (
     <GlassPanel
-      className={`hidden lg:flex lg:shrink-0 lg:flex-col p-4 transition-[width] duration-300 ${collapsed ? "lg:w-20" : "lg:w-72"}`}
+      className={`hidden lg:flex lg:shrink-0 lg:flex-col transition-[width] duration-300 ${collapsed ? "lg:w-16 p-2" : "lg:w-60 p-3"}`}
     >
-      <div className={`mb-6 ${collapsed ? "px-0" : "px-2"}`}>
-        <div className={`flex gap-2 ${collapsed ? "justify-center" : "items-start justify-between"}`}>
-          {!collapsed ? (
-            <div>
-              <p className="text-xs tracking-[0.2em] uppercase text-white/50">Hermes</p>
-              <p className="text-2xl font-semibold text-white mt-1">Training OS</p>
-            </div>
-          ) : null}
-          <button
-            onClick={onToggleCollapse}
-            aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-            className="rounded-xl border border-white/15 bg-white/5 p-2 text-white/70 transition hover:bg-white/10 hover:text-white"
-          >
-            <HamburgerMenuIcon className="h-4 w-4" />
-          </button>
-        </div>
+      {/* Collapse toggle */}
+      <button
+        onClick={onToggleCollapse}
+        aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+        className={`flex items-center justify-center rounded-lg border border-white/10 bg-white/5 p-1.5 text-white/50 transition hover:bg-white/10 hover:text-white/80 mb-3 ${collapsed ? "w-full" : "self-end"}`}
+      >
+        {collapsed ? (
+          <ChevronRightIcon className="h-3.5 w-3.5" />
+        ) : (
+          <ChevronLeftIcon className="h-3.5 w-3.5" />
+        )}
+      </button>
 
-        {!collapsed && username ? <p className="text-xs text-white/40 mt-2">@{username}</p> : null}
-      </div>
-
+      {/* Bootcamp progress (only when active + expanded) */}
       {!bootcampCompleted && !collapsed && (
-        <div className="mb-5 rounded-xl border border-white/15 bg-white/5 p-3">
-          <p className="text-xs uppercase tracking-widest text-white/45">Bootcamp</p>
-          <p className="text-sm text-white/80 mt-1">Calibration in progress</p>
-          <div className="mt-3 h-1.5 rounded-full bg-white/10 overflow-hidden">
+        <div className="mb-3 rounded-xl border border-white/10 bg-white/5 p-3">
+          <p className="text-[10px] uppercase tracking-widest text-white/40">Bootcamp</p>
+          <div className="mt-2 h-1 rounded-full bg-white/10 overflow-hidden">
             <div
               className="h-full rounded-full bg-gradient-to-r from-white/50 to-white/30 transition-all"
               style={{ width: `${progressPct}%` }}
             />
           </div>
-          <p className="mt-2 text-[11px] text-white/40">
-            {progressPct}% complete
-          </p>
+          <p className="mt-1.5 text-[10px] text-white/35">{progressPct}%</p>
         </div>
       )}
 
-      <nav className={`space-y-1 ${collapsed ? "flex flex-col items-center" : ""}`}>
+      {/* Navigation */}
+      <nav className={`flex flex-col gap-0.5 ${collapsed ? "items-center" : ""}`}>
         {APP_NAV_ITEMS.filter((item) =>
           item.href !== "/onboarding/bootcamp" || !bootcampCompleted
         ).map((item) => {
@@ -104,64 +90,54 @@ export default function AppSidebar({
               key={item.href}
               href={blocked ? "/onboarding/bootcamp" : item.href}
               title={collapsed ? item.label : undefined}
-              className={`flex items-center rounded-xl text-sm transition ${collapsed
-                  ? `h-12 w-12 justify-center px-0 ${active
-                    ? "bg-white/10 text-white border border-white/20"
-                    : "text-white/70 hover:text-white hover:bg-white/5 border border-transparent"}`
-                  : `${active
-                    ? "bg-white/10 text-white border border-white/20"
-                    : "text-white/70 hover:text-white hover:bg-white/5 border border-transparent"} gap-3 px-3 py-2.5`
-                }`}
+              className={`flex items-center rounded-lg text-sm transition-all duration-150 ${
+                collapsed
+                  ? `h-10 w-10 justify-center ${
+                      active
+                        ? "bg-white/12 text-white border border-white/20"
+                        : "text-white/50 hover:text-white/80 hover:bg-white/5 border border-transparent"
+                    }`
+                  : `gap-3 px-3 py-2 ${
+                      active
+                        ? "bg-white/10 text-white border border-white/15"
+                        : "text-white/55 hover:text-white/85 hover:bg-white/5 border border-transparent"
+                    }`
+              }`}
             >
-              <span className={active ? "text-white/80" : "text-white/50"}>
+              <span className={`flex-shrink-0 ${active ? "text-white/90" : ""}`}>
                 {ICON_MAP[item.iconKey]}
               </span>
-              {!collapsed ? <span>{item.label}</span> : null}
-              {!collapsed && item.href === "/onboarding/bootcamp" && !bootcampCompleted ? (
-                <span className="ml-auto text-[10px] px-2 py-0.5 rounded-full bg-white/15 text-white/60">
+              {!collapsed && <span>{item.label}</span>}
+              {!collapsed && item.href === "/onboarding/bootcamp" && !bootcampCompleted && (
+                <span className="ml-auto text-[10px] px-1.5 py-0.5 rounded-full bg-white/10 text-white/50">
                   Active
                 </span>
-              ) : null}
+              )}
             </Link>
           );
         })}
       </nav>
 
-      <div className="mt-auto pt-5">
-        {collapsed ? (
-          <div className="flex flex-col items-center gap-3">
-            <button
-              onClick={() => void onLogout()}
-              disabled={loggingOut}
-              title={loggingOut ? "Logging out..." : "Logout"}
-              className="flex h-12 w-12 items-center justify-center rounded-xl border border-white/15 bg-white/5 text-white/60 hover:text-white hover:bg-white/10 transition disabled:opacity-50"
-            >
-              <ExitIcon className="w-3.5 h-3.5" />
-            </button>
+      {/* Bottom status indicator */}
+      <div className="mt-auto pt-4">
+        {!collapsed && (
+          <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/[0.03] border border-white/[0.06]">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-40 animate-ping" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-green-400" />
+            </span>
+            <span className="text-[10px] text-white/35 uppercase tracking-widest">Online</span>
           </div>
-        ) : (
-          <>
-            <div className="flex items-center gap-2.5 px-3 mb-3">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-40 animate-ping" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-green-400" />
-              </span>
-              <span className="text-xs text-white/50 uppercase tracking-widest">Systems Online</span>
-            </div>
-          </>
+        )}
+        {collapsed && (
+          <div className="flex justify-center" title="Systems Online">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-40 animate-ping" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-green-400" />
+            </span>
+          </div>
         )}
       </div>
-
-      {!collapsed ? (
-        <button
-          onClick={() => void onLogout()}
-          disabled={loggingOut}
-          className="mt-5 flex items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/5 px-3 py-2 text-sm text-white/60 hover:text-white hover:bg-white/10 transition disabled:opacity-50"
-        >
-          <ExitIcon className="w-3.5 h-3.5" />
-          {loggingOut ? "Logging out..." : "Logout"}
-        </button>
-      ) : null}
     </GlassPanel>
   );
 }

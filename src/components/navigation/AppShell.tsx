@@ -2,8 +2,8 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import GradientBackdrop from "@/components/ui/GradientBackdrop";
+import TopBar from "@/components/navigation/TopBar";
 import AppSidebar from "@/components/navigation/AppSidebar";
 import MobileDrawer from "@/components/navigation/MobileDrawer";
 import { APP_NAV_ITEMS } from "@/lib/navigation/app-nav";
@@ -15,6 +15,7 @@ type AppShellProps = {
 type MeResponse = {
   authenticated: boolean;
   stravaUsername?: string;
+  displayName?: string;
 };
 
 type FlowStatus = {
@@ -40,6 +41,7 @@ export default function AppShell({ children }: AppShellProps) {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [loggingOut, setLoggingOut] = useState(false);
   const [username, setUsername] = useState<string | undefined>(undefined);
+  const [displayName, setDisplayName] = useState<string | undefined>(undefined);
   const [flow, setFlow] = useState<FlowStatus | null>(null);
   const [bootcampProgressPct, setBootcampProgressPct] = useState<number | null>(null);
   const [gateReady, setGateReady] = useState(false);
@@ -48,6 +50,7 @@ export default function AppShell({ children }: AppShellProps) {
     () => SHELL_PREFIXES.some((prefix) => pathname?.startsWith(prefix)),
     [pathname]
   );
+
   const currentLabel = useMemo(() => {
     const item = APP_NAV_ITEMS.find((n) => pathname === n.href || pathname?.startsWith(`${n.href}/`));
     if (item) return item.label;
@@ -90,7 +93,10 @@ export default function AppShell({ children }: AppShellProps) {
 
         if (meRes.ok) {
           const me = (await meRes.json()) as MeResponse;
-          if (!cancelled) setUsername(me.stravaUsername);
+          if (!cancelled) {
+            setUsername(me.stravaUsername);
+            setDisplayName(me.displayName);
+          }
         }
 
         if (flowRes.ok) {
@@ -153,39 +159,32 @@ export default function AppShell({ children }: AppShellProps) {
   }
 
   return (
-    <div className="min-h-screen text-white">
+    <div className="min-h-screen text-white flex flex-col">
       <GradientBackdrop />
+
       <MobileDrawer
         open={menuOpen}
         onClose={() => setMenuOpen(false)}
+        currentLabel={currentLabel}
         bootcampCompleted={flow?.bootcampCompleted ?? false}
         bootcampProgressPct={bootcampProgressPct}
-        onLogout={handleLogout}
-        loggingOut={loggingOut}
       />
 
-      <div className="relative z-10 px-3 py-3 lg:px-4 lg:py-4">
-        <div className="lg:hidden mb-3 glass-panel px-3 py-2 flex items-center justify-between">
-          <div>
-            <p className="text-xs uppercase tracking-widest text-white/50">Hermes</p>
-            <p className="text-sm text-white/85">{currentLabel}</p>
-          </div>
-          <button
-            onClick={() => setMenuOpen(true)}
-            aria-label="Open menu"
-            className="rounded-lg border border-white/20 p-2 text-white/80 hover:bg-white/10"
-          >
-            <HamburgerMenuIcon className="h-4 w-4" />
-          </button>
-        </div>
+      <div className="relative z-10 flex flex-col flex-1 px-3 pt-3 lg:px-4 lg:pt-4">
+        {/* Top bar */}
+        <TopBar
+          username={username}
+          displayName={displayName}
+          onLogout={handleLogout}
+          loggingOut={loggingOut}
+          onMenuToggle={() => setMenuOpen(true)}
+        />
 
-        <div className="mx-auto flex items-stretch w-full max-w-[1600px] gap-4 min-h-[calc(100vh-2rem)]">
+        {/* Sidebar + content */}
+        <div className="mx-auto flex items-stretch w-full max-w-[1600px] gap-3 lg:gap-4 flex-1 mt-3 pb-3 lg:mt-4 lg:pb-4">
           <AppSidebar
-            username={username}
             bootcampCompleted={flow?.bootcampCompleted ?? false}
             bootcampProgressPct={bootcampProgressPct}
-            onLogout={handleLogout}
-            loggingOut={loggingOut}
             collapsed={sidebarCollapsed}
             onToggleCollapse={handleSidebarToggle}
           />

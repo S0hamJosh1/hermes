@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { APP_NAV_ITEMS } from "@/lib/navigation/app-nav";
+import { Cross1Icon } from "@radix-ui/react-icons";
 import {
   DashboardIcon,
   CalendarIcon,
@@ -11,18 +12,15 @@ import {
   PaperPlaneIcon,
   TargetIcon,
   LightningBoltIcon,
-  CheckCircledIcon,
-  ExitIcon,
 } from "@radix-ui/react-icons";
 import type { ReactNode } from "react";
 
 type MobileDrawerProps = {
   open: boolean;
   onClose: () => void;
+  currentLabel: string;
   bootcampCompleted: boolean;
   bootcampProgressPct?: number | null;
-  onLogout: () => Promise<void> | void;
-  loggingOut?: boolean;
 };
 
 const ICON_MAP: Record<string, ReactNode> = {
@@ -35,18 +33,6 @@ const ICON_MAP: Record<string, ReactNode> = {
   lightning: <LightningBoltIcon className="w-4 h-4" />,
 };
 
-const SYSTEMS = [
-  "Strava OAuth & Sync",
-  "Auto-Calibration",
-  "Bootcamp Flow",
-  "Plan Generation",
-  "State Machine",
-  "Safety Validator",
-  "Auto-Repair",
-  "Health Tracking",
-  "Compliance",
-];
-
 function isActive(pathname: string, href: string): boolean {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
@@ -54,10 +40,9 @@ function isActive(pathname: string, href: string): boolean {
 export default function MobileDrawer({
   open,
   onClose,
+  currentLabel,
   bootcampCompleted,
   bootcampProgressPct,
-  onLogout,
-  loggingOut = false,
 }: MobileDrawerProps) {
   const pathname = usePathname();
 
@@ -66,18 +51,31 @@ export default function MobileDrawer({
   return (
     <div className="lg:hidden fixed inset-0 z-50">
       <button
-        className="absolute inset-0 bg-[#020a18]/70 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
         onClick={onClose}
         aria-label="Close menu"
       />
-      <div className="absolute left-0 top-0 h-full w-72 border-r border-white/15 bg-[#030712]/85 backdrop-blur-2xl p-4 flex flex-col">
-        <p className="text-xs tracking-[0.2em] uppercase text-white/50">Hermes</p>
-        <p className="text-xl font-semibold text-white mt-1 mb-4">Menu</p>
+      <div className="absolute left-0 top-0 h-full w-72 border-r border-white/10 bg-[#060a12]/95 backdrop-blur-2xl p-4 flex flex-col animate-fade-in">
+        {/* Drawer header */}
+        <div className="flex items-center justify-between mb-5">
+          <div>
+            <p className="text-[10px] tracking-[0.25em] uppercase text-white/40">Navigate</p>
+            <p className="text-sm font-medium text-white/80 mt-0.5">{currentLabel}</p>
+          </div>
+          <button
+            onClick={onClose}
+            aria-label="Close menu"
+            className="rounded-lg border border-white/10 bg-white/5 p-2 text-white/50 hover:text-white/80 hover:bg-white/10 transition"
+          >
+            <Cross1Icon className="w-3.5 h-3.5" />
+          </button>
+        </div>
 
+        {/* Bootcamp progress */}
         {!bootcampCompleted && (
-          <div className="mb-4 rounded-xl border border-white/15 bg-white/5 p-3">
-            <p className="text-xs uppercase tracking-widest text-white/45">Bootcamp</p>
-            <div className="mt-2 h-1.5 rounded-full bg-white/10 overflow-hidden">
+          <div className="mb-4 rounded-xl border border-white/10 bg-white/5 p-3">
+            <p className="text-[10px] uppercase tracking-widest text-white/40">Bootcamp</p>
+            <div className="mt-2 h-1 rounded-full bg-white/10 overflow-hidden">
               <div
                 className="h-full rounded-full bg-gradient-to-r from-white/50 to-white/30 transition-all"
                 style={{ width: `${Math.max(0, Math.min(100, bootcampProgressPct ?? 0))}%` }}
@@ -86,7 +84,8 @@ export default function MobileDrawer({
           </div>
         )}
 
-        <nav className="space-y-1">
+        {/* Navigation */}
+        <nav className="flex flex-col gap-0.5">
           {APP_NAV_ITEMS.filter((item) =>
             item.href !== "/onboarding/bootcamp" || !bootcampCompleted
           ).map((item) => {
@@ -97,13 +96,13 @@ export default function MobileDrawer({
                 key={item.href}
                 href={blocked ? "/onboarding/bootcamp" : item.href}
                 onClick={onClose}
-                className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition ${
+                className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition ${
                   active
-                    ? "bg-white/10 text-white border border-white/20"
-                    : "text-white/70 hover:text-white hover:bg-white/5 border border-transparent"
+                    ? "bg-white/10 text-white border border-white/15"
+                    : "text-white/55 hover:text-white/85 hover:bg-white/5 border border-transparent"
                 }`}
               >
-                <span className={active ? "text-white/80" : "text-white/50"}>
+                <span className={`flex-shrink-0 ${active ? "text-white/90" : ""}`}>
                   {ICON_MAP[item.iconKey]}
                 </span>
                 <span>{item.label}</span>
@@ -112,32 +111,16 @@ export default function MobileDrawer({
           })}
         </nav>
 
+        {/* Bottom status */}
         <div className="mt-auto pt-5">
-          <div className="flex items-center gap-2.5 px-3 mb-3">
-            <span className="relative flex h-2 w-2">
+          <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/[0.03] border border-white/[0.06]">
+            <span className="relative flex h-1.5 w-1.5">
               <span className="absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-40 animate-ping" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-green-400" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-green-400" />
             </span>
-            <span className="text-xs text-white/50 uppercase tracking-widest">Systems Online</span>
-          </div>
-          <div className="space-y-1 px-3">
-            {SYSTEMS.map((name) => (
-              <div key={name} className="flex items-center gap-2.5 text-[11px] text-white/35 py-0.5">
-                <CheckCircledIcon className="w-3 h-3 text-green-400/60 flex-shrink-0" />
-                {name}
-              </div>
-            ))}
+            <span className="text-[10px] text-white/35 uppercase tracking-widest">Systems Online</span>
           </div>
         </div>
-
-        <button
-          onClick={() => void onLogout()}
-          disabled={loggingOut}
-          className="mt-5 flex items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/5 px-3 py-2 text-sm text-white/60 hover:text-white hover:bg-white/10 transition disabled:opacity-50"
-        >
-          <ExitIcon className="w-3.5 h-3.5" />
-          {loggingOut ? "Logging out..." : "Logout"}
-        </button>
       </div>
     </div>
   );
