@@ -269,17 +269,6 @@ export default function GoalPage() {
                     </div>
                 )}
 
-                {existingGoalId && (
-                    <button
-                        onClick={handleDeleteCurrentGoal}
-                        disabled={deletingGoalId !== null}
-                        className={`self-start rounded-full border border-red-400/20 bg-red-400/5 px-3 py-1.5 ${deleteBtnClass}`}
-                    >
-                        <TrashIcon className="w-3.5 h-3.5" />
-                        Delete current goal
-                    </button>
-                )}
-
                 {activeGoal && (
                     <div className="glass-card p-4 border border-green-500/20">
                         <div className="flex items-center justify-between mb-2">
@@ -291,11 +280,24 @@ export default function GoalPage() {
                         <p className="text-sm font-semibold text-white/90">
                             {activeGoal.distance} {"->"} {activeGoal.targetDate}
                         </p>
-                        <p className="text-xs text-white/50 mt-1">
-                            {activeGoal.targetTimeSeconds && activeGoal.targetTimeSeconds > 0
-                                ? `Target time ${formatTime(activeGoal.targetTimeSeconds)}`
-                                : "No specific finish-time target"}
-                        </p>
+                        <div className="flex items-center justify-between mt-2">
+                            <p className="text-xs text-white/50">
+                                {activeGoal.targetTimeSeconds && activeGoal.targetTimeSeconds > 0
+                                    ? `Target time ${formatTime(activeGoal.targetTimeSeconds)}`
+                                    : "No specific finish-time target"}
+                            </p>
+                            {existingGoalId && (
+                                <button
+                                    onClick={handleDeleteCurrentGoal}
+                                    disabled={deletingGoalId !== null}
+                                    className={deleteBtnClass}
+                                    title="Delete current goal"
+                                >
+                                    <TrashIcon className="w-3 h-3" />
+                                    <span>Delete</span>
+                                </button>
+                            )}
+                        </div>
                     </div>
                 )}
 

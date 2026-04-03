@@ -218,8 +218,8 @@ export default function Dashboard() {
 
     return (
         <main className="text-white flex flex-col items-center px-2 py-2">
-            <div className="w-full max-w-6xl flex flex-col gap-6">
-                {/* Runner State + Profile */}
+            <div className="w-full max-w-6xl flex flex-col gap-5">
+                {/* ── Row 1: State header + metrics strip ── */}
                 {profile && (
                     <div className="glass-card p-5 flex flex-col gap-4">
                         <div className="flex items-center justify-between">
@@ -246,41 +246,39 @@ export default function Dashboard() {
                             </div>
                         </div>
 
-                        {/* Metrics grid */}
-                        <div className="grid grid-cols-2 gap-3">
+                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
                             <div className="glass-card p-3">
-                                <p className="text-xs text-white/40 mb-1">Easy Pace</p>
-                                <p className="text-sm font-medium">{formatPacePerMile(profile.basePaceSecondsPerKm)}</p>
+                                <p className="text-[11px] text-white/40 mb-1">Easy Pace</p>
+                                <p className="text-base font-semibold">{formatPacePerMile(profile.basePaceSecondsPerKm)}</p>
                             </div>
                             <div className="glass-card p-3">
-                                <p className="text-xs text-white/40 mb-1">Threshold</p>
-                                <p className="text-sm font-medium">{formatPacePerMile(profile.thresholdPaceSecondsPerKm)}</p>
+                                <p className="text-[11px] text-white/40 mb-1">Threshold</p>
+                                <p className="text-base font-semibold">{formatPacePerMile(profile.thresholdPaceSecondsPerKm)}</p>
                             </div>
                             <div className="glass-card p-3">
-                                <p className="text-xs text-white/40 mb-1">Weekly Capacity</p>
-                                <p className="text-sm font-medium">{formatMiles(profile.weeklyCapacityKm)}</p>
+                                <p className="text-[11px] text-white/40 mb-1">Weekly Capacity</p>
+                                <p className="text-base font-semibold">{formatMiles(profile.weeklyCapacityKm)}</p>
                             </div>
                             <div className="glass-card p-3">
-                                <p className="text-xs text-white/40 mb-1">Consistency</p>
-                                <p className="text-sm font-medium">{Math.round(profile.consistencyScore * 100)}%</p>
+                                <p className="text-[11px] text-white/40 mb-1">Consistency</p>
+                                <p className="text-base font-semibold">{Math.round(profile.consistencyScore * 100)}%</p>
                             </div>
                         </div>
 
-                        {/* Goal */}
                         {profile.primaryGoalDistance && (
-                            <div className="border-t border-white/10 pt-3">
-                                <p className="text-xs text-white/40 mb-1">Current Goal</p>
-                                <p className="text-sm font-medium">
-                                    {profile.primaryGoalDistance}
-                                    {profile.primaryGoalDate && (
-                                        <span className="text-white/50 ml-2">
-                                            → {profile.primaryGoalDate}
-                                        </span>
-                                    )}
-                                </p>
+                            <div className="flex items-center justify-between border-t border-white/10 pt-3">
+                                <div>
+                                    <p className="text-[11px] text-white/40 mb-0.5">Current Goal</p>
+                                    <p className="text-sm font-medium">
+                                        {profile.primaryGoalDistance}
+                                        {profile.primaryGoalDate && (
+                                            <span className="text-white/50 ml-2">→ {profile.primaryGoalDate}</span>
+                                        )}
+                                    </p>
+                                </div>
                                 <button
                                     onClick={() => router.push("/onboarding/goal")}
-                                    className="mt-2 text-xs text-white/50 hover:text-white/80 transition"
+                                    className="text-xs text-white/50 hover:text-white/80 transition"
                                 >
                                     Edit goal →
                                 </button>
@@ -289,202 +287,179 @@ export default function Dashboard() {
                     </div>
                 )}
 
-                {/* Health & Injury Status */}
-                <div className="glass-card p-5 flex flex-col gap-4">
-                    <div className="flex items-center justify-between">
-                        <p className="text-xs text-white/40 uppercase tracking-widest">
-                            Health Status
-                        </p>
-                        {health && health.activeStrikes > 0 && (
-                            <span className="text-xs px-2 py-0.5 rounded-full bg-orange-500/20 text-orange-400">
-                                {health.activeStrikes} strike{health.activeStrikes !== 1 ? "s" : ""}
-                            </span>
-                        )}
-                    </div>
-
-                    {health && health.activeInjuries.length > 0 ? (
-                        <div className="flex flex-col gap-2">
-                            {health.activeInjuries.map((injury) => (
-                                <div
-                                    key={injury.id}
-                                    className="flex items-center justify-between bg-red-500/10 border border-red-500/20 rounded-lg px-4 py-3"
-                                >
-                                    <div>
-                                        <p className="text-sm text-red-300 font-medium">
-                                            {injury.bodyPart}
-                                        </p>
-                                        {injury.description && (
-                                            <p className="text-xs text-red-300/60 mt-0.5">{injury.description}</p>
-                                        )}
-                                    </div>
-                                    <span className="text-xs text-red-400">
-                                        Severity {injury.severity}/10
-                                    </span>
-                                </div>
-                            ))}
-                        </div>
-                    ) : (
-                        <div className="flex items-center gap-3 text-sm text-green-400/80">
-                            <div className="w-2 h-2 rounded-full bg-green-400" />
-                            No active injuries
-                        </div>
-                    )}
-
-                    <button
-                        onClick={() => router.push("/health/report")}
-                        className="w-full rounded-lg border border-white/15 bg-white/5 px-4 py-3 text-sm font-medium transition hover:bg-white/10"
-                    >
-                        Report Injury or Pain
-                    </button>
-                </div>
-
-                {/* Compliance */}
-                {compliance && compliance.currentWeekCompliance !== null && (
+                {/* ── Row 2: Charts ── */}
+                <div className={`grid grid-cols-1 gap-5 ${activityHeatmap.length > 0 ? "xl:grid-cols-[1.15fr_0.85fr]" : ""}`}>
                     <div className="glass-card p-5 flex flex-col gap-4">
-                        <p className="text-xs text-blue-200/40 uppercase tracking-widest">
-                            Compliance
-                        </p>
-                        <div className="grid grid-cols-2 gap-3">
-                            <div className="glass-card p-3">
-                                <p className="text-xs text-white/40 mb-1">This Week</p>
-                                <p className={`text-lg font-bold ${compliance.currentWeekCompliance >= 80
-                                    ? "text-green-400"
-                                    : compliance.currentWeekCompliance >= 60
-                                        ? "text-yellow-400"
-                                        : "text-red-400"
-                                    }`}>
-                                    {Math.round(compliance.currentWeekCompliance)}%
-                                </p>
-                            </div>
-                            <div className="glass-card p-3">
-                                <p className="text-xs text-white/40 mb-1">4-Week Avg</p>
-                                <p className="text-lg font-bold text-white/80">
-                                    {compliance.last4WeekAverage !== null
-                                        ? `${Math.round(compliance.last4WeekAverage)}%`
-                                        : "—"}
-                                </p>
-                            </div>
-                        </div>
-                        {compliance.totalPlannedKm !== null && compliance.totalActualKm !== null && (
-                            <div className="text-xs text-white/40">
-                                {kmToMiles(compliance.totalActualKm).toFixed(1)} mi actual / {kmToMiles(compliance.totalPlannedKm).toFixed(1)} mi planned this week
-                            </div>
-                        )}
-                    </div>
-                )}
-
-                <div className={`grid grid-cols-1 gap-6 ${activityHeatmap.length > 0 ? "xl:grid-cols-[1.15fr_0.85fr]" : ""}`}>
-                    <div className="glass-card p-5 flex flex-col gap-4">
-                        <div>
-                            <p className="text-xs text-blue-200/40 uppercase tracking-widest">
-                                Volume Trend
-                            </p>
-                            <p className="mt-1 text-sm text-white/55">
-                                {weeklyTrend.length > 0
-                                    ? `Planned vs actual mileage over the last ${weeklyTrend.length} weeks`
-                                    : "A standing chart shell that fills in once weekly compliance history exists"}
-                            </p>
+                        <div className="flex items-center justify-between">
+                            <p className="text-xs text-white/40 uppercase tracking-widest">Volume Trend</p>
+                            {weeklyTrend.length > 0 && (
+                                <span className="text-[11px] text-white/30">{weeklyTrend.length} weeks</span>
+                            )}
                         </div>
                         <WeeklyVolumeChart points={weeklyTrend} />
                     </div>
 
                     {activityHeatmap.length > 0 && (
                         <div className="glass-card p-5 flex flex-col gap-4">
-                            <div>
-                                <p className="text-xs text-blue-200/40 uppercase tracking-widest">
-                                    Activity Heatmap
-                                </p>
-                                <p className="mt-1 text-sm text-white/55">
-                                    A quick read on how consistently you have been showing up lately
-                                </p>
-                            </div>
+                            <p className="text-xs text-white/40 uppercase tracking-widest">Activity Heatmap</p>
                             <ActivityHeatmap days={activityHeatmap} />
                         </div>
                     )}
                 </div>
 
-                {/* Strava Sync */}
-                <div className="glass-card p-5 flex flex-col gap-4">
-                    <div className="flex items-center gap-3">
-                        <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                        <span className="text-sm text-white/70">Connected to Strava</span>
-                    </div>
-
-                    <div className="flex gap-2">
-                        <button
-                            onClick={handleSync}
-                            disabled={syncing || recalibrating}
-                            className="flex-1 rounded-lg border border-white/15 bg-white/5 px-4 py-3 text-sm font-medium transition hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed"
-                        >
-                            {syncing ? "Syncing..." : "Sync Activities"}
-                        </button>
-                        <button
-                            onClick={handleRecalibrate}
-                            disabled={syncing || recalibrating}
-                            title="Fix weekly capacity if it looks wrong (e.g. best efforts correct but mileage low)"
-                            className="rounded-lg border border-white/15 bg-white/5 px-4 py-3 text-sm font-medium transition hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed"
-                        >
-                            {recalibrating ? "Recalibrating..." : "Recalibrate"}
-                        </button>
-                    </div>
-
-                    {syncResult && (
-                        <div
-                            className={`rounded-lg px-4 py-3 text-sm ${syncResult.error
-                                ? "border border-red-500/30 bg-red-500/10 text-red-300"
-                                : "border border-green-500/30 bg-green-500/10 text-green-300"
-                                }`}
-                        >
-                            {syncResult.error ? (
-                                <span>{syncResult.error}</span>
-                            ) : syncResult.recalibrated ? (
-                                <span>✓ Weekly capacity updated from your activities</span>
-                            ) : (
-                                <span>
-                                    ✓ Synced <strong>{syncResult.synced}</strong> run
-                                    {syncResult.synced !== 1 ? "s" : ""} · Skipped{" "}
-                                    <strong>{syncResult.skipped}</strong> non-run
-                                    {syncResult.skipped !== 1 ? "s" : ""}
+                {/* ── Row 3: Health + Compliance side by side ── */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                    <div className="glass-card p-5 flex flex-col gap-4">
+                        <div className="flex items-center justify-between">
+                            <p className="text-xs text-white/40 uppercase tracking-widest">Health Status</p>
+                            {health && health.activeStrikes > 0 && (
+                                <span className="text-xs px-2 py-0.5 rounded-full bg-orange-500/20 text-orange-400">
+                                    {health.activeStrikes} strike{health.activeStrikes !== 1 ? "s" : ""}
                                 </span>
                             )}
+                        </div>
+
+                        {health && health.activeInjuries.length > 0 ? (
+                            <div className="flex flex-col gap-2">
+                                {health.activeInjuries.map((injury) => (
+                                    <div
+                                        key={injury.id}
+                                        className="flex items-center justify-between bg-red-500/10 border border-red-500/20 rounded-lg px-4 py-3"
+                                    >
+                                        <div>
+                                            <p className="text-sm text-red-300 font-medium">{injury.bodyPart}</p>
+                                            {injury.description && (
+                                                <p className="text-xs text-red-300/60 mt-0.5">{injury.description}</p>
+                                            )}
+                                        </div>
+                                        <span className="text-xs text-red-400">Severity {injury.severity}/10</span>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="flex items-center gap-3 text-sm text-green-400/80">
+                                <div className="w-2 h-2 rounded-full bg-green-400" />
+                                No active injuries
+                            </div>
+                        )}
+
+                        <button
+                            onClick={() => router.push("/health/report")}
+                            className="mt-auto w-full rounded-lg border border-white/15 bg-white/5 px-4 py-2.5 text-sm font-medium transition hover:bg-white/10"
+                        >
+                            Report Injury or Pain
+                        </button>
+                    </div>
+
+                    {compliance && compliance.currentWeekCompliance !== null ? (
+                        <div className="glass-card p-5 flex flex-col gap-4">
+                            <p className="text-xs text-white/40 uppercase tracking-widest">Compliance</p>
+                            <div className="grid grid-cols-2 gap-3">
+                                <div className="glass-card p-3">
+                                    <p className="text-[11px] text-white/40 mb-1">This Week</p>
+                                    <p className={`text-lg font-bold ${compliance.currentWeekCompliance >= 80
+                                        ? "text-green-400"
+                                        : compliance.currentWeekCompliance >= 60
+                                            ? "text-yellow-400"
+                                            : "text-red-400"
+                                        }`}>
+                                        {Math.round(compliance.currentWeekCompliance)}%
+                                    </p>
+                                </div>
+                                <div className="glass-card p-3">
+                                    <p className="text-[11px] text-white/40 mb-1">4-Week Avg</p>
+                                    <p className="text-lg font-bold text-white/80">
+                                        {compliance.last4WeekAverage !== null
+                                            ? `${Math.round(compliance.last4WeekAverage)}%`
+                                            : "—"}
+                                    </p>
+                                </div>
+                            </div>
+                            {compliance.totalPlannedKm !== null && compliance.totalActualKm !== null && (
+                                <p className="text-xs text-white/40 mt-auto">
+                                    {kmToMiles(compliance.totalActualKm).toFixed(1)} mi actual / {kmToMiles(compliance.totalPlannedKm).toFixed(1)} mi planned
+                                </p>
+                            )}
+                        </div>
+                    ) : (
+                        <div className="glass-card p-5 flex flex-col gap-3">
+                            <p className="text-xs text-white/40 uppercase tracking-widest">Compliance</p>
+                            <p className="text-sm text-white/30">Data appears once weekly plan history is available.</p>
                         </div>
                     )}
                 </div>
 
-                {performance && (
+                {/* ── Row 4: Strava + Best Efforts side by side ── */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
                     <div className="glass-card p-5 flex flex-col gap-4">
-                        <p className="text-xs text-blue-200/40 uppercase tracking-widest">
-                            Strava Best Efforts
-                        </p>
-                        <div className="grid grid-cols-1 gap-2">
-                            {(["5K", "10K", "Half Marathon", "Marathon"] as const).map((d) => {
-                                const effort = performance[d];
-                                const displayEffort = effort.best ?? effort.secondBest;
-                                return (
-                                    <div key={d} className="glass-card px-3 py-2">
-                                        <div className="flex items-center justify-between text-sm">
-                                            <span className="text-white/70">{d}</span>
+                        <div className="flex items-center gap-3">
+                            <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                            <span className="text-sm text-white/70">Connected to Strava</span>
+                        </div>
+
+                        <div className="flex gap-2">
+                            <button
+                                onClick={handleSync}
+                                disabled={syncing || recalibrating}
+                                className="flex-1 rounded-lg border border-white/15 bg-white/5 px-4 py-2.5 text-sm font-medium transition hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                                {syncing ? "Syncing..." : "Sync Activities"}
+                            </button>
+                            <button
+                                onClick={handleRecalibrate}
+                                disabled={syncing || recalibrating}
+                                title="Fix weekly capacity if it looks wrong"
+                                className="rounded-lg border border-white/15 bg-white/5 px-4 py-2.5 text-sm font-medium transition hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                                {recalibrating ? "..." : "Recalibrate"}
+                            </button>
+                        </div>
+
+                        {syncResult && (
+                            <div
+                                className={`rounded-lg px-4 py-3 text-sm ${syncResult.error
+                                    ? "border border-red-500/30 bg-red-500/10 text-red-300"
+                                    : "border border-green-500/30 bg-green-500/10 text-green-300"
+                                    }`}
+                            >
+                                {syncResult.error ? (
+                                    <span>{syncResult.error}</span>
+                                ) : syncResult.recalibrated ? (
+                                    <span>Weekly capacity updated from your activities</span>
+                                ) : (
+                                    <span>
+                                        Synced <strong>{syncResult.synced}</strong> run
+                                        {syncResult.synced !== 1 ? "s" : ""} · Skipped{" "}
+                                        <strong>{syncResult.skipped}</strong> non-run
+                                        {syncResult.skipped !== 1 ? "s" : ""}
+                                    </span>
+                                )}
+                            </div>
+                        )}
+                    </div>
+
+                    {performance && (
+                        <div className="glass-card p-5 flex flex-col gap-4">
+                            <p className="text-xs text-white/40 uppercase tracking-widest">Best Efforts</p>
+                            <div className="grid grid-cols-2 gap-2">
+                                {(["5K", "10K", "Half Marathon", "Marathon"] as const).map((d) => {
+                                    const effort = performance[d];
+                                    const displayEffort = effort.best ?? effort.secondBest;
+                                    return (
+                                        <div key={d} className="glass-card px-3 py-2.5">
+                                            <p className="text-[11px] text-white/40 mb-0.5">{d}</p>
                                             {displayEffort ? (
-                                                <span className="text-white font-medium">
-                                                    {formatTime(displayEffort.timeSeconds)}
-                                                </span>
+                                                <p className="text-sm font-semibold text-white">{formatTime(displayEffort.timeSeconds)}</p>
                                             ) : (
-                                                <span className="text-white/30">No effort yet</span>
+                                                <p className="text-sm text-white/25">--:--</p>
                                             )}
                                         </div>
-                                        {displayEffort && (
-                                            <p className="text-xs text-white/40 mt-1">
-                                                Using {displayEffort === effort.best ? "best" : "2nd best"} from{" "}
-                                                {new Date(displayEffort.date).toLocaleDateString()}
-                                            </p>
-                                        )}
-                                    </div>
-                                );
-                            })}
+                                    );
+                                })}
+                            </div>
                         </div>
-                    </div>
-                )}
-
+                    )}
+                </div>
             </div>
         </main>
     );

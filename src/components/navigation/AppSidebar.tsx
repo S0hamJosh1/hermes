@@ -51,18 +51,28 @@ export default function AppSidebar({
     <GlassPanel
       className={`hidden lg:flex lg:shrink-0 lg:flex-col transition-[width] duration-300 ${collapsed ? "lg:w-16 p-2" : "lg:w-60 p-3"}`}
     >
-      {/* Collapse toggle */}
-      <button
-        onClick={onToggleCollapse}
-        aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-        className={`flex items-center justify-center rounded-lg border border-white/10 bg-white/5 p-1.5 text-white/50 transition hover:bg-white/10 hover:text-white/80 mb-3 ${collapsed ? "w-full" : "self-end"}`}
-      >
-        {collapsed ? (
-          <ChevronRightIcon className="h-3.5 w-3.5" />
-        ) : (
-          <ChevronLeftIcon className="h-3.5 w-3.5" />
+      {/* Sidebar header */}
+      <div className={`flex items-center mb-3 ${collapsed ? "justify-center" : "justify-between"}`}>
+        {!collapsed && (
+          <div className="flex items-center gap-2 px-1">
+            <div className="w-1 h-4 rounded-full bg-gradient-to-b from-orange-400/60 to-orange-500/20" />
+            <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-white/35">
+              Navigate
+            </span>
+          </div>
         )}
-      </button>
+        <button
+          onClick={onToggleCollapse}
+          aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+          className="flex items-center justify-center rounded-lg border border-white/10 bg-white/5 p-1.5 text-white/50 transition hover:bg-white/10 hover:text-white/80"
+        >
+          {collapsed ? (
+            <ChevronRightIcon className="h-3.5 w-3.5" />
+          ) : (
+            <ChevronLeftIcon className="h-3.5 w-3.5" />
+          )}
+        </button>
+      </div>
 
       {/* Bootcamp progress (only when active + expanded) */}
       {!bootcampCompleted && !collapsed && (
